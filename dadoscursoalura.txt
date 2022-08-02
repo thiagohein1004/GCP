@@ -1,0 +1,57 @@
+O link que o instrutor acessou neste vídeo é o seguinte: 
+https://cloud.google.com/certification/guides/cloud-engineer.
+
+O link que o instrutor acessou neste vídeo é o seguinte: 
+https://cloud.google.com/docs/compare/aws.
+
+GCP Solutions: https://cloud.google.com/?utm_source=google&utm_medium=cpc&utm_campaign=latam-BR-all-pt-dr-BKWS-all-all-trial-p-dr-1011454-LUAC0014411&utm_content=text-ad-none-any-DEV_c-CRE_512285710746-ADGP_Hybrid%20%7C%20BKWS%20-%20PHR%20%7C%20Txt%20~%20GCP_General-KWID_43700071226328480-kwd-21114445543&utm_term=KW_google%20cloud%20service-ST_google%20cloud%20service&gclid=Cj0KCQjw_viWBhD8ARIsAH1mCd7zlC1xNUOIbjx27kSM8py7BXa7jJs64to52kXZlaWLhTNHsMJT69oaAptoEALw_wcB&gclsrc=aw.ds
+
+Produtos:
+https://cloud.google.com/products
+
+Regions and zones: https://cloud.google.com/compute/docs/regions-zones#locations
+
+Infraestrutura google
+https://cloud.google.com/infrastructure/
+
+Calculadora: https://cloud.google.com/products/calculator?hl=pt-br
+
+https://cloud.google.com/free
+
+Cloud Shell:
+https://cloud.google.com/shell/docs/quickstart
+
+Download de arquivo:
+$ dl README-cloudshell.txt
+
+VM Instances
+https://cloud.google.com/compute/docs/instances?hl=pt_br
+
+Criar vm via cli
+gcloud compute instances create instance-lab1 --project=gcp-labs-357410 --zone=us-central1-a --machine-type=f1-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --service-account=851755502288-compute@developer.gserviceaccount.com --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --create-disk=auto-delete=yes,boot=yes,device-name=instance-lab1,image=projects/debian-cloud/global/images/debian-11-bullseye-v20220719,mode=rw,size=10,type=projects/gcp-labs-357410/zones/us-central1-a/diskTypes/pd-balanced --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --labels=type=lab --reservation-affinity=any
+
+Machine types: https://cloud.google.com/compute/docs/machine-types
+
+Comandos SDK = https://cloud.google.com/sdk/docs/cheatsheet
+
+Install SDK = https://cloud.google.com/sdk/docs/install
+
+Comandos usados:
+gcloud project list = Listar os projetos
+gcloud services list = listar os serviços
+gcloud config list = ver qual projeto você está
+gcloud config set gcp-labs-357410 = trocar de projeto
+gsutil = comando pra tratar de storages e buckets
+gsutil ls = listar as buckets
+gsutil ls gs://hein-gsutil/ = listar o que tem dentro da buckets
+gsutil mb gs://theinlab3 = criar um bucket (se não especificar a localidade, ele cria multiregion nos EUA)
+gsutil mb -l SOUTHAMERICA-EAST1 gs://theinlabs4 = cria bucket na região de SÃO_PAULO
+https://cloud.google.com/storage/docs/locations
+gsutil cp "c:\Users\Thiago\Downloads\Condominio062022 (1).pdf" gs://theinlabs4 = copia arquivos ao bucket
+gsutil du -h gs://theinlabs4 = ver o tamanho da bucket
+Versionamento
+gsutil versioning get gs://theinlabs4 = ver se o versionamento está on ou off
+gsutil versioning set on gs://theinlabs4 = habilitar o versionamento
+gsutil cp gs://theinlabs4/README-cloudshell.txt#1659092781054826 C:\Users\Thiago\Desktop = copiar um arquivo versionado
+devido seu ID para a máquina local
+
