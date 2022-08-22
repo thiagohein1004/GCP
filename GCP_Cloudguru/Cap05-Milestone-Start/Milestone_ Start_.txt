@@ -1,0 +1,112 @@
+Congratulations Cloud Gurus.
+You've reached a milestone.
+Now I know it may not feel like much
+given that we're so little of the way through this course,
+but I wanted to call this out right up front
+because it'll help you better understand the road ahead.
+Now some of you have just charged ahead
+and will leave this course with hyper-speed playback.
+And so you've only spent a few minutes so far
+on learning Google Cloud.
+Others of you may have already spent many hours
+and have dug into every additional resource I've linked
+and maybe you've even read through the entire site,
+reliability engineering book.
+Now just like each of you has your own unique background
+as we talked about in the course outline,
+you each also have your own personal way
+of approaching learning.
+And I get it.
+Some of you might just wanna jump in
+and get going with things
+and not do anything keeping you from the labs.
+But do realize, for example, that skipping the intro to GCP
+is a lot like starting a novel at chapter three,
+because that was designed
+to be this course's 10,000-foot overview
+where we set the scene and introduce the main characters.
+But who am I to judge though?
+I mean, some people even read the last page of a novel
+before they decide to start reading it.
+If you wanna do it this way, then you can.
+But I want you to realize that you will be missing things.
+So you may have to catch up with that later on.
+This same principle applies to the other things
+that you may or may not do along the way,
+like the homework labs or reading extra documentation
+or whatever.
+And this also ties into the progression that I talked about,
+where we ramp up over the course.
+A few of you might feel like the beginning of this course
+has a little too much handholding.
+And if this is you just speed up the video player.
+But you'll likely find the end of this course
+rather more difficult.
+And this will be especially true
+if you don't do any of the supporting activities
+that I recommend throughout the course.
+As we go, you'll get tons of opportunities
+to dig deeper into the topics that you choose.
+So if at the end you do find yourself struggling,
+then either circle back and do more of the extra things
+on your second pass through the lessons,
+or take each of the difficulties that you encounter
+as the next challenge to overcome and research it
+and ask questions on our forum.
+Through this course, I'm teaching you how to fish,
+not just feeding you meal after meal.
+At the same time as you're learning about Google Cloud,
+you should also be learning how to dig deeper for yourself,
+because if you don't practice that skill now,
+you'll really struggle out in the real world.
+And even just this Associate Cloud Engineer Certification
+is not a simple undertaking.
+It's a substantial one.
+And people generally rate this as harder
+than AWS' Solutions Architect Associate Certification.
+Actually, I compare this more to AWS'
+Sysops Administrator Associate Certification,
+which is one of their harder ones.
+Because this ACE certification has a big emphasis
+on understanding and debugging the data flows
+that are going inside of the systems built on Google Cloud.
+In any case, at this point, you should have an understanding
+of Google's philosophy that they're about massive scale,
+and they have an engineering approach to everything.
+You should also have a sense for GCP,
+how it's designed for global systems
+and a feel for all of the services that it includes.
+But I don't expect you to understand
+or even remember all of them.
+There are lots of them
+and you'll get familiar with a number of them
+and how they fit into the ecosystem
+as we go through the course.
+Now, as we go along, try to see the bigger picture
+behind everything we do.
+Don't just think about what it is we're doing.
+Ask why a lot, both to yourself
+and on our forums.
+About our forums, don't feel bad about asking questions.
+I mean, do try to ask good questions,
+but questions are a core part of the learning process.
+You'll learn something both by forming the question
+and getting a response.
+The people answering will learn something
+by writing down and backing up their answers.
+But many other students will learn too
+by getting to read through the discussion,
+possibly even for years to come.
+So hopefully by this point,
+you've found and started to participate in our course forum.
+One thread in particular that you might want to look over
+is my mega thread, where I've collected people's reports
+of how they studied and how they found their exams.
+You can get a lot of good ideas from these posts
+and you can thank those students for taking the time
+to write up their stories by upvoting their posts.
+Well, all right.
+If you have any questions about any of this,
+please let me know.
+If not, then let's jump in.
+I'll see you in the next lecture.

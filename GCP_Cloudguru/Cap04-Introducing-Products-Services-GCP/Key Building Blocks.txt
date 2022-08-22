@@ -1,0 +1,378 @@
+Okay, hello Cloud Gurus,
+and welcome to this lecture,
+where we're gonna continue our look
+at the Google Cloud Developer Cheat Sheet.
+Like before, please try to follow along
+on your own copy of this document.
+It's useful for you to get familiar with it yourself.
+Now, before we jump in,
+let me reassure you that I am not going to read out
+and talk about every line on this document.
+My purpose here is to give you a feel
+for the different products that Google Cloud offers,
+and to give you a bit of a heads up
+on some of the ones that you're going to come across.
+Truth be told, there are some items on this list
+that you will never have to deal with in your entire life.
+Now, I'm not gonna be able to list those items
+because it's going to actually be different
+for different people.
+But I want to talk a little bit about the ones
+that you are likely to deal with,
+and let you know that the text version of this document
+links out to the documentation
+for every single one of these products.
+In fact, most of them have two links.
+One link goes to the more marketing type
+everyone-friendly version of the documentation
+that describes the product, why you might want to use it,
+what it does, stuff like that.
+And the other link goes to the developer documentation,
+where you can learn all the details that you need to know
+to be able to use that particular product effectively.
+But let's start at the top of the list.
+Compute Engine is described
+as virtual machines, disks, network.
+This is the most relatable Google Cloud product.
+Just like computers you might buy from the store,
+you can run whatever you want on them,
+do virtually anything with them.
+But you rent these ones by the second.
+Have a huge job?
+Maybe spin up dozens, hundreds,
+or even thousands of Compute Engine instances
+at the same time to get the job done faster,
+then stop paying for them when the job's done.
+This is like the workhorse
+two by four brick of the Lego world.
+You can build almost anything with it if you have the time
+and you're okay with having a few rough edges.
+But in terms of building systems,
+this is a relatively small brick
+where you have to do a lot of work yourself to use it.
+Cloud Functions, just a little way down,
+is described as event-driven serverless functions.
+Cloud Functions is built
+even finer grained than Compute Engine is.
+This is by the 10th of a second,
+but it manages all of the scaling for you automatically.
+This is Google Cloud's functions as a service product,
+or FAS, and just like Amazon's Lambda,
+this is a key building block of serverless systems.
+With this, instead of running server programs
+that sit around and wait for clients to connect to them,
+in Cloud Functions you set up an event
+and Google will run the code that you've given it
+every time that event happens.
+If no events are happening, you're not paying anything.
+And if a whole bunch of these events
+happen all at the same time,
+then Google just runs your code in parallel lots of times.
+But you don't even really have to think about that.
+Google just does it automatically.
+Now there are all sorts of events that you can hook up.
+They could be requests through HTTP,
+like connections being made from your web page
+or other micro services or something like that,
+or the event could be a new object
+being uploaded to Cloud Storage
+or a message being sent to Cloud Pub/Sub,
+or any number of other things, really.
+There are lots of different event types.
+Now this isn't a perfect comparison,
+but if we were looking for something in the Lego world
+that would be like this,
+maybe it would be like a thin one by six brick.
+You can build lots of things with it,
+but it's particularly good at connecting
+all sorts of things together.
+Now, speaking of Cloud Storage, just like Cloud Functions,
+Cloud Storage is also a serverless product
+and they work very nicely together.
+Cloud Storage is like the most pure service at its core.
+It says give me some data, and I can give it back to you.
+No fuss, no muss, and incredibly reliable.
+You never really change any data it holds
+but you can give it some new data
+and tell it to forget about the old stuff.
+But unless you tell it to,
+it's really, really good at not losing your data.
+And it's also amazing at handling
+however much load you slam it with
+without even breaking a sweat.
+That's why it's described as object storage and serving.
+Nearline and Coldline are really just
+versions of Cloud Storage that are priced and optimized
+for less frequent data access patterns,
+so they're perfect for backups.
+That's why their descriptions
+are archival occasional access storage
+and archival rare access storage.
+Persistent Disk is a special kind of storage,
+and its description gives that away.
+VM-attached disks.
+Now, the Cloud Storage product is object storage,
+but Persistent Disk is block storage instead,
+so it works much like a hard drive does.
+And it only connects to Compute Engine instances.
+In a way, Persistent Disk is kind of like the Lego pieces
+with a different kind of connector on the side.
+It only goes together with Compute Engine.
+They were made for each other.
+You don't usually even think too much
+about the Persistent Disks.
+They're just one aspect of the Compute Engine instance,
+but if you've decided to take on the burden
+of managing data storage yourself,
+which I don't generally recommend by the way,
+then you'll get more familiar with this product
+and some of the cool things that it can do
+beyond what a normal hard drive could do.
+Cloud Filestore sits between
+Cloud Storage and Persistent Disk,
+and it is neither object-based, nor block-based.
+Cloud File Store is file-based.
+Being a managed NFS server,
+it's a bit more flexible to connect to than Persistent Disk
+and may work better with certain kinds of applications
+than the object-based Cloud Storage.
+Jumping back up a little bit, GKE, or Kubernetes Engine,
+can help alleviate some of the management burden
+that you would otherwise have to deal with
+with Compute Engine.
+GKE will install, run, and manage Kubernetes for you
+on clusters of Compute Engine instances.
+But it also reaches out to the networking world
+and creates things like Cloud load balancers,
+which helps reduce even further the amount of stuff
+that you would have to do.
+Now, Cloud TPU is listed
+in the AI and Machine Learning section,
+but it's specialized hardware for machine learning.
+So it's kind of like a Compute Engine instance,
+but this one is purpose-built for tensor flow processing
+instead of for general purpose processing.
+In fact, that's what TPU stands for.
+TensorFlow Processing Unit.
+Now, if you're not familiar with it,
+TensorFlow is an open source platform
+for doing machine learning stuff.
+It's quite broadly popular,
+but it's actually another one of the things
+that Google originally created
+and then released as open source.
+Now some of the products
+in the AI and Machine Learning section
+are pretty straightforward.
+Cloud Speech-To-Text will convert audio to text.
+Cloud Text-To-Speech will convert text to audio.
+Cloud Natural Language is for text parsing and analysis
+so you can give it some text
+and then it'll tell you both the parts of speech
+and the emotions that are represented in it,
+stuff like that.
+But there's a lot more breadth
+to the AI and machine learning products.
+In fact, there's quite a spectrum where at one end,
+you have the completely automatic
+pre-trained machine learning model stuff,
+like we've just talked about.
+At the complete opposite end,
+we have Cloud Machine Learning Engine,
+which is a managed platform for machine learning,
+where it will run TensorFlow for you.
+Or if you want to get even more manual,
+the Cloud Deep Learning VM Image
+is a pre-configured virtual machine for deep learning.
+So you would run that image as a Compute Engine instance.
+In the middle of the spectrum though,
+we have the Cloud AutoML products,
+where the basic machine learning models are set up
+but you can train them
+on your organization's own set of data,
+whether those be text documents,
+or images, or translations, or what have you.
+The Databases section has quite a variety of products.
+The one that's most likely to be familiar to you
+is Cloud Sequel, which is managed MySQL and PostgreSQL.
+Here, instead of having to manage
+the Compute Engine instances and persistent disks yourself
+and installing MySQL, upgrading it,
+applying patches, all that good stuff,
+here, Google can do all of that for you
+and can even manage things like read replicas.
+But not everything fits within a single MySQL instance,
+and so Cloud Spanner is
+a horizontally scalable relational database.
+This thing is seriously massive scale,
+and it lets you keep all of the things you love
+about relational databases while still scaling
+well beyond what you would ever consider normal for that.
+But not every situation still needs a relational database.
+So there are a number of non relational options too.
+Cloud Firestore, which incidentally shows up
+in a couple of sections here
+since it's also one of the Firebase family of products
+that shows up in the Mobile Products section.
+It's a strongly consistent serverless document database
+and it has some really cool things built in,
+like web socket connections for updates.
+But there's also Cloud Data Store,
+which is a horizontally scalable document database,
+and one of the nice things about Cloud Data Store
+is that you just pay for what you use.
+You don't have to provision and manage a certain capacity.
+But if you do have a more predictable and high volume,
+then Cloud Bigtable might be a better choice,
+since it is a petabyte-scale,
+low-latency, nonrelational database.
+In the Data and Analytics section,
+two of the core services that stand out
+are Cloud Dataflow and Cloud Dataproc.
+Now Dataproc is managed Spark and Hadoop.
+So if you're already running Hadoop work somewhere else,
+Cloud Dataproc could be a good way
+to move that work on to the Google Cloud.
+This is for processing large amounts of data,
+and it uses Compute Engine under the hood,
+just like Kubernetes Engine does.
+Cloud Dataflow also processes large amounts of data,
+but this is newer and better than Cloud Dataproc,
+and it handles both stream and batch data processing.
+The key technology behind Cloud Dataflow
+is something that Google released
+as the open source Apache Beam.
+Now, Google Genomics is very specialized,
+and it's only really useful
+if you're working with that kind of medical data.
+Comparing this to Lego pieces,
+this is kind of like a helicopter rotor Lego piece.
+It's not very general purpose,
+but it's very useful if you have that particular need.
+Cloud Pub/Sub is probably the most flexible product
+in all of Google Cloud.
+This is described as global real-time messaging,
+and it can be used to connect almost anything
+to almost anything else.
+In Cloud Pub/Sub, you create topics,
+and then you have one part of your system
+publish messages to that topic,
+and another part of your system
+subscribe to messages from that topic.
+So for example, you might have a Cloud Function
+that creates some data and publishes it,
+and then you might have that same data
+flow out to both Cloud Dataflow, and BigQuery.
+Now, speaking of BigQuery,
+some people have described BigQuery
+as the crown jewel in Google Cloud.
+It is definitely a really important and valuable product.
+It's described as data warehouse slash analytics,
+but I think that undersells it quite a lot.
+BigQuery is serverless,
+in that when you're not using it, you're not paying for it.
+And then when you slam it with a huge complicated SQL query,
+it just scales up automatically
+and handles it without a problem.
+You can store tons of data in BigQuery
+and still get incredibly fast responses to your queries.
+Pretty much everyone loves Big Query.
+In the Networking section,
+there are a bunch of different things listed.
+Virtual Private Cloud, or VPC, is the core.
+It's the umbrella for the software-defined networking,
+and most of the other networking services
+hang off of that one.
+You can use Dedicated Interconnect
+to have a dedicated private network connection
+between that VPC and your external data center,
+you can use Cloud NAT to have network address translation
+to connect out from that VPC,
+and you can have Cloud Load Balancing
+that deals with multi-region load distribution
+into that global Virtual Private Cloud network.
+Cloud Load Balancing is pretty special,
+especially when you combine it
+with a premium network service tier.
+That can let you have your clients
+who are connecting from all over the world
+connect to one single IP address
+and still have all of those connections be made
+to whatever server inside of your VPC
+is actually physically closest to them.
+That means that your clients
+can have much faster connections,
+and faster connections makes for happier clients.
+Oh, and it also handles situations
+where there isn't something close by to serve that request
+because it's failed or something like that,
+and it can just reroute that
+inside of Google's global network
+to some server that actually can still handle that request.
+But this is all transparent to the client.
+So fail overs like that can happen almost instantaneously.
+Now there are more products here, too.
+Cloud Armor is distributed denial of service protection
+and a web application firewall.
+Cloud CDN is a content delivery network that can cache data
+much closer to where users are physically located,
+and Cloud DNS lets you take advantage
+of Google's programmable DNS serving network
+where their domain name system has a 100% uptime guarantee.
+When your users are connecting to mycoolwebsite.com,
+or whatever it is,
+you definitely want that name translation to succeed.
+Otherwise, they won't be able to connect
+to your service at all.
+Down in the Management Tools section,
+Stackdriver is an important family of services.
+Stackdriver Monitoring is
+infrastructure and application monitoring,
+so you can watch metrics of what's going on in your system.
+Stackdriver Logging is centralized logging,
+so that all the different parts of your system,
+whether they be micro services, or just multiple instances,
+or completely different parts of your system,
+they can all log to one central place.
+Centralized logging is really important to running a system,
+because if you have to go out
+and try and gather up log information
+from every individual piece of your system
+just to make sense of what's been happening,
+you're going to get so bogged down in that overhead,
+that you won't actually be able to make any progress.
+The Identity and Security section
+has a number of interesting products, too.
+The core ones are Cloud Identity, which,
+if you're not using G Suite,
+is where you manage users, devices, and apps,
+and Cloud IAM,
+which stands for identity and access management,
+is the resource access control part of things.
+Cloud IAM ties everything together
+from a security perspective.
+That's where you define who can do what to which things.
+Now, there's more security related stuff too,
+like Cloud HSM is the hardware security module service.
+You can use that to manage
+your encryption keys and certificates,
+and the Cloud Data Loss Prevention API
+is actually a machine learning service
+that can classify and redact sensitive data
+from what you pointed at.
+Now, I could go on like this all day,
+but I'm sure you'll be happy to hear that I won't.
+So feel free to keep reading through some of these
+on your own and following up on some of the ones
+that interest you by taking a look
+at their product overview pages.
+A lot of these pages are really user-friendly,
+and some of them even have little demos built in.
+Well, all right.
+I hope you found that to be a valuable walk
+through some of the key products that Google offers
+to get a feel for how those products
+could be used to build bigger systems.
+If you have any questions about this, please let me know.
+If not, please feel free to move on to the next lecture.
+Thank you.

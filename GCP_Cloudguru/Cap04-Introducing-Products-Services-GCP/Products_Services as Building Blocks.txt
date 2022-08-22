@@ -1,0 +1,148 @@
+Okay, hello Cloud Gurus and welcome.
+As we go through this lecture, please follow along
+on your own copy
+of the Google Cloud Developer's cheat sheet.
+So, right off the bat,
+when we look at this cheat sheet,
+we see that it's divided up
+into a whole bunch of different categories.
+We have 'Compute Products', 'Storage Products',
+'Networking Products', 'Management Tools',
+Developer Tools, all sorts of things.
+And in each section,
+we have a list of a number of
+different Google Cloud products.
+So first off,
+why are these products and services grouped
+in this way?
+Well okay, fundamentally,
+the key reason for this organization
+is because it's what Greg Wilson,
+who put the original version of this document together,
+decided to use.
+He thought it would be useful.
+But why did he feel that this
+is a more useful organization than, say,
+sorting everything alphabetically?
+Or listing them by how recently they've been released?
+I mean, if you know absolutely nothing about the product,
+then a full alphabetical list
+is probably the easiest way to find it.
+And if you're trying to stay up-to-date,
+then maybe you just wanna look at the ones
+that are most recent, right?
+But that's not what this is for.
+Each one of the products listed here
+is like a piece of a puzzle, they fit together.
+Both with each other and with other parts of your system.
+But they're not quite like the 500 piece puzzle
+that you might buy at a store
+and put together to make one exact picture.
+These are a lot more like Lego bricks,
+they're building blocks.
+Now every one of these blocks has a different shape,
+they serve different functions.
+You can think of each one of these sections
+like a bucket of Lego bricks.
+Imagine that one of the buckets
+has a whole bunch of those huge, flat sheet pieces.
+The kind of piece that you use
+as a foundation for the rest of what you're building.
+And another bucket
+might have a whole bunch of tiny and flexible pieces.
+They're really uselful for certain circumstances,
+but they take forever if you wanna build something big
+out of just those.
+And most of the other buckets
+are a bunch of generally useful pieces.
+In the Lego world, that's like the two by twos,
+two by fours, two by eights.
+One by tens, wheel bases,
+all sorts of things like that.
+When you're building something out of blocks,
+you need to pick a block with a right shape.
+And in a weird kind of way,
+these groups are kind of the shapes
+of the different products.
+Now I'd like to point out three important categories.
+Without fail, every single system in IT
+revolves around data flow.
+It's taking data or information
+and it's moving it around,
+processing it and remembering it.
+So most systems will require some
+amount of support for compute, storage
+and networking, or messaging.
+But there's more than that.
+It's not such a clean division,
+there's actually quite a bit of overlap.
+An easy example is a database
+that combines both compute and storage.
+And in that way, really creates
+quite a valuable category of its own.
+Sure, it's remembering data,
+but when you ask it for data,
+it's also doing processing.
+Filtering all the data down
+to just the part that you're interested in
+and transforming it so that it's in a format
+that you can use.
+And in fact, if you have replication
+set up for your database,
+then it's also moving the data
+from one place to another.
+And some other categories are a little bit less
+about the shape of the different services,
+and a bit more about the theme.
+For example, the section called,
+'Data and Analytics Products',
+lists a whole bunch of services
+that you're likely to use together.
+Kind of like how
+if you were building with Legos,
+you might have one bucket that is the 'space' theme,
+where you have lots of gray pieces
+and computers that you can use to build spaceships.
+Those pieces aren't all the same shape,
+but they go together in a really useful way.
+Now continuing on with this Lego analogy,
+there are two specific line items
+that I wanna call out.
+The first one is in the 'Management Tools Products' section,
+called the 'Cloud Deployment Manager'.
+The cheat sheet calls this,
+'Templated Infrastructure Deployment.'
+This product is kind of like buying a box of Lego pieces,
+with instructions to build a particular thing.
+You get all the pieces you need listed in the template,
+and just pushing a few buttons
+winds up building the whole thing.
+But this is your template,
+and you can change it however you want.
+Just like with a Lego set,
+you might combine several things together,
+you might chop some stuff out,
+you might swap some pieces out for something else,
+it's entirely up to you.
+But the 'Cloud Deployment Manager'
+is a pretty important thing to understand
+because of how it fits into everything else.
+The next thing that I wanted to call out
+is in the 'API platform and Ecosystems' section.
+In particular, the 'GCP Marketplace'
+is a partner and open-source marketplace.
+This also has sets of pieces all packaged together,
+but a difference here is
+that instead of you controlling all of the details,
+and building it yourself,
+the 'GCP Marketplace' is more
+about buying completed things,
+that might even all be glued together,
+so that you can't take them apart.
+I hope that makes sense to you
+and if it doesn't, then please let me know,
+but in any case, let's move on to taking a look
+at some of the specific ones and who knows,
+maybe that will help it click for you
+if you didn't get it already anyway.
+Well, all right, I'll see you in the next lecture, thanks.

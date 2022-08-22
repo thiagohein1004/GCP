@@ -1,0 +1,94 @@
+Okay, hello Cloud Gurus
+and welcome to this lecture where I'm not actually
+going to teach you how to cheat.
+Well, not really anyway.
+But I'll get to that in just bit.
+So why are you watching this video?
+Well for most of you, it's probably just because
+this was the next video in the list.
+But for some of you, you jumped here
+because you were curious about the clickbait title, right?
+(chuckles)
+Okay, so what is cheating?
+Well Google's dictionary definition says that it is
+to act dishonestly or unfairly in order to gain
+an advantage, especially in a game or examination.
+Now if you want to cheat yourself out of succeeding
+with a certification exam, then you'll have to look
+somewhere else for guidance on that
+because I care about you actually succeeding
+in the real world and not just on a test.
+But this definition says especially in a game or exam
+not only that.
+So it applies to other situations too.
+And that's what I want to point out here.
+Now acting dishonestly is right off the table
+but who decides what qualifies as unfairly in real life?
+Some people, and you will definitely come across
+people like this sometimes, they have the misguided belief
+that you can't really know what you're doing with something
+unless the way that you've learned that thing
+is the same as they did.
+They probably became an expert with that thing
+through years of formal education or experience.
+And they think that that's the only way to do it.
+Now to be completely honest, I can catch myself feeling
+the same way about some things every once and a while.
+But it's wrong.
+If someone else does that to you, it's called gatekeeping.
+And if you do it to yourself, it's called imposter syndrome.
+These are a very real problem in IT and we all need to do
+what we can to fight them.
+Each one of us has a different journey and that's okay.
+Is learning something quickly wrong?
+Is it unfair to use tools or resources to skill-up
+on something efficiently?
+I agree that it's good to get experience and learn
+from your mistakes, but isn't it even better
+to learn from someone else's mistakes?
+Well you're taking this course,
+so I'm sure you agree with me here.
+So on to the reason why I called this lecture
+what I did then.
+It all comes back to a document made by Greg Wilson
+who is the Director of Developer Relations at Google.
+He used to call his document GCP Products
+Described in Four Words or Less.
+But he has since renamed it to the Google Cloud Developer's
+Cheat Sheet which is definitely less of mouthful.
+But it really has nothing to do
+with actual cheating of course.
+A cheat sheet is just something that you can refer to
+to either remind yourself or get a very basic idea
+about something when you don't have time
+to research it more fully.
+So here it is.
+This is what the Google Cloud Cheat Sheet looks like.
+Well at least at the time when I'm recording this anyway.
+It does get updated fairly regularly, but you don't need
+to worry too much about having a slightly older version
+printed out say because it will only be missing
+just a few of the very newest services or products.
+But about that, it really wouldn't be a bad idea at all
+to actually print out a copy of this cheat sheet
+or maybe a couple of copies even
+so you can leave them in different places
+so you can easily refer to it whenever you read something
+about a Google Cloud product or even just
+as a quick reminder of all the different options
+you have when you're brainstorming some Google Cloud stuff.
+Okay, so this is a really important document.
+So please open it up right now.
+Yes, right now.
+Go ahead.
+Hey, I didn't see you open it up yet.
+I really mean it, open it up.
+Okay, so I was actually tempted to make the rest
+of this walk-through just be me talking over
+a completely blank screen so that way you'd be forced
+to follow along on the document you just opened.
+You did right?
+But I thought that might be going just a bit too far.
+So let's look together at the
+Google Cloud Developer's Cheat Sheet.
+And for that I'll see you in the next lecture.
