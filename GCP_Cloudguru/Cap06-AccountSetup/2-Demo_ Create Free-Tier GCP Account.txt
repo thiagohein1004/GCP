@@ -1,0 +1,222 @@
+Okay!
+Hello Cloud Gurus and welcome to this lab
+where you're going to create
+your very own
+Free-Tier Google Cloud Platform Account.
+Now specifically, what we're going to do
+is we're gonna create this free trial
+GCP account,
+but we're not going to link it
+to your existing email address.
+We wanna make a new Gmail account
+behind the scenes for billing.
+We're also going to secure this
+with two-factor authentication,
+and you might want to consider forwarding
+this account's email to your normal account
+so you can get any notifications.
+Now I should point out that forwarding the mail
+like this could be a potential attack vector.
+In particular, if someone hacked your normal
+email account they might be able to use that
+to reset the password on this billing account.
+But especially for this free trial account
+that you're setting up,
+it's probably still worth it
+so you get the notifications.
+Now you might ask,
+why should we use a separate Gmail account here?
+And the answer really is Least Privilege.
+This is the principle where "Every program
+and every privileged user of the system
+should operate using the least amount of privilege
+necessary to complete the job".
+And especially for what we're setting up,
+it's a very bad habit to use admin privileges
+to do normal things.
+This admin account that we're setting up,
+after we've done a few things with it,
+will very rarely be needed.
+Now that said, I do wanna warn you upfront
+that we will take a few shortcuts
+as we go through the course,
+so that we don't get hopelessly bogged down.
+But I will try to point them out as we go.
+All right, to do this lab
+I'm gonna have you use Incognito Mode.
+In Chrome, this is called an "Incognito Window"
+in Firefox they call it "Private Browsing"
+and other browsers call it something similar.
+But the reason we use this
+is so that you're not attaching all of your
+normal, day-to-day stuff to this GCP account.
+You want to set up a completely separate account.
+Now if you absolutely never login to any
+Gmail or Gsuite accounts,
+then this might be unnecessary for you.
+But personally, I'd still recommend
+you do it in Incognito Mode.
+Now this is something you really should get comfortable with
+because we're gonna use it throughout this course.
+Google can act a little strangely when you have
+multiple accounts logged in.
+I mean, it works well enough for Gmail and Calendar,
+I do that all the time myself,
+but we really wanna make sure that we keep
+everything straight as we're going through the labs.
+All right, to get to one of these things directly,
+you can right-click on a link,
+such as in the resources panel,
+and say "Open Link in Incognito Window".
+Or to open a new empty window in Chrome,
+you could hit the command + shift + N
+or control + shift + N shortcut keys.
+Or in Firefox, command + shift + P
+or control + shift + P
+will do the job.
+All right, enough talking!
+Let's do it!
+So open up and Incognito Window,
+and join me at the sign-up link for your free trial.
+Okay, here we are in the Incognito Window.
+I'm going to paste in the link,
+and let's get going.
+All right, it offers that I can sign in
+with an existing one,
+but remember that we're going to create a new account here.
+Click "Create Account".
+Now in this screen,
+instead of just creating a Google Account,
+and linking that to our existing email address,
+we wanna create a new Gmail account.
+Once you've entered your name,
+a username that hasn't been taken,
+of course this has to be unique
+so you'll need to pick something different than I do,
+and a strong password,
+that you are storing safely I hope.
+Click next to continue on.
+Oh by the way,
+I don't recommend that you use any periods
+like it suggests you could in your username.
+The way that Gmail handles periods
+in usernames can be a bit of an issue.
+Click "Next" and move on.
+All right, we do want to secure our account
+so let's enter in our phone number here.
+If I can type it correctly.
+That faint buzzing in the background
+was my phone giving me the code,
+which of course I'll type in now.
+It doesn't matter if you see it,
+because this is a single-use code.
+We don't have to connect this to a recovery
+email address like they offer here,
+but really I think it's a good idea to do that.
+All right, once we've got the information in,
+we hit "Next"
+of course we always read the Terms of Service
+and Privacy Policy before we agree to those, right?
+At the bottom we say "I Agree".
+Answer whatever you want in terms of
+Feature Announcements and whatnot.
+More terms of service which of course we also read.
+Say "Yes", "Agree and Continue"
+note here, you won't be charged.
+No payments or automatic charges unless you upgrade.
+And we wanna make sure that this is an individual account.
+I will enter my information here,
+including the credit card details.
+All right, now that I've entered all the information,
+I can click "Start My Free Trial".
+It takes a little bit of time to set things up.
+And again we're reassured
+that we won't be billed until we give our permission.
+That feels nice, right?
+All right, our account is now live!
+So we say "Got It".
+And here we are!
+We'll come back to this Google Cloud Platform console
+in a little bit,
+but before we do,
+I want us to set up the two-factor authentication
+on our new Gmail account.
+Start by clicking on the little icon
+up in the top right-hand corner.
+Go to "Account",
+and then click on the "Signing in to Google" link.
+On the right-hand pane,
+if you scroll down a little bit,
+you'll get to "2-Step Verification".
+If you click on that,
+here we can make it much harder
+for people to take over our account.
+We say "Get Started".
+Re-enter the password we just made.
+Click "Next".
+And then setup our phone.
+We click "Next",
+enter the new code we just got,
+"Next again".
+It worked!
+Do we want to turn on two-step verification?
+Well of course, that's the reason we're here!
+Say "Turn On"
+and here we go.
+Now at the moment, I've got this set up
+to send me a text message whenever I'm trying to login.
+But I could choose a different step,
+such as the Security Key,
+But I'm just gonna stick with a simple thing right now.
+Well all right!
+Our account is setup!
+Now I recommend that you immediately logout
+and then log back in again
+to make sure you know exactly what you need to do here;
+you remember all the passwords and all that sort of stuff.
+So let's do that right now.
+I've signed out.
+I click sign in to this account.
+Re-enter my password,
+enter the new verification code,
+click "Next",
+and yep, everything's good.
+From here, I can go directly to Gmail
+by just clicking on the little envelope.
+Close all the promotion stuff.
+I don't need the extra tips.
+But if you wanna know how you can set-up the forwarding,
+I'll show you here.
+You go to the gear,
+click on "Settings",
+click on "Forwarding and POP/IMAP"
+and then add a forwarding address.
+Enter your normal email address here.
+Say "Next",
+"Proceed".
+Now the destination address
+needs to approve the forwarding setup,
+so go and get the code from there.
+Type the number into this box,
+and click "Verify".
+If it tells you "You have verified the forwarding address"
+that's good.
+So you can say that you wanna forward a copy
+of all incoming mail to that box
+and still keep a copy in this inbox.
+Once you've done that don't forget
+to hit "Save Changes" at the bottom of this screen
+and then you get this big message at the top
+that says "Hey, hey hey! You are forwarding email!"
+Because it would be pretty dangerous
+if someone set this up on your account
+without you knowing it
+Google puts this warning
+at the top of your screen for a week.
+You can't dismiss it because of course that's the point.
+If you could dismiss it,
+then someone could set it up and dismiss it for you.
+Well now we've finished setting up our account.
+So if you have any questions, please let me know,
+if not, please feel free to move on to the next lecture.
+Thank you.

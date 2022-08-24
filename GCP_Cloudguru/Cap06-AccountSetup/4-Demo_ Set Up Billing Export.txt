@@ -1,0 +1,124 @@
+Okay. Hello, Cloud Gurus,
+and welcome to this lab where we're going to set things up so that Google
+automatically exports billing information for us to a BigQuery dataset.
+In the GCP documentation, they say tools for monitoring, analyzing,
+and optimizing costs have become an important part of managing development.
+Billing export to BigQuery enables you to export your daily usage and cost
+estimates automatically throughout the day to a BigQuery dataset you specify.
+You can then access your billing data from BigQuery.
+This is really nice because once you've got the data in a queryable format,
+you can use it however you want.
+Later on when we've actually got some billing data in the dataset hopefully take
+a look at how we can use Data Studio to analyze it.
+But Data Studio isn't connecting in any special way.
+It's just doing a standard BigQuery query.
+So you could write your own tools or use any third-party software or service.
+I love it when things are open like that. Alright, to start the lab,
+you're going to need to login to the GCP console as the administrative account.
+Like before I recommend that you open up the console Lincoln an incognito
+window,
+but now I'm just going to assume that you know how to do that and I'm going to
+jump straight into the console. Okay so here we are in the console.
+Now don't worry if your console doesn't look exactly like mine. In fact,
+I kind of expect your console to look a little different.
+You probably aren't nearly as zoomed in as I need to be,
+to take videos and you've probably left a lot of helpful cards showing things
+like tutorials, Google news, stuff like that, but no matter,
+I'm sure you can still follow along. And if you're having any trouble,
+just ask a question on the forums. Don't feel bad to ask if you do get stuck.
+In fact,
+you're giving another student an opportunity to answer that question and really
+lock in their learning. So for your own learning sake,
+do try to figure things out first, but don't feel bad if you can't. In any case,
+what we want to do here is to set up an export of billing information.
+So let's start by going to the billing screen.
+We could get there through the card,
+or we can go to the menu and say billing. Off on the left,
+we have a menu item called Billing Export. Let's go there.
+Here we see that we don't currently have BigQuery export set
+up.
+So let's change that by clicking Edit Settings and now we see some things.
+In particular,
+we see that where we're going to store the data is in the context of a
+project and inside of a BigQuery dataset that we haven't created yet.
+Now we could follow this link to go to BigQuery and create a dataset here but
+then that dataset will live inside of this project and that's not where we want
+it. In GCP, we don't mash all of our stuff together.
+Instead, we use projects to manage groups of resources.
+So let's actually start there by creating our first new project.
+So let's open up the navigation menu and go to the home dashboard. Now,
+here we see that GCP is no longer sure which project I was working on.
+So it asks me to either select or create a new one,
+but don't worry if this prompt doesn't show up on your screen,
+pressing on the Select button down here is pretty much the same thing as
+pressing on the select a project dropdown up here and from either of those,
+you can press this New Project button so you can follow along and in my case,
+I'm just going to press the button here that says Create.
+Now here's our first real exposure to quotas.
+We have 11 projects remaining in our quota.
+This means that projects are not an entirely unlimited resource,
+especially during our free trial where we can't get any quota increases.
+We'll have to pay a little bit of attention to how we use them.
+Now we have to give our projects names.
+So let's call this one admin project and that's fine for a name because the
+names don't have to be globally unique. The project IDs on the other hand,
+can't be reused even between different customers.
+So you won't be able to create your project with the same ID as you see here.
+We can create the project and wait a little bit for it to finish.
+There's a new notification,
+which isn't that surprising because we just created a project.
+Now, when we've got this admin project selected, let's go over to BigQuery.
+We could open up the navigation menu and find it in the list,
+but we could also go to this helpful little Find tool and get to it that way.
+Now, before we create our billing export dataset,
+I'd like to just point out that there are a number of public datasets down
+here--things like hacker news and weather data.
+Since we're here, because we want to create a billing export though we'll say,
+Create Dataset.
+Now we'll call the dataset billing_export,
+and for the data location, we're just going to set it to the US.
+Also we want to keep all of our historical data.
+So we set the expiration to never. Now,
+if we click on this billing export dataset,
+we can see that we could add a description
+and change the expiration but
+what we really care about here is adding a label.
+We want to add labels to the different resources we make so that we can track
+them later.
+Labels are completely free form key and value pairs.
+So we could add labels for things like departments or whatever sort of
+organization system we want to come up with. When we're done with the labels,
+we can see here that this is how Google displays labels department:finance,
+where department is key and finance is the value. Function:billing,
+where function is the key and billing is the value.
+Now don't worry that there aren't any tables created yet.
+The billing export itself will create whatever tables it needs. Alright,
+so let's finish setting up the billing export.
+Let's go back to the billing console
+and then back to the billing export section,
+Edit Settings, choose our admin project.
+The billing export is already preselected for us, and then we save,
+alright, it's enabled. Now, it's going to take some time though,
+before this billing data starts showing up in the BigQuery dataset and it's also
+important to know that if you've been doing anything in this account already,
+that won't show up in the export.
+Once we enable this export only charges that come through after the time it was
+enabled will be exported. Okay, well that covers it for the lab.
+So let's just recap.
+We need to set up the billing export for each billing account.
+We did it now for our free trial account,
+but if we create any other billing accounts in the future,
+we should remember to go back and set this up for them too. Also,
+we saw that when we create resources in Google cloud platform,
+we should place them in an appropriate project.
+Creating and managing projects is an important thing to be paying attention to.
+Another important thing to think about is how we tag resources with labels.
+We saw just a quick example of that here,
+but you'll want to think about how you structure those tags so that you get the
+right information in the right places. Finally,
+remember that the billing export is not time in general.
+We would measure the delay in hours, not seconds or days.
+This means that there are definitely some interesting things you can do with it,
+but it's also not a good fit for situations that require instantaneous
+response. All right. If you have any questions, please let me know. If not,
+please feel free to move on to the next lecture. Thank you.

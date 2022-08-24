@@ -1,0 +1,46 @@
+Okay. Hello, Cloud Gurus,
+and welcome to this lab where we're going to set up a billing alert for our GCP
+account. For some context, Google says this:
+to help you with project planning and controlling costs, you can set a budget,
+setting a budget lets you track how your spend is growing toward that amount.
+You can apply a budget to either a billing account or a project and you can set
+the budget at a specific amount or match it to the previous month's spend.
+You can also create alerts to notify billing administrators when spending
+exceeds a percentage of your budget. Alright, to start off,
+we're going to log into the GCP console as our administrative account,
+the same one we've been using so far. Okay. So here we are in the console,
+logged in as our administrative account and we're going to go to the navigation
+menu and select Billing.
+In the Billing menu, we'll choose budgets and alerts.
+We'll say that we want to create a budget,
+call our budget Trial Budget,
+and make sure that it's set up to use our billing account.
+You might sometimes have circumstances where you want a specific project to have
+its own budget or alerts,
+but for our situation now we want to get a notification if anything is charged
+to this trial billing account.
+Because we want to find out when we do stuff that's outside of the free tier,
+we're just going to set the budget to $1 and since this is a trial account,
+we have to make sure that we include credit as a budget expense.
+If we check this cost after credit checkbox,
+then we won't get any notification until we've used up the entire $300
+trial credit and that's not what we want.
+These are a good set of alerts so we can leave them.
+But I'm also going to add one more alert for 1% of our $1 budget.
+Now connecting a Pub/Sub topic to this budget allows you to track this stuff
+programmatically rather than just getting emails,
+but that's not something we're going to do today.
+Let's click Save and our budget should be created. Now up here,
+we see a little thermometer that tells us how much of this particular budget has
+been used and of course we don't have any usage yet. Well,
+this is a good thing to have in place for now anyway. In the future,
+we'll definitely want to increase this budget.
+I know that this was a really quick lab,
+but I hope it gives you just a sense for what you can do here and I hope it will
+really sink in for you when you get that first notification that basically tells
+you, Hey,
+what you just did there is not in the always free tier and a few more email
+notifications later and your thermometer will fill up and it'll tell you how
+much you would have spent this month if you didn't have the free trial anymore.
+Alright if you have any questions for me, please let me know. If not,
+please feel free to move on to the next lecture. Thank you.

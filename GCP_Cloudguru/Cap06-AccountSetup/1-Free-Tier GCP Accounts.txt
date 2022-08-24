@@ -1,0 +1,169 @@
+Okay, hello Cloud Gurus
+and welcome to this lecture.
+In the next lecture, we're gonna create
+a Free-Tier Google Cloud Platform account.
+So in this lecture, I just want to tell you
+a little bit about how those work.
+Now a free trial account in GCP
+is a billing account that does not get charged.
+The key thing here is that you need to manually upgrade this
+for it to become a paying account.
+Now this just blows AWS' free-tier out of the water
+because it works so much better
+for people who are trying to learn the platform.
+I always get just a little bit concerned
+when people create an AWS account to learn on
+because if they're not careful,
+they could run up huge charges.
+But that's not the case with the GCP free trial account.
+Now setting up an account like this
+still does require a credit card for verification,
+but it won't get charged.
+When you create a free trial account for GCP,
+you also get 300 US dollars of credit
+that you can use for up to 12 months.
+And this is basically what defines your free trial account.
+If you either use up the $300 or let 12 months go by,
+then your free trial will be over.
+But when your free trial ends,
+your account will be paused
+and you'll have the option
+to upgrade to a paid account then,
+whether this happens in 12 months
+or sooner because you've run out of credit.
+Now it bares repeating,
+this really is excellent for learning.
+You can do all sorts of things in this free trial account
+and really get your hands dirty learning real stuff in GCP.
+Now they say that business accounts
+are not eligible for the free trial,
+so you want to set this up as your own personal account.
+And you should be aware that it does have some restrictions.
+So when you're on the free trial,
+you're not allowed to have more than eight
+virtual CPUs together at once.
+Now you can split this up in a number of different ways.
+Maybe you'd wanna run one eight CPU machine for awhile
+and then maybe switch things up later
+and run eight single CPU machines.
+Some more restrictions during the free trial
+are that you can't attach any GPUs to your machines,
+nor any TPUs for boosting TensorFlow performance,
+and you're not allowed to ask for any Quota increases
+while you're on the free trial.
+Another thing Google calls out
+is that you are not allowed to do any cryptomining.
+They're givng you $300 of credit
+so that you can learn the platform,
+not so that you can try and exchange it
+for some other currency.
+Also, although you're welcome to run
+whatever you want on it,
+they don't recommend that you run production environments
+and they don't give you any service level agreements
+that you can rely on.
+During the free trial,
+you also can't use any premium OS licenses
+or Cloud Launcher products with extra usage fees.
+The nice component to a Free-Tier GCP account though,
+is the "Always Free".
+Always Free is a certain amount of different services
+that you can use with out having to pay for it.
+And it's kind of nice that Always Free usage
+doesn't even count against your free trial credits.
+So that means your $300 will last even longer.
+Also, as you might guess from its name,
+this lasts beyond the end of the free trial period,
+which is really nice.
+Now the Google documentation has a lot more detail
+about the specific limits for each service,
+but I'm gonna go through just a few highlights here.
+But don't worry at all about trying to remember
+all of these limits.
+You will not need to know them for your exam
+and you can always just look up
+whatever the current amount is
+whenever you want to try out a new service.
+From the compute side of things,
+each day you can run 24 hours
+worth of an f1-micro instance in most US regions
+and you won't get charged for it.
+Of course, if you're running multiple of these all day long,
+you will get charged for the additional ones.
+But you could, for example,
+run eight of them for a couple of hours
+and still not get charged.
+Now I'd like to point out that this has nothing
+to do with where you yourself are located,
+only where you choose to run the instances.
+Also in the Always Free compute category,
+we have App Engine,
+where your app can run for 28 hours each day,
+in North America, without getting charged.
+Of course this means it can still be free,
+even if App Engine has some part of the day
+where it's running more than one instance for you.
+You can also run two million Cloud Functions every month
+with it still being free,
+within certain runtime and size limits.
+In the storage category,
+it's important to realize that the storage is averaged
+entirely over the month.
+So for example, storing a terabyte of data
+and then deleting it within a minute
+isn't going to cost a lot at all.
+Okay, so in the Always Free tier,
+you can store five gigabytes of Regional Cloud Storage,
+one gigabyte of data in Cloud Datastore,
+and 10 gigabytes of data in BigQuery.
+And for BigQuery,
+every month you can do one terabytes worth
+of query processing in the free tier.
+More free storage includes 30 gigabytes
+of hard drive storage
+on Google Compute Engine and App Engine,
+five gigs of snapshot storage on those,
+and five gigs of StackDriver logs
+with a seven day retention period.
+Moving on to Networking,
+I should point out that if your data
+is headed to China or Australia,
+that doesn't qualify for the Always Free tier,
+but could be applied to the free trial credit you've got.
+Anyway, aside from those two,
+you can have one gigabyte each month of data
+that leaves your App Engine project for free.
+Similarly for Compute Engine, one gig per month.
+Google Cloud Functions are even more generous,
+giving you five gigs of data that can exit them each month
+and also five gigs of data than can leave Cloud Storage
+that's based in North America.
+Now, Cloud PubSub is a kind of interesting one.
+Here you can have 10 gigs of data
+that goes through it each month for free.
+And because Cloud PubSub is a global messaging system,
+you could potentially be writing data to it
+from one region in the world
+and reading from it from another.
+All right, finally let's just take a quick look
+at some of the extra things
+that are in the Always Free tier.
+Every day, you can do 120 minutes
+worth of builds in Google Cloud Container Builder,
+you can do 60 minutes of voice recognition each month
+in Google Cloud Speech API,
+you can run 1,000 units per month
+through the Vision API,
+and 5,000 units per month
+through the Natural Language API.
+Google also has a Cloud Shell built into the console
+that we'll be using a lot through this course.
+And in there, you can store five gigs of data persistently.
+You can also do a little bit of private hosting
+in Google Cloud Source Repositories.
+Well all right.
+If you have any questions for me, please let me know.
+If not, please feel free to move on to the next lecture,
+where we're actually going to create
+your Google Cloud Platform free trial account.
+Thank you.

@@ -1,0 +1,133 @@
+Okay, hello Cloud Gurus
+and welcome to this lab, where we're going to explore
+the GCP Console.
+All right, we're gonna start off
+at this console.cloud.google.com link,
+which is where we're gonna start a lot of our labs.
+And in this case, we're gonna be logged
+in as the account owner that we just created
+with the actual GCP account.
+So go ahead and join me in the console.
+Okay, I'm assuming you've closed down
+the incognito windows before, so open up a new one,
+head to the GCP Console URL,
+and then login with the email address,
+and password.
+Of course, we'll also need our verification code.
+And we're in, now we start out with
+this Navigation menu expanded on top of things,
+so we can close that down just to get it out of the way
+for the moment.
+Now up at the top here, we see a notification bar
+that tells us how much credit and how many days
+we have left in our free trial.
+But since we don't wanna be tempted
+to hit that upgrade button, let's just dismiss this.
+That said, we will wanna be able to see
+what our billing information is.
+So you can either click on the card over here
+to get over to the Billing section.
+Or you can open up the Navigation menu
+and click on Billing there.
+Now I have my screen zoomed in so it's easier
+for you to see in the videos,
+so I'm gonna collapse this little bar on the left,
+and I'm gonna hide the Info panel too.
+So here we see that I have 383.96 in credits remaining.
+Now the reason this is more than $300 is because
+it's Canadian dollars and it was 300 US
+that was credited to the account.
+'Course there's no exchange rate for days,
+so there are still just 364 of those remaining.
+Now, while we're here,
+we may as well rename this billing account,
+and call it My Trial Billing Account instead.
+It could make it more clear that this is the one
+that's specifically the trial one,
+in case you attach another billing account later.
+Now, if we wanna see the list of billing accounts we have,
+we can click on this drop down
+and then Manage billing accounts.
+Here we see I still only have one billing account attached.
+We can leave this just like this for now.
+Up in the Navigation menu, let's head back to the homepage.
+Now, here on this main dashboard, we can customize it
+so that we only see the stuff that we really care about.
+If we press this Customize button up on the top right,
+we can turn off cards for things that don't matter to us,
+and move things around just by dragging and dropping them.
+All right, when we're done playing with the layout,
+we can just hit Done, and we'll see a more simplified view.
+You probably wanna keep this News card active,
+but I'm gonna turn mine off to save some space.
+Same goes for this Documentation card.
+You might also wanna leave this Getting Started card active.
+And explore some of the tutorials
+that they've got linked here.
+Of course, we'll be going through a number of things
+in this course already, so you don't necessarily
+have to go and explore on your own yet.
+I suggest you leave this APIs card visible for now,
+and just watch what happens here as you do things
+in this project.
+We can also get rid cards using this little drop down,
+of course, we do actually want to keep
+the Project Info card around.
+If we click up here on Activity,
+we can also see a list of all the things
+that have been happening in this project.
+This is a new account and project,
+so there hasn't been a lot going on yet.
+Speaking of projects, one was automatically created
+for us when we created the account.
+If we click here, we can see some more information
+about it.
+Google assigned a project number
+and automatically generated an ID for us as well.
+The name of the project can be changed
+but the Project ID and Project number can't be,
+so let's take a look at that, if we go to the Dashboard,
+and click on the Project info to go to the project settings,
+we see here, the Project ID is grayed out,
+the Project number is grayed out,
+but the Project name can be changed.
+And here's how we can control the project
+in a little more depth, but we'll get to that later.
+Now, to see a list of the projects that we have,
+we can click on this drop down up here.
+And this is also where we could create a new project.
+For now, let's head back to the main dashboard.
+Some other things we see here are that all the
+platform services seem to be operating normally
+which is nice.
+And we can link to the Cloud status dashboard here.
+But also, at a glance we see that we have
+no resources in this project.
+We haven't set up any trace information
+or any reporting.
+That's not really surprising because we haven't
+done anything yet, right?
+Just a couple more things to point out
+before we finish this exploration,
+up at the top we can see our Free trial status,
+we can get that bar back by pressing
+the little present icon.
+We can see Notifications at a glance
+from this little menu, and link straight
+to the Activities page we saw, no matter where we are.
+And we can also learn about things
+like Keyboard shortcuts and set up Preferences
+in this menu.
+If you want, you can also go through Googles
+interactive tutorial to show you around the console.
+So that pretty much wraps up what I wanted to show you
+in the console here.
+But before I go, don't press the Cloud Shell button,
+no I'm totally kidding, you can press that all you want,
+it's actually the free trial Upgrade button
+that you do not want to press.
+We'll be using Cloud Shell a whole ton
+through this course, so don't be afraid of it at all.
+All right, if you have any questions, please let me know,
+if not, please feel free to move on to the next lecture,
+Thank you.

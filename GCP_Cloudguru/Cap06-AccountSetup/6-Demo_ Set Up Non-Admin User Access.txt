@@ -1,0 +1,193 @@
+Okay, Hello, Cloud Gurus,
+and welcome to this lab
+where we're going to set things up
+so that we don't have to keep accessing GCP
+with our overpowered administrator account.
+Now, I wonna point out
+that we are still going to be granting
+quite a lot of power to this account that we're gonna use,
+but the key thing
+is that this user account
+will not have the power to upgrade
+the billing account to become a paying one.
+So, this really limits our risk while we're learning.
+Now, for a production setup, though,
+we would really consider using
+even more restrictive privileges
+than what we're gonna be granting here.
+And exactly how you do that,
+it's gonna depend on how empowered,
+or encumbered you want your Dev or DevOps teams to be.
+But we'll take a closer look at that
+when we cover billing access control
+later on in the course.
+For now though,
+there's one key role we wonna take a look at.
+And that's the one called Billing Account User.
+Now, if you'll remember back to the intro to GCP course,
+roles are collections of permissions
+to use or manage GCP resources.
+And in this case,
+the purpose of the Billing Account User
+is to be able to link projects to billing accounts.
+Now, you can grant this role
+at either the organization,
+or billing account level.
+But since we only have a billing account
+and not yet an organization,
+that's what we're gonna do in this lab.
+Now, a key thing that they point out in the documentation
+is that this role has very restricted permissions.
+So, you can grant it broadly.
+Typically, in combination with Project Creator.
+These two roles allow a user to create new projects
+linked to the billing account
+on which the role is granted.
+So, we'll see how this plays out in the lab.
+Now, before you start doing this lab,
+you need to get the email address
+of a Google account that you control.
+And one that's not the admin account
+that we created when we signed up for GCP.
+This account is going to be the user account
+that we use to do a lot of stuff in GCP.
+So, if you want,
+you could use a pre-existing Google account
+that you've made,
+or if you have an email address
+that hasn't had a Google account created for it,
+you could do that now,
+or you could choose to make a completely separate
+new Gmail account.
+Any of these options could be fine,
+but I do wonna warn you
+that you wonna be able to control this account.
+So, you might not wonna use an email address
+that'll fall under a lot of security controls
+set up by your organization.
+And please make sure
+that you've got two factor authentication set up
+for this particular account.
+All right, so to start off with,
+I want you to log onto the GCP console
+as the administrative account that we've been using.
+We're not gonna log in with this user account just yet.
+So, go ahead and fire up an Incognito window
+and I'll see you in the console.
+Okay, so now here we are in the console.
+And remember we get here
+by going to console.cloud.google.com and signing in.
+Right now I'm signed in as the admin account
+that we created with our GCP account.
+But what we wonna do is effectively to control the billing.
+So, let's go to that section now.
+Now you've probably already got this,
+My Trial Billing Account selected,
+but if not,
+you can just drop this thing down
+and either select it,
+or go to manage billing accounts
+and selected in the list.
+Now, remember, I've hidden this info panel
+just to make a bit more space on the screen.
+But right now, what we wonna do is on that info panel.
+So, I'm gonna show that again.
+And now we can see
+that there is one billing account administrator
+attached to this billing account.
+And of course that's the admin account
+that we're logged in as right now.
+But the reason that we're here,
+is because we wonna delegate some of this authority
+to another account.
+And in particular,
+if we look in this role dropdown,
+what we want to grant is the billing account user role.
+All right, now enter the email address
+of the Google account
+that we're gonna be using as our GCP user.
+When you've done that,
+you can hit add.
+And quite immediately,
+we see the update.
+And that's pretty much it really.
+We've just granted the ability for this user
+to link GCP projects to this billing account.
+So, let's check that out.
+We'll sign out of this account
+and sign in as our user account.
+Now, since this is the first time
+I've logged in as this particular user,
+I agreed to the terms of service.
+Now, since I logged out and logged back in,
+it tried to go back to the same URL of that admin project.
+But since the only authority that we delegated
+was to link projects to that trial account,
+we're not authorized to view anything in the admin project.
+So, if we select a project here,
+we have none.
+But let's see what happens when we create a new project.
+Now, if we create a project called My User Project,
+we wait a bit for it to get created.
+Once we've waited for that project to be created,
+we can drop the select a project dropdown again,
+and select My User Project.
+And here we see we've automatically been linked up
+to that trial account.
+Now, we could just dismiss this
+but let's see what happens if we try to upgrade.
+And here's exactly what we wanted.
+Error, you do not have sufficient permissions
+to view this page.
+We're not able to upgrade that particular billing account.
+So, let's dismiss this now
+and head over to the billing dashboard
+so we can see what it shows.
+Now, it won't show us the details
+of the individual billing account,
+but if we go back to this main spot here,
+we can see that there are three projects
+attached to this trial billing account.
+If we show the info panel while it's selected,
+we can see the administrator and the user like before.
+But the UI that we were using before
+to grant those privileges
+is of course gone.
+When we look at the projects,
+we only see this user project that we just created.
+Now, because this GCP user account owns this project,
+we can do things like disabled the billing,
+or change it to use a different billing account.
+But it also means that if someone has access
+to this GCP user account,
+they can control this user project as much as they want.
+So this seems to be a good time to remind you
+that you really need to have two factor authentication
+set up for this user account as well.
+Now, there's one last thing I wonna show in this lab.
+So, to do that,
+let's go back to the dashboard
+and grab the URL for this particular project.
+Now, let's sign out
+and sign back in as our admin account
+and take a look at what happens.
+Here we've been switched back to the admin project.
+So, let's paste the URL to the user project
+and we see that we are not authorized to view that.
+So, if we go back to the admin project,
+and go to billing,
+and manage billing accounts,
+we can see the same information that three projects
+are attached to the billing account,
+but one of them is not one of ours.
+We can't even see it in this list.
+The lesson here is that owning a project
+and being able to control its resources
+is completely separate
+from being able to control the billing account
+attached to that project.
+All right, well, that's it for this lab.
+So, if you have any questions for me,
+please let me know.
+If not, please feel free to move on to the next lecture.
+Thank you.
