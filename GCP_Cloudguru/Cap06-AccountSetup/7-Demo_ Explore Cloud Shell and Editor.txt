@@ -1,0 +1,256 @@
+Okay, hello, Cloud Gurus
+and welcome to this lecture
+about the Cloud Shell and editor included
+in the GCP console.
+First, let's start with what it is.
+Google Cloud Shell provides you with command-line access
+to your cloud resources directly from your browser.
+You can easily manage your projects
+and resources without having to install the Google Cloud SDK
+or other tools on your system.
+With Cloud Shell, the Cloud SDK gcloud command-line tool
+and other utilities you need are always available,
+up to date and fully authenticated when you need them.
+So let's take a look at some of the highlights.
+One of the big ones
+is that you can access this Cloud Shell command-line
+from any browser anywhere with an internet connection.
+This means that you don't need
+a local terminal program running
+on the computer you're using.
+Now, if you've ever tried to do any development
+on a Chromebook, you'll immediately realize the value
+of this and if you've ever had to use PuTTY
+on a Windows machine,
+you'll probably also be celebrating.
+Now, another nice thing about this though
+is that not only do you escape having to run a program
+on your local machine,
+you also escape having to manage those keys manually.
+Of course, if you've used PuTTY,
+you'll know that that's particularly annoying
+because it uses a different key format
+but even SSHing from your local machine
+can be a bit of a pain sometimes.
+So it's nice that Cloud Shell
+can do some automatic management
+of SSH keys for you.
+Another nice thing about Cloud Shell
+is that it gives you five gigabytes of persistent storage,
+which means that if you save something in one web session
+and then come back to it later, it'll still be there.
+You can just pick up where you left off.
+And in terms of what you might be doing in this shell,
+it's good to know that it has easy access
+to a whole bunch of pre-installed tools,
+tools like gcloud, bq and kubectl
+to interact with resources in GCP
+or different programming language tools
+like Node, Python and Ruby.
+Now, when you are using these tools to interact with GCP,
+it's nice that they're pre-authorized,
+which means you have to jump through fewer hoops
+to get things done and you don't have to worry
+about continually reinstalling these things
+because they're always up to date
+every time you connect to Cloud Shell.
+Now, one last thing to mention before we move on
+is that if you do run something in this Cloud Shell,
+maybe like run a Node app or something,
+you can get a URL so that you can preview
+that web app, connecting directly from your local machine
+to that Cloud Shell.
+But that's something that'll probably make more sense
+to you when you see it happen and do it for yourself,
+so let's jump into the lab.
+To start this lab, log into the GCP console
+with your non-administrative account.
+And pay attention when you're logging in
+because if you don't get prompted
+for two-factor authentication,
+then you should definitely go and set that up right now.
+All right, I'll see you in the console.
+All right, so here we are in the console
+and we're logged in as the GCP user account.
+Now, of course, this is a lab about running Cloud Shell,
+so we're gonna find and press the button
+that says Activate Google Cloud Shell.
+Now, this confirmation screen shows a neat little animation
+of some of the things you can do in Cloud Shell
+and feel free to watch what it does.
+Maybe even canceling and restarting it a few times
+so you can see what happens at each step.
+But for now, I'm just gonna start Cloud Shell.
+Now, by default, Cloud Shell starts
+in this split window view
+at the bottom of the screen
+and you can feel free to leave it that way if you want
+but I'm gonna press this button over here
+to pop it up into its own tab.
+I feel like this can make it a bit easier to work with,
+especially for recording,
+so I'll be doing this throughout the course.
+Now, the first thing I wanna point out
+is that this Cloud Shell has automatically connected
+to the my-user-project that we've created.
+Now, so far, this GCP user account
+only has access to one project,
+but if we wanna switch to a different project later,
+we'll use the gcloud config set project command.
+Now, before we start doing stuff,
+I wanna take a look at this menu.
+This lets us do things like upload
+and download files, restart the Cloud Shell machine
+and get some information about Cloud Shell.
+But you might also be able to enable Boost Mode
+like I can here.
+And when you do that,
+you can restart Cloud Shell to use a more powerful machine.
+Well, why not, right?
+So let's do that now.
+Now, this definitely can take a bit of time.
+All right, Boost Mode activated.
+Now, it might not look any different
+but it should be faster now.
+All right, well, this is just a normal Linux machine.
+Now I'm just gonna clear the screen here,
+which is something that I'll do pretty often
+so that you can keep focusing close to the top
+of the shell instead of having
+to try and figure out where I'm typing now.
+Now, if we print the working directory
+to see what we start out,
+we can see that we're in the home directory for this user.
+And if we do something like move to the parent directory,
+we can always get back to that home directory
+by just tying cd space and a tilde
+and as you can see, this default prompt
+is also telling us which directory we're currently in.
+Now, when we start our Cloud Shell,
+there really isn't all that much there.
+Just this README file.
+Well, plus a few hidden files
+but for now, let's just pay attention to this.
+Now, if we wanna see what this file says,
+we can just cat it.
+But thankfully, after the capital R,
+I can just hit Tab to finish the rest of the file name.
+And here we see some interesting information.
+In particular, the VM that we're using right now
+is ephemeral, so we shouldn't rely on it sticking around.
+That said, the home directory that we're using
+will persist across sessions.
+So we have to make sure that everything is saved here
+or I guess somewhere else if we care about keeping it.
+Now, this also points us
+to a few interesting Cloud Shell extras,
+like dl filename,
+allowing us to download that particular file.
+So let's test that out right now.
+Do I wanna download this file?
+Yes.
+And that just triggers
+the normal browser download functionality.
+But it's quite convenient
+and we'll wanna remember that for later.
+But now I wanna show you something else.
+I want you to get the lab files for this course.
+So to do that,
+start in this home directory
+and type git clone
+https://github.com/ACloudGuru/gcp-cloud-engineer.git.
+Now, you don't actually have to type out
+that entire address.
+You can go to the resources panel,
+find this link, right click on it
+and say Copy Link Address
+and then just paste that in here.
+In any case, I'm gonna grab these files now
+and we'll see that it's created a new directory for us.
+Let's navigate into that directory
+with cd gcp-cloud-engineer.
+Now, inside there,
+there's another folder called cloud-shell-hello
+so let's go into that directory as well.
+And you can feel free to do both of these
+in one step if you want.
+This directory has a couple of source files
+for Node.js applications
+and so we're just gonna check that out now.
+If we run node hello.js,
+it tells us that it's running an application
+on its localhost address on port 8080.
+But if we try navigating to that address,
+we'll see that it doesn't work.
+And that's, of course,
+because the localhost for this browser
+is different than the localhost for the Cloud Shell.
+What we need to do here
+is to go to this web preview.
+When we drop down this menu,
+we see that we can preview what's running on port 8080.
+So if I click that,
+it opens up a new tab and connects to that app.
+Here we see that we get an appspot URL
+to connect us through to the application
+that we're running in our Cloud Shell.
+So let's go and take a look at the source code
+of this application.
+To do that, we could definitely look at stuff
+in the terminal
+but we can also open up the Cloud Shell code editor
+with this little button here.
+Now, the file that we were running
+was this hello.js
+and we can see here
+that it was set to run on port 8080
+and say Hello Cloud Gurus!
+Now, this code editor is actually quite helpful,
+including even things like syntax highlighting and warnings
+and of course, like any good editor,
+we can make changes to this file,
+save it with Command + S
+or save in the menu,
+and then what should happen when we reload this?
+Well, actually nothing should happen yet
+and that's because what we ran over here
+was Node and Node does not automatically reload source files
+when they change.
+So if we click down on the bottom,
+we can hit Control + C to exit the program
+and this time, we'll run nodemon instead.
+Nodemon is another tool that comes pre-installed
+in Cloud Shell.
+So now if we refresh,
+even though it's a different application,
+it's still connecting through to the same port
+on Cloud Shell, so it gets the response
+from the new application.
+Now, if we make some more changes,
+we see that nodemon has done its job.
+All right, let's close this editor for now,
+click down here at the bottom,
+Control + C to stop nodemon and node
+and then clear the screen.
+Next, let's use the diff tool
+to see what the difference is
+between this hello.js file and this html-hello.js file.
+Here we see that there are changes
+to which port is being used,
+the message that's being returned
+and the content type as well.
+So if we run nodemon on this html-hello,
+it'll start running the app on a different port
+than we were using before.
+So if we refresh the browser on port 8080, we get nothing.
+What we need to do now is to go back
+to this web preview menu and change the port.
+We say 8081, change and preview.
+And now we see what's running there.
+All right, I hope this has been a useful introduction
+to the Cloud Shell
+so you get a sense for what you can do here
+and see how useful this can be.
+If you have any questions for me, please let me know.
+If not, please feel to move on to the next lecture.
+Thank you.

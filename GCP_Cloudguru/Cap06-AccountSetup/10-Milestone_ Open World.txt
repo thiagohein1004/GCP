@@ -1,0 +1,82 @@
+Congratulations, Cloud Gurus.
+You've reached a milestone.
+Now, some people might have felt like it was a bit too slow
+or detailed for the setup stuff that we've just done.
+But that was the riskiest part of what we do in this course.
+So I wanted to make sure that you got through it safely.
+But now that we're through that setup,
+the world is open to you and you don't have to worry
+that what you might do could rack up huge charges.
+But now we're gonna start going a little faster.
+I'm gonna push you to do more.
+I'll still support you, of course.
+But you're learning to walk,
+so you need to take a few steps on your own.
+That means you'll probably fall down
+a few times, and that's okay, too.
+You get back up and apply what you just learned.
+If I kept spoon-feeding you everything
+you would never really learn properly.
+I need to teach you to fish, not just give you fish.
+So looking back at the setup,
+we've gone through a number of real-world scenarios.
+How to setup billing, how to grant access
+to other accounts, stuff like that.
+And we've already been exposed
+to some services in Google Cloud.
+But another really important thing
+is that we've taken a look
+at how data flows through systems,
+and that's something that you really need
+to keep in mind as we keep going.
+Now as we do keep going, I want you to remember
+that the goal here is to learn and not to watch videos.
+So that means that while I lead you through certain things
+you should also look for opportunities to explore.
+Go off script, it's okay.
+If you mess stuff up or it doesn't work
+how you expected it to, that can actually be
+a really great learning experience.
+Try to figure out how things went wrong
+and how you might avoid that in the future.
+Try to figure out why it works the way it does.
+Now one of the really awesome tools that you have
+to help you explore is Projects.
+In the Amazon Web Services world,
+it's really painful to get this level of isolation.
+You have to create a new account each time you want that,
+and managing and organizing AWS accounts can be a real pain.
+So embrace the tool that Google gives you.
+Projects are awesome.
+If you wanna try something out, you can make a project,
+do some stuff, and then delete the project.
+You have excellent isolation in the project
+and it's really easy to clean things up
+as long as you keep them separated.
+Now one thing that I will point out
+is that there are two quotas to be aware of.
+Each user account has a quota
+for how many projects you can own,
+and your trial billing account has a separate quota
+for how many projects can be linked to it.
+So if you hit an error when you're creating projects
+or linking them to billing, take a look and see
+if you've just hit that particular limit.
+Oh, and a little tip is that Google automatically creates
+a project for your administrator account
+and links it to your trial billing account.
+So that can be a good one for you to either delete or unlink
+so that you can link other projects to that billing account.
+Just make sure, though, that you don't accidentally delete
+or unlink the billing export project,
+you need to keep that one.
+Now as we move through the course,
+make sure that you're thinking about the data flows
+that are happening in all of the labs and surrounding
+the things that we talk about in our theory lectures.
+That'll really help you learn things properly
+so that you can use them effectively in the real world
+and demonstrate what you know in the exam.
+Well, all right, if you have any questions,
+please let me know, if not,
+please feel free to join me in the next lecture, thank you.

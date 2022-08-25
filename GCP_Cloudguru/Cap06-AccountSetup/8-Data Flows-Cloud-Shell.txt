@@ -1,0 +1,414 @@
+Okay, hello Cloud Gurus,
+and welcome to this lecture,
+where we're going to dig into data flows.
+Now, depending on your background,
+this may all be very natural for you,
+or this may seem like a completely new concept.
+And for most of you, it'll probably be somewhere in between.
+But no matter where you're at right now,
+I hope this lecture will help you to apply
+this way of thinking
+to all sorts of situations that you come across.
+Okay, so let's get started.
+The first thing I wanna say
+is that data flows are everything.
+Well, in information technology anyway.
+I mean, IT is literally all about applying technology
+in useful ways to handle information.
+Because of this, I've seen a very strong correlation
+between data flow thinking, and success in this field.
+In fact, I would even go so far as to say that
+if you learn to identify and control data flows,
+then you will succeed.
+But if you just try to memorize situations
+and how to respond to them, then you won't.
+Now in the context of this course,
+I definitely want you to be able to pass the exam,
+but I want you to do that
+because you'll actually be successful in the real world.
+Not just because you learned how to pared back
+the right answer for some questions.
+So I think this applies to both real world
+and exam situations.
+Okay then, so what is a data flow?
+Fundamentally, it's about taking some data or information
+and moving it around, processing it in interesting ways,
+and remembering it.
+So we'll often associate these three things
+with three classes of services.
+Being network services, compute services,
+and storage services.
+And well, that's a good rule of thumb,
+it's important to not box our thinking in
+as rigidly as that.
+For example, moving data could also include loading stuff
+from disk into memory,
+or linking up services through some integrations
+that aren't specifically networking.
+And processing also includes how a database system
+might respond to a query,
+or setting a messaging service up
+to filter what passes through it.
+Remembering also includes things like caching data in a RAM
+or a Content Distribution Network.
+So do remember the categories on the left,
+but the stuff on the right
+is the right way to think about data flows.
+AlL right, so to help us think about data flows,
+we need to use mental models.
+A mental model is a simplified representation of reality,
+which is used by your mind to anticipate events
+or draw a conclusions.
+It's what your brain builds when you understand something,
+or the way that your brain
+organizes information it learns into hierarchies.
+Now, if you haven't spent any time in the past
+thinking specifically about how your brain builds
+and uses mental models,
+then please watch at least this lecture
+in my Cert Prep Guide,
+which talks all about mental models and how they work,
+and there's next one which goes through an example
+of building a specific mental model.
+Now beyond just one mental model though,
+it's also important to recognize that systems do combine.
+You build larger systems out of smaller ones.
+And to do that effectively, we need to use abstractions.
+A lot of the time,
+it's not that important what the details are
+of what's happening inside of a subsystem,
+but it's usually very helpful to understand
+at least the basics of what's going on.
+And so being able to zoom into subsystems
+and back out into the bigger system is a valuable skill.
+I'll talk a bit more about that in the lecture
+in the Cert Prep Guide Two,
+but I'm not gonna rehash all of that.
+Let's move on to a practical example of a data flow.
+Now, I'm gonna skip or gloss over a lot of things here,
+because I care more about the core data flow,
+and not so much about the internal details of every action,
+or each subsystem.
+But we're gonna try and break down the data flow
+of both control information
+and other data like web pages and web node,
+that happened in the Cloud Shell Lab
+that you just went through.
+Let's start with Your Machine,
+on Your Machine, you run a web browser.
+I'm sure you've got other things running
+on that machine too,
+but those things don't really affect this data flow.
+Now in this web browser, you open up the GCP Console,
+and that reaches out to the Google Cloud Control Plane.
+Now of course, this isn't an airplane type plane,
+it's like a Mathematical plane,
+a surface where you can control everything
+that happens in GCP.
+Now, when we open up Cloud Shell,
+Google Cloud makes sure
+that we have some persistent storage available,
+and finds a machine to host our Cloud Shell Instance.
+On this machine, it starts a container.
+And in that container, it starts a Secure Shell Server.
+Now, there might also be some other things
+running on that machine,
+like maybe more Cloud Shell Containers for other clients,
+but it doesn't really matter to us.
+What matters to us is that we can now connect
+to this Cloud Shell from our browser.
+Now in this, we run a Get-Command
+that connects to GitHub to get the lab files,
+and it stores those files
+on the Cloud Shell Persistent Storage.
+When that's finished, we run node against those files,
+node will load them up,
+and then sit there waiting for a request
+that comes in on port 8080.
+Now in your web browser, you try to connect to Port 8080.
+But local host is just pointing back to your machine,
+so that doesn't work.
+Instead, we use the web preview,
+where the Google Cloud sets up a proxy for us.
+Now when we connect to the URL for that particular proxy,
+it connects through to node running on port 8080
+on the container on the Cloud Shell Host Machine.
+So when we see the response, we see what we expected.
+Then we open up the Cloud Shell Editor,
+which connects to the lab files,
+and then we make a change.
+We save those changes back to the persistent storage,
+and then reload our browser,
+which connects back through the proxy
+and onto Port 8080 on the Cloud Shell container.
+Now here's something that really shows off the power
+of data flow thinking.
+When you look at it this way,
+it's really obvious what response we're gonna get back
+to that page running in our web browser.
+There has been no data flow between the lab files
+and the node process.
+So when we talk to the node process,
+we're definitely going to get the old version of the page.
+If we wanna see those updates take effect,
+we have to get that data into the node process somehow.
+So that's why we stopped the node process
+and then restart it using nodemon.
+So again, when the node process starts,
+it reaches out and grabs the files,
+the updated ones in this case,
+and the nodemon process puts a watch on those files.
+So now when we change the files again in the editor,
+and save them,
+nodemon notices that they've been changed
+and restarts the node process.
+And of course when the node process starts,
+it reaches out and grabs the files.
+This is how the data is flowing through the system,
+but those new updates have still only made it
+to the node process themself.
+So we need to reload the browser
+and have it connect back out again.
+Of course, this time we see
+that it will get the updated response,
+because the data has flowed to that node process
+before this request comes in.
+Now the next thing we do is to tear down the nodemon process
+and the node process it's controlling,
+and then run nodemon again,
+but this time against the file that's on port 8081.
+Of course, nodemon puts its watch on the files,
+and the node process loads them from persistent storage.
+Now when we reload the page
+that we were using to look at Port 8080,
+it connects through the same proxy,
+but that proxy doesn't find anything on port 8080 anymore.
+That process is gone.
+Since we have no more use for that 8080 page,
+we close it down.
+And eventually Google Cloud will get around
+to cleaning up that proxy as well.
+Since we wanna see what's running on port 8081,
+we change the port,
+have Google Cloud create us another proxy,
+open up that webpage, and connect through there.
+Since that proxy is configured for Port 8081,
+it does find the new node process,
+and gets the response.
+Well, literally 138 slide animation steps later,
+we go through the whole data flow.
+Now, if you look at this closely,
+you'll see lots of places where there's data movement,
+data processing, and data storage.
+There's definitely some long term storage here.
+But there's also a lot of short term storage too.
+And there's definitely processing as well.
+I mean, the response to the different web pages
+is definitely not the same as the source code,
+the lab files directly.
+Those code files were interpreted by the node process
+so that it knew how to respond.
+Okay, so do you feel like this was helpful?
+Do you think that you could apply
+this process of thinking to other systems?
+Now if you don't feel like you followed every step in this
+that's okay too,
+but I would then recommend that you rewatch this lecture
+and redo the lab, so it will make sense to you.
+And please do ask for help on the forums if you get stuck.
+But now let's take a look at this understanding
+and use it to make some predictions.
+So for example, what happens if I update the lab files
+that are stored in GitHub?
+How would you update your lab files?
+And what if we both changed the same lab file?
+And how about if you wanted to get the lab files
+back to the way they were before you changed them?
+Do you know some ways you could do that?
+I can immediately think of three possibilities.
+Now what happens if the Cloud Shell Persistent Storage
+becomes temporarily unavailable?
+When and how might you notice that?
+Would it be when you refresh the browser?
+Why or why not?
+What happens when Cloud Shell times out
+and it tears down your Cloud Shell Container?
+What would you lose then?
+And how would you get things back to the way they were
+at the end of this lab?
+Understanding this mental model and its data flows
+is very strong.
+You'll need to do this same sort of thing
+with other GCP services too.
+Things like how Kubernetes is structured with nodes,
+and pods, and deployments, and services.
+Or how source code makes its way from a developer's machine
+and eventually becomes something useful to the end user
+on their machine,
+working its way through continuous integration
+and continuous deployment systems and stuff like that.
+Now, let's apply this data flow way of thinking
+to a new scenario.
+So let's imagine this situation,
+you're at a dance recital,
+and the ballet class teacher
+was going to take this group of girls out for treats
+after their performance.
+But an emergency has come up
+and she's now asked you to take these kids home.
+You want to choose an efficient vehicle
+and you consider your options.
+Your first option is this plane.
+Now, this is not really the right vehicle for this job.
+Of course, you know that intuitively,
+but let's think about the details as an exercise.
+So, not only are plane tickets rather expensive,
+but the data flow here just doesn't work.
+And I don't just mean the flow to get plane tickets
+for all of them.
+Okay, so given the scenario I posed,
+you might expect the flow to be something like this.
+The dancers are on stage, then they go offstage,
+they get in the vehicle, you go to the first home,
+the second home, the third, fourth, fifth, sixth home,
+and you're done.
+But trying to take these kids home using this airplane,
+would mean a flow more like this.
+They start on stage, they go offstage,
+but then, you have to get to the airport.
+I mean, I dealt the recitals at the airport, right?
+And even though you take the plane,
+you landed another airport.
+So how would you get everyone home from the airport
+at the destination?
+There's some critical missing pieces in this flow.
+That doesn't mean that this is absolutely wrong,
+but it's certainly incomplete,
+and you have to make some assumptions
+about what else is going on here.
+Okay, let's take a look at our next option.
+Here we have a very small car.
+Now you can probably say that this vehicle
+is fuel efficient,
+but I don't really think it's gonna be efficient
+for this job.
+Think data flow,
+what is the practical process
+by which you get a whole bunch of kids home using this car?
+After they come offstage,
+I guess you can really only fit one kid in the car.
+So do you drive that person home
+and then come back to pick up the next kid?
+How long would this process take?
+And who would watch the remaining kids
+when you're driving each one home?
+This might be a workable process,
+but there are definitely some issues
+that you'd have to figure out.
+And in terms of efficiency,
+if all the homes were close to the theater,
+this might not be so bad.
+But if all the homes are close to each other,
+but far away from the theater,
+then this becomes particularly bad.
+Let's look at our next option.
+Well, this vehicle has enough space
+to hold all the kids at the same time,
+but how would you use this vehicle?
+I mean, you can't mail the kids home.
+So where are you gonna borrow this truck from a mail person?
+But even still, mail trucks don't have passenger seats,
+they're for transporting cargo.
+So this vehicle will not enable you to safely
+and legally drive these kids home.
+The question didn't call this out,
+but safely and legally are always implied.
+Next, okay, school buses can definitely be a safe
+and legal way to transport many children,
+but is that the case for you?
+Do you have a bus driver's license?
+Also, I didn't really say in the scenario
+how you would come by these vehicle options,
+but practically speaking,
+you usually have to plan some time ahead
+to have a bus and driver ready to transport kids.
+And in the scenario I described,
+you seem to only have the little time
+while they finished their dancing to get this all arranged.
+Again, the flow of getting everything worked out here
+seems to be a bit of an issue.
+Okay, now we're getting somewhere.
+This minivan is made to cargo around
+a smaller group of people, especially kids.
+But does it have enough space?
+Well, I thought it looked like it,
+so, let's come back to this one.
+Now this hodgepodge option
+seems like it might be interesting at first,
+and you start to think more closely about them,
+like maybe that VW bus,
+because you think maybe they'll work.
+But if you look closer,
+you'll see that these are actually just toys.
+What looks like it might be a reasonable option
+is actually not.
+Next, okay, now this is another interesting option
+as a slightly larger vehicle than the minivan,
+this might be a bit less efficient on fuel,
+but really, that's just a guess
+and that might be wrong.
+We don't really know for sure.
+But we do see a difference
+in what looks to be sitting capacity.
+So let's take a closer look at the scenario again.
+All right, while we could count the destination houses,
+one, two, three, four, five ,six.
+But that's really getting confused if you think about it.
+It doesn't matter so much how many times we stop,
+it matters more how many seats we need.
+So let's count the kids instead.
+One, two, three, four, five, six, seven.
+Only seven kids, maybe go for the minivan then.
+But let's look more closely again.
+One, two, three, four, five, six,
+seven, eight, nine Kids
+plus a driver.
+When we were waving our hands at the numbers,
+these two options looked pretty similar.
+But when we looked more carefully at the flow
+and thought instead about how each individual person
+would need to sit in a specific seat,
+we saw that the minivan would require now two trips,
+and leaves open the question about who supervises the kids.
+Whereas the bigger van can do the job in one trip
+and brings everyone along at once.
+So now the decision is pretty clear, all right?
+Let's look at what I hope you take away
+from these exercises.
+I hope you can see how data flows
+are the foundation of every system,
+and they're made up of moving, processing,
+and remembering information,
+not just network, compute, and storage components.
+When you're thinking about data flows,
+make sure you build mental models.
+These help you make predictions about what should
+or will happen.
+And identifying and think through the data flows,
+because doing this can highlight a lot of potential issues.
+We also saw how the requirements and options
+that we're looking at are not always clear.
+And while the example I gave is a little bit silly,
+this is especially true in the real world.
+So the skills we practiced here are critical
+for both real world and exam situations.
+All right, a lot of you
+will probably still have some questions about all of this,
+and that's fine.
+I recommend that you try rewatching this video
+and redoing the lab a couple of times,
+to see if it clicks for you.
+And of course, as always,
+you can also reach out and ask questions, please do.
+In any case, when you're ready to move on,
+I'll see you in the next lecture, thank you.

@@ -1,0 +1,116 @@
+Okay, hello, Cloud Gurus
+and welcome to this lab.
+In this lab, we're gonna take a quick look
+at how you can update the course files
+in your Cloud Shell.
+So do you remember how in the Cloud Shell data flow lecture
+I asked you how might you undo the changes
+that you had made to those files?
+Well, you could try undoing changes manually
+in each file but that's really time consuming
+and error prone.
+Not a recommended approach.
+And remember how I also asked you
+how you might update those files
+if I made some changes to them?
+Well, I did make some changes
+and I will definitely be making more too.
+So before each lab,
+you really should make sure that any lab files you use
+are up to date.
+So a pretty bad way to update the files
+would be to delete everything
+and clone the whole repository fresh each time
+but that's really inefficient,
+both in terms of how much data you need
+to transfer from GitHub to that Cloud Shell machine
+and also in terms of how long it'll take.
+Now, of course, if you're already familiar with Git,
+then I'm sure that the solution has been obvious
+to you all along.
+Just pull the changes,
+and that's definitely what we're gonna do, yeah.
+Now, you can feel free to do that on your own
+if you'd like but in case you're not so familiar with Git,
+I made a little script to make things easier.
+In particular, this script will configure a couple
+of default settings in Git,
+squirrel away any local changes you've made
+for future reference by using Git's stash functionality
+and then get the latest updates from GitHub.
+All right, so to follow along with this lab
+and run the update script,
+you'll need to log into the GCP console
+with your user account
+and open Cloud Shell.
+For this lab, it doesn't really matter
+which project you use when you open Cloud Shell.
+Well, all right, I'll see you in the shell.
+Okay, so here we are in the Cloud Shell,
+so let's just take a look at the files that we have.
+So there's not really a lot here,
+just the README file
+and the repository that we cloned.
+So let's navigate into that repository,
+the gcp-cloud-engineer, and take a look there.
+Now, this doesn't look like a lot of stuff yet,
+but I know already that there's more stuff on GitHub
+than we see here and the update.sh file
+is the update script that I mentioned.
+Now, before we run any script,
+it's always a good idea
+to make sure we know what it's going to do.
+And while we could print the script
+to the screen, it's a much nicer browsing experience
+to use the editor instead.
+So let's open up the editor,
+navigate into the gcp-cloud-engineer folder
+and click on the update.sh script.
+Here we see that it does some setup,
+prints out what it's going to do,
+configures the user.email and user.name settings in Git,
+if they're not already set.
+Shows any local changes that have been made,
+stashes those changes in Git,
+pulls the later changes from GitHub and finishes.
+Well, all right, that seems reasonable enough.
+We won't be needing the editor any longer,
+so I'll just close it now
+but you can feel free to leave it open if you want.
+If we wanna run this script,
+we're gonna have to make it executable first.
+So we type chmod +x
+and then update.sh.
+And now we can run the script by typing ./update.sh.
+And there we go.
+That was pretty quick, right?
+And now if we look at the files,
+we see that there's more stuff here.
+And also, the update.sh script
+has gone green to indicate that it's executable.
+Well, there we go, that's really all there is to this.
+It's not very complicated and from now on,
+all you'll have to do
+is to just run the update script
+or of course, like I mentioned,
+you could run whatever Git commands you want yourself.
+Now, also as I mentioned,
+it can be good to keep these files up to date
+and this is particularly important
+if the lab actually uses these files
+to run a program or something like that
+but it can also be helpful
+because I often include a text file,
+listing the different commands I run in each lab.
+If you're getting stuck on a particular command,
+then you can definitely take a look at what it says there
+but I would caution you,
+don't do the labs by just copying these commands
+and running them.
+The whole point here is to learn
+and you'll really learn much better
+by doing it yourself.
+If you have any questions for me,
+please let me know.
+If not, please feel free to move on to the next lecture.
+Thank you.
