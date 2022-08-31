@@ -1,0 +1,226 @@
+Okay, hello Cloud Gurus,
+and welcome to this lab
+where we're going to get hands-on with Google Cloud Storage.
+Now I'm not gonna repeat everything I said
+about GCS in the intro to GCP course,
+especially because you should already
+be re-watching that before your exam.
+Instead, we'll use the Google Cloud
+console to see how it actually works.
+All right, let's jump right in.
+So to start off, log into the Google Cloud
+console with your user account.
+From now on, just assume that this will be the account
+we use in each of the labs.
+We only wanna use the admin account
+when we really need it.
+So I'll see you in the console!
+All right, here we are in the console
+and we're logged in as the user account.
+To start off with, we're gonna create a new project.
+Generally, when you're working on a new thing,
+you make a new project for it.
+And in this case, we're gonna make a project
+that we'll use to explore a few new services.
+So we'll call it services exploration labs.
+Like always, it takes a bit of time to finish
+creating the project but when it does finish,
+we can select it from the list.
+Of course, we start out with no resources
+but we're gonna do something about that now.
+We could search for Google Cloud storage,
+but let's find it in the list instead.
+Here it is and we can even pin it to the top.
+We start out in the browser
+but since we have no buckets,
+it shows us this prompt instead.
+Now Google Cloud Storage will let
+us store all sorts of objects,
+but they need to be stored inside of a bucket, a container.
+So let's make one of those now by saying, create bucket.
+Now, the first thing it asks us for here
+is the name for this bucket.
+And in particular, this must be unique across cloud storage.
+And this means all cloud storage clients.
+Just like project IDs, bucket names are globally unique.
+So when you type something and then wait a little bit,
+it'll tell you whether that particular name is unique.
+In this case, someone has already taken storage-lab
+but that's no worry, I'll just add something more.
+The next choice it asks us to make is the storage class.
+But this is very much tied to the next one,
+which is location.
+The reason I say this is
+because if you've chosen multi-regional,
+then in the location dropdown, you have the multi regions,
+but if you instead choose regional in the dropdown
+you see each particular region instead.
+Now, if you choose nearline or coldline,
+the dropdown includes the multi regions and the regions.
+But since the location of a bucket cannot
+be changed after the bucket has been created,
+this is effectively choosing whether you want
+the bucket to be multi-regional or regional.
+For now, let's make this a multi-regional
+bucket in the United States.
+In the advanced settings,
+we can add labels to the bucket
+and change whether we want Google to be managing
+the encryption keys or whether
+we want to manage them ourselves.
+But since we haven't set up any encryption keys in KMS,
+we should just leave this as a Google managed key.
+That said, we can add a label to
+this bucket while we're here.
+Now one last thing to point out before we move on,
+is that although the retrieval cost is listed as free
+for multi-regional storage, we can't forget the fact
+that we'll be charged for network transfer
+for retrievals that leave the Google Cloud.
+Well, when we're done here, we can click create.
+Now that we have a bucket, going back to this list
+will show it to us and we can get back
+to the bucket details by just clicking on it.
+Well, what good is a bucket
+unless we upload some files, right?
+So let's do that now!
+Let's upload the cloud shell read me
+and feel free to include a couple of other things as well.
+You can see here that the upload
+to the console is actually pretty smart.
+It uploads things in parallel
+and it's actually pretty reasonable to use this
+to upload a smallish number of files or folders.
+When it's finished, we can close the upload dialogue
+and then clicking on the file opens it in a new tab.
+So here's the cloud shell read me.
+And here's a picture I took of Ryan,
+taking a picture of Robin
+in front of the Golden Gate Bridge
+when we were all together for a conference in San Francisco.
+Now, if you look at the URL for this particular file,
+it's very long, but the reason it's so long
+is because it's a signed request
+to be able to view this file.
+Not just anyone is allowed to view this file.
+By default, every file is private.
+You have to go out of your way to make it public.
+Now, in all likelihood, you're not seeing the same
+list of check boxes as I have on my screen here.
+And that's because shortly after I recorded this,
+Google changed the UI to make it much harder
+to share things publicly.
+Now, I'm sure they did this on purpose because it's bad
+press for Google if people have security breaches
+while using their platform,
+but for the rest of this lab then,
+when I say check on this checkbox,
+you should instead go to the far right
+hand side of the screen,
+press on the little menu button, select edit permissions
+and make the changes in there.
+To share it publicly,
+you add an item, enter all users as the name,
+make sure the access column says reader,
+and save your changes.
+That will give you the link you need.
+Now, technically the entity dropdown
+should also be set to user, but it's okay
+if you don't do that yourself each time
+because Google will make that change for you
+when you close the dialogue.
+To unshare the object,
+delete the all users line and save.
+Okay, so back to the rest of the lab.
+So if we want, we can check this share publicly check box
+and then it gives us a much nicer URL.
+In fact, this URL is entirely predictable.
+It is always going to be
+https://storage.google.apis.com,
+slash the bucket name,
+slash the object name.
+Now I say object name, not file name,
+because each Google cloud storage bucket
+just has a whole bunch of objects in it.
+It does not have a hierarchical file system.
+Now you can create a hierarchy here if you want to
+by giving each object a name that includes slashes.
+And if you do that, it'll act like folders.
+In fact, when you create a folder like this,
+and then refresh the bucket,
+you should see it show up in the list.
+I'm not sure why the test folder isn't showing up quite yet
+but we'll give it a little bit of time.
+All right, so given that we understand
+how to make these URLs, let's make a URL for
+a private file instead.
+Let's copy the URL for this link
+and then replace the name of the object
+with the name of another one.
+So of course, if we try to go to this without
+authentication in the URL, it denies us access.
+We need to share the file before it'll let us view that.
+Now that said, I might still call them files often enough
+just because that's how I think about them.
+But when it really comes down to it,
+they are objects, not files.
+Of course, this view also lets us delete files quite simply.
+And there we go.
+Now the test folder has shown up.
+Now it's a little odd that this test folder
+didn't show up earlier, but it did show up now,
+and we can see that it includes a trailing slash.
+Every object whose name ends with a slash
+is considered to be a folder and you can navigate
+into that folder and upload files there if you want.
+Now, another thing you can do is to rename files
+by going to the little menu at the end and choosing rename.
+That name seems unnecessarily long,
+so we'll just shorten that.
+But before I press the rename button,
+I want to point out that this dialogue,
+it gives you the GSU equivalent for renaming this object.
+In fact, there are a lot of places in Google Cloud
+where the console UI will show you what
+the command line equivalent would be for what it's doing.
+When it does show you something like this,
+you could hit the copy button
+and then cancel and run this command
+in cloud shell instead to get the same result.
+But for now, I'm just going to rename it in the console.
+Well, all right, let's take a look at what happens
+when you try to edit the bucket.
+Now, like I said before,
+the name cannot be changed
+and neither can the location
+but you can change the default storage class
+for new objects that are put in this bucket.
+Of course multi-regional cannot become regional
+and neither could regional become multi-regional,
+but you could set them to use nearline
+or coldline if you wanted.
+So a nice thing about this is that you can see
+how easy it is to put objects in a bucket and share them,
+but sharing them doesn't just mean sending a link.
+You could refer to these files and other systems
+that you're building.
+Okay, there's one more thing I should show you.
+If you go back to this list of buckets
+and drop the drop down on the far right,
+you can get at editing the labels
+in addition to the storage class.
+But the thing I want to show you now
+is editing the bucket permissions.
+Here, you can add permissions to the entire bucket,
+not just individual files,
+and you could do things like add the all users member
+and give it permission to view all objects.
+Doing this makes this a public bucket
+which is a very dangerous thing to do
+and you should definitely only do it
+if you're absolutely sure.
+For my case, I'm going to undo that right now.
+Well all right, that's it for this lab.
+If you have any questions for me, please let me know.
+If not, please feel free to move on to the next lecture.
+Thank you!
