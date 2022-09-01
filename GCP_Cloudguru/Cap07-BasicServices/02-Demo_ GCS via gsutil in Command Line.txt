@@ -1,0 +1,253 @@
+Okay, hello Cloud Gurus
+and welcome to this lab where we're going to get hands on
+with the Google Cloud Storage through the command line.
+To do this, we'll be using gsutil in the cloud shell.
+Okay, to start off with,
+log into the GCP console with a user account,
+select the same project as we just used in the GCS lab
+and open the cloud shell.
+All right, I'll see you in the shell.
+Okay, so here we are in the cloud shell.
+Now I've changed the prompt here
+just that we have a little bit more space
+but if we type pwd to print the working directory,
+we see that we're in the same place as we were before.
+And if we type ls to list the files,
+we see the same README file and folder
+that we cloned from GitHub before.
+Also to verify that we're in the right project,
+we can type gcloud config list
+which shows us what account we're using
+and shows us what project we're currently in.
+But what we're here to do today is to take a look at gsutil.
+gsutill is the command line tool
+that we can use to connect to Google Cloud Storage
+and it mimics many of the commands
+that you have in a normal shell prompt.
+For example, if we type gsutil ls
+it shows us the buckets we have.
+Now, something to note here is that the bucket name
+starts with gs://.
+Similar to how web addresses
+start with https://, native Google Cloud Storage addresses
+start with gs:// as we see here.
+Now, if we do type gsutil ls gs://
+we can simply hit tab
+to auto complete the rest of the bucket name.
+When we hit enter there
+then we see the objects that we uploaded in the console lab.
+Now you'll notice that this actually shows the test folder
+and not the contents of the folder.
+But if we wanted to list everything
+as a completely flat list,
+we can use star, star to show everything.
+In this lab we wanna mimic
+some of the things that we did in the console lab
+because the point I wanna drive home
+is that you're still interacting
+with the same services in GCP,
+you're just using a different program.
+In this case you're using gsutil,
+whereas in the last lab you were using the console web app.
+All right, so what we wanna do now
+is we wanna make a bucket
+and we do that with gsutil mb.
+Now, unlike the console
+where we say first that we want to make a bucket
+and then it starts asking us
+all of the questions we need to answer
+to be able to finish that,
+command line tools like this expect us to pass
+all of the information they need right up front.
+Now you will want to remember some of these commands
+for your exam, but to tell you the truth,
+most of the time when I'm using the command line
+I'm looking up the syntax
+when I'm running different commands,
+it's usually the case
+that I've either not done that thing before
+or if it's something that needs to happen often enough
+then it's just been automated
+so I'm not manually running that same command each time.
+The most important thing
+is that you understand what you can do
+and then you can figure out how you do that
+by looking at the documentation.
+In any case when you've written a partial command like this,
+the thing you can do is just type --help.
+Doing this can give you a few pages
+of really good information.
+If I scroll back to the beginning of this,
+I see that the syntax is gsutil mb
+and then I can optionally give it a class and a location
+and a project ID and then a URL that specifies the bucket.
+So let's say that I wanna make a bucket
+and I wanna make it in the Montreal region.
+Well, I can open up this webpage here and scroll down a bit
+and see that Montreal is North America dash Northeast one.
+So let's copy that, close this page
+and then respecify our command.
+gsutil mb-l northamerica-northeast1.
+Now, the last thing we have to do to make this command work,
+is to specify a bucket name using the gs:// notation.
+So let's call this one storage-lab-cli.
+When we hit enter, it creates the bucket
+which we now see when we gsutil ls.
+The next command I wanna show you
+is the gsutil label command.
+If we type gsutil label get
+and then the name of the console storage bucket,
+we get a response which is the json document
+listing the labels that we put on that particular bucket.
+Let's hit the up arrow to rerun that command
+and tell the shell to redirect the output of this
+into a file that we call bucketlabels.json.
+In case you're not familiar with it,
+that greater than symbol just tells the command shell
+to run the thing that comes before it
+and to put the output of the command
+into the file with the name that comes after it.
+We can see the results is exactly what we wanted
+by just cutting that file.
+If we rerun the gsutil label get command
+against the cli bucket,
+we'll see that it has no labels at the moment.
+But now that we have that bucketlabels.json file,
+we can run gsutil label set
+with that bucketlabels.json file
+against gs:// and our cli bucket.
+Now that it sets it, we can get it again.
+And we see we got exactly what we were hoping for.
+If we refresh the console
+we can see that the same thing has shown up here as well
+including the labels.
+Now, of course if you wanted to add more labels
+to a particular bucket,
+you could always get a copy of those current labels,
+edit the json file locally and then set those labels back.
+But that's a lot more work than you'd normally wanna do.
+So there's one more version of the label command
+that I wanna show you.
+If we type gsutil label and then ch-l
+that can let us change the labels to add an extra thing
+that maybe we'll call extra label with an extra value
+using the same label colon value format
+that we've seen in other places.
+The final argument to this command is the bucket name.
+And now when we run it,
+we see we got what we wanted both in the command line
+and when we refresh the browser.
+Now, speaking of the console,
+there are a lot of things that you can do
+in both the console and the command line.
+And like we saw in the last lab
+the console may even give you the command line equivalent
+but there are some things that can only be done
+through the command line.
+You can do things like control the life cycle
+here in the console
+but object versioning control just isn't available here.
+We can only do that programmatically
+whether that's through the command line
+or through an API call.
+Now, to see whether versioning is turned on
+for a particular bucket we can type gsutil versioning get
+and then the bucket name.
+Here we see that it's not currently turned on.
+So if we change the command to be gsutil versioning set on
+and then the bucket name,
+it tells us that it's enabled it
+and if we rerun the get command
+we see enabled instead of suspended.
+Now let's remind ourselves of what we have in the bucket.
+Nothing, nothing yet anyway.
+So what we can do is gsutil copy some file
+like the README file that we have locally on our cloud shell
+and set the destination to be the bucket.
+And there we go.
+Now, let me just rerun this gsutil list command
+because I wanna compare what it shows
+to the same command run with a -a flag.
+Running gsutil list with the -a parameter
+tells it to include information about archived objects.
+Basically, we're asking it to show us information
+about object versioning.
+And here we see that the file that we uploaded
+includes a generation number
+of one, five, three, blah, blah, blah.
+This is interesting because if we do something
+like remove this file, running the normal list command
+will show us that it's gone
+but running the list -a command
+will show us that it's still there.
+That's basically what object versioning does.
+It means that every time we give GCS an object
+it'll hold onto it forever
+until we tell it quite specifically
+that we want that object to be deleted.
+Giving it a new version of that object
+or just deleting it by name isn't enough.
+That can of course be very valuable
+to make sure that you don't lose data
+and it will also tie into the object lifecycle stuff
+that we'll cover later.
+Now, so far what we've done
+is we've uploaded a file from cloud shell
+into that particular bucket.
+And that's all well and good
+but there's another very powerful thing
+we can do with gsutil.
+Transferring objects doesn't always have to involve
+the local machine that's running the gsutil program.
+So let's say that we wanted to copy
+all the contents of the bucket that we created
+in the console lab
+and put them into this new command line bucket.
+Well, to do that, we would just run gsutil copy
+and instead of just specifying a file as the source
+we would give it another gs://.
+Now, if we give it the same as star star specifier
+that I showed you in the list command
+we'll copy all the objects
+regardless of where they show up in the folder hierarchy.
+And here we see that we've gotten all the files
+but this is a little bit different than passing a dash
+or a flag to the copy command to make it recursive.
+Because as we see here
+the objects all show up in the root of the bucket
+not where they originally were in the folder structure.
+Now again, let's list the files with the -a flag
+and now we see the cloud shell README show up again.
+Let's take a look inside this new cli bucket
+in the console instead.
+And again, we see what we see through the command line
+for the normal view
+but the archived versions aren't something we can get at.
+Now, one last thing to point out
+is that when we copied these objects from the other bucket,
+we didn't copy their sharing settings.
+They were shared publicly in the console bucket
+but here they're private
+because that's how the command line bucket is set up.
+So the last thing I wanna do then,
+is to share that selfie object.
+So let's enter gsutil acl for access control list,
+ch for change and then -u for user.
+Say AllUsers:R for read access
+and then specify the file name that we want.
+And there we go.
+That object should now be available in the same way
+as the other objects that we set in the console lab.
+Give it a shot to try it out for yourself.
+Well, I hope you found this to be an interesting perspective
+on the Google Cloud Storage system
+that again shows how we can interact with the same services
+through the same control plane with the same results
+in completely different ways.
+In some cases you'll want to access it through the console
+because it's just easier
+and other times, especially when you're automating things
+it'll be much better to do it through the command line.
+Well, if you have any questions, please let me know.
+If not, please feel free
+to move on to the next lecture, thank you.

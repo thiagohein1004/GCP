@@ -1,0 +1,344 @@
+Okay, hello, Cloud Gurus,
+and welcome to this lab,
+where we're going to take a look at how you can connect
+into and out of a Google Compute Engine instance.
+So for this lab, you'll need to head
+into the console with a user account,
+select the same project that we've been using
+for our GCS labs, and open the Cloud Shell.
+Well, all right. I'll see you in the Shell.
+Okay, so here we are in the Shell.
+And like we usually do, we're just gonna check
+which project we're set to use.
+gcloud config list.
+And we see that we're using
+the services-exploration-labs project.
+We also notice here that the account is set to use
+that user Gmail address.
+Another thing that we're gonna take a quick look at
+before we move on is to see that this home directory
+doesn't have a hidden .ssh folder yet.
+That'll come into play later.
+If you're unfamiliar the syntax,
+ls -a will just show us all of the files,
+including the hidden ones that start with a period.
+We also wanna take a quick look
+at this Cloud Shell machine itself.
+If we type whoami, we find out that the user
+that's running on this operating system
+matches up with the user account
+that we're using for Google Cloud.
+And if we type hostname, we see that the name
+of the machine that's running our Cloud Shell
+is this big long thing here.
+There's one last investigative thing I wanna do
+to find out more about this Cloud Shell.
+If we type curl, this program is a client program
+to see any URL.
+Just like your web browser will reach out
+to any URL you give it,
+this will do it from the command line.
+And the address that we wanna enter is api.ipify.org.
+This is a simple little web address,
+and all it does is it gives us back the IP address
+that it sees us connecting from.
+This tells us that our Cloud Shell machine
+is connecting out to the internet
+from the IP address 35.233.169.202.
+Now, if we copy this URL
+and bring it up in a new tab in our web browser,
+we'll see that my computer is connecting out to the internet
+from 70.71.77.77.
+Okay, now with that done, let's check on our instances.
+gcloud compute instances list.
+And there's nothing running,
+which is good because we shut it down last lab, right?
+Now, in the last lab, we typed,
+gcloud compute instances create, and then gave it a name.
+In this case, we'll call it myhappyvm.
+But if you'll remember,
+it asks us if we wanna use this as our particular zone.
+Now, last time we just accepted this,
+but this time we're going to say no
+by entering n and hitting Enter.
+Now, it's giving us a bunch of choices,
+and we really don't wanna do this,
+so we're just gonna hit Control + C.
+Hold down the Control key and tap C.
+Now, another thing is that when we ran the VM last time,
+we just got the default machine type,
+and that's not what we wanna do this time.
+Let's bring back that command by up-arrowing
+and then add -h to get the help information.
+Now, we can see at a glance
+that there are a lot of optional flags that we can use here,
+like the machine-type and the zone.
+So let's get some fuller information about those.
+If we change it to --help,
+then we can scroll through the pages
+until we find the machine type.
+Here, it tells us that the default type
+is an n1-standard-1,
+but we would rather use the free tier eligible f1-micro,
+so we're going to run this
+gcloud compute machine-types list,
+which we'll copy to the clipboard,
+hit Q to exit, paste that in,
+and then take a look at the output.
+Now, this is a lot of choices. Too many, really.
+So we're going to filter this list down.
+To do the filtering,
+we could run the output through the grep command,
+like we've done before, but I wanna show you something else.
+gcloud topic filters.
+This let's us use --filter to specify an expression
+that it should use to cut down the output.
+Now, you can feel free to hit the Space Bar
+to see all about the different filters that you can run,
+but I'm just gonna show you a couple of things now.
+We'll start off by adding --filter=, open a double quote,
+type capital NAME, colon,
+and then lowercase f1-micro.
+Then, we close the double quote and run the command.
+Now, that's still too many options,
+and the free tier is restricted to zones
+that are in the United States and not North Virginia.
+So let's up arrow to get that filter back,
+and then add into the filter capital AND, space,
+capital ZONE, and then a tilde, and then us-west.
+That'll make sure that the options that we see
+are all free tier eligible.
+Now, we still have several options,
+but at least the list is short enough
+that we can see the column headers,
+which is something you would not see
+if you were running the results through grep instead.
+Well, all right, enough about that.
+I think we should use us-west2-b.
+We'll copy that to the clipboard,
+and while we could specify that
+every time we start a new instance,
+let's set that as our default zone instead.
+To do that, we type, gcloud config set compute/zone,
+and the zone we copied, us-west2-b.
+Now, even though we don't need it right now,
+it's always a good idea to set the zone and region together.
+So let's up arrow to that command
+and change it to also set the region,
+remembering, of course, to also remove the -b from the zone
+so that it becomes a valid region.
+Well, all right, I think we're ready now.
+So let's up arrow back to the command
+where we were creating the instance
+and add in the flag --machine-type,
+which incidentally we can autocomplete
+by pressing the Tab key, and then specify f1-micro.
+We let that go, and it takes just a little bit
+to start the machine.
+Now notice, of course,
+that it doesn't prompt us for the zone,
+and it does put the instance into the right place.
+So far, so good.
+Well, now, let's try to connect to that machine.
+Ping is a useful tool for this,
+so let's type, ping -c 3,
+so that it uses a count of three attempts
+instead of going forever,
+and then let's have it ping myhappyvm.
+Aha. It doesn't know what to make of myhappyvm.
+Well, what if we ping the internal IP instead then?
+Let's copy that. Paste it in here.
+It's trying, but it's not getting anywhere.
+Yeah, that didn't work either.
+Well, okay, one more try.
+Let's use the external IP address this time.
+Well, there we go. That was snappy.
+So we see we can connect to that machine,
+but we can't connect with just the name
+or the internal IP address.
+Now, this is an interesting point
+that'll come into play a lot more later
+when we look at networking,
+but for now, just file this in the back of your mind.
+Well, we've seen that we can connect
+to that machine using ping,
+so let's try to connect to that machine using ssh.
+ssh is the Secure Shell command.
+And when we run this, it asks us,
+are we sure that we wanna connect to this machine?
+We say yes, and it fails.
+It says that it permanently added that machine's fingerprint
+to our list of known hosts,
+but we weren't able to make a connection.
+Okay, so we do now have a .ssh folder,
+but the only file it contains is known_hosts.
+So instead of just plain ssh,
+we're going to use gcloud compute ssh,
+and instead of giving it the external IP address,
+we're just gonna type, myhappyvm,
+which actually we can even auto-complete with Tab.
+Now, when we do this for the very first time,
+it notices that we don't have any keys that we can use
+to connect to other machines,
+and so it helpfully runs keygen for us.
+Now, feel free to type in
+whatever password you wanna use for this,
+but don't forget what it is.
+You could leave it empty to make it simpler,
+but that's really not recommended.
+All right, I've typed in my password and typed it again.
+Now, before I reenter the key passphrase
+as a part of this login process,
+I wanna draw your attention to the two log lines
+that say, Updating project ssh metadata
+and Waiting for SSH key to propagate.
+Those are really important,
+but we'll come back to them later.
+All right, I entered my passphrase, but maybe I mistyped it.
+So I'll just rerun the gcloud compute ssh myhappyvm,
+and this time, all I get is the login passphrase prompt,
+and in I go.
+So the prompt has changed and we are connected to the VM.
+So let's take a look at some of the same things
+that we looked at in the Cloud Shell.
+Now, if we type whoami,
+we see that we're logged into this machine
+with a user account that has the same name,
+but the hostname is very different here.
+And if we curl to api.ipify.org,
+we see a different IP address here
+than we had on Cloud Shell.
+This one is 35.235.122.8.
+And if we type exit to log out
+of the myhappyvm secure shell,
+and then rerun the curl from outside
+in the Cloud Shell instead,
+and remind ourselves of the IP address
+that it uses to connect to the internet,
+we'll see that the two addresses are definitely different,
+but they're a lot more similar to each other
+than either of them are to the IP address
+that my computer was using to connect to the internet.
+All right, from this Cloud Shell,
+if we navigate into the .ssh directory
+and take a look at the files, we see a number of new ones.
+Now, this google_compute_engine.pub
+is the public key that was generated,
+and if we take a look at the google_compute_engine file,
+we see that that's the private key
+and it's been encrypted with a passphrase.
+Now, the public key here is really the key thing
+because it's what shows who we are
+when we're trying to log into the other machine.
+And if we can't prove that we have the private key
+that matches this public key
+when we're logging into the machine,
+then the secure shell connection will be refused.
+But okay, now that we've seen this public key
+of AAAAB3N whatever and then ending in 0bgo6Sp,
+let's gcloud compute ssh back into our VM
+and take a look around in there.
+If we cat the authorized_keys file in the .ssh folder,
+we see the exact same public key
+that we just saw out in the Cloud Shell folder,
+but of course, no private key.
+Now, if you're not totally following
+how all of this public and private key stuff works,
+it would definitely be a good idea
+to follow up a bit more on this
+to make sure that you've got a solid understanding
+of how it works, but the long and the short of it
+is that the public key can always be public
+and it identifies you, but you need to have the private key
+and the passphrase that unlocks that
+to be able to use that private key
+to make a connection out.
+But the question still remains,
+how did this public key that we generated
+while the machine was running
+make its way onto this machine?
+How did this myhappyvm know to accept a connection from us?
+Why would it trust us?
+And the answer to that is in the metadata
+that I pointed out was being logged about
+when gcloud compute ssh was first running.
+To look into this, we're going to use
+the curl command again, and we're gonna go
+to metadata.google.internal/computeMetadata,
+with a capital M in there,
+/v1 lowercase, and then a trailing slash.
+Now, when we run this,
+we see that we get, Error 403 Forbidden.
+It says that we're not allowed to look at this URL,
+but the reason is because we're missing
+Metadata-Flavor:Google.
+As a security measure,
+this is a header that you have to pass along
+when you're making a request for this page.
+So let's rerun the curl command, but before the address,
+let's add dash capital H, space, double quote,
+paste in the Metadata-Flavor:Google
+that we copied from the error message,
+end the double quotes, and then run it.
+And now, we see that we have instance, oslogin, and project.
+So let's start by looking at what's under project
+by rerunning the command and adding project/.
+Here, we see that we have attributes,
+numeric-project-id, and project-id.
+If we look at the project-id,
+we see services-exploration-labs.
+And if we look in the attributes,
+we see we have an ssh-keys,
+and that address includes the public key that identifies us.
+This is how the information about what key we were using
+was communicated to this instance
+even while it was running.
+Now, there's a lot more useful stuff in here,
+like, for example, you could get the instance name,
+which is myhappyvm, and then runs right into the prompt
+because it doesn't have a new line character at the end,
+but it also has information about the service accounts.
+So we can get the address
+that includes service-accounts/default/
+to see that it's got aliases, email,
+identity, scopes, and token.
+The default service account for this instance
+has both a token that it can use to sign API requests,
+and it's using the service account
+that was automatically created
+when we enabled the Compute Engine API.
+So what this means is that gcloud automatically has a way
+to connect out from this instance
+to the rest of the Google Cloud platform.
+If we run gcloud config list,
+we can see that it connects out
+as this particular service account, and that it's connected
+to this services-exploration-labs project.
+So what does that let us do then?
+We'll, if we gsutil ls,
+we see the same buckets that we already created.
+And not only the buckets themselves,
+but also the objects inside of them.
+So let's try one more thing.
+gcloud compute instances delete myhappyvm.
+Did I mean this particular zone? Yes.
+This instance will be deleted. Yes.
+And, ah! We're not allowed.
+Would have been fun though, right?
+Well, in any case, to finish things off,
+we can grab this command, exit the secure shell,
+and run it from outside in the Cloud Shell instead.
+Yes.
+Notice that this time it didn't complain about the zone
+because it already had a default zone,
+but it still asks us,
+are we sure that we wanna get rid of this instance?
+And, again, we see we have no more instances running.
+Well, all right. I hope you found all that to be useful.
+Not only to see how we can wield gcloud in a few more ways,
+but also to see what it takes to connect into a machine
+and to see how the metadata service plays a crucial role
+in all of the communication.
+As always, if you have any questions, please let me know.
+If not, please feel free to move on
+to the next lecture, thank you.

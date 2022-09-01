@@ -1,0 +1,303 @@
+Okay, hello Cloud Gurus,
+and welcome to this lecture.
+In this lecture we're gonna take a closer look
+at this gcloud command that we've been using
+in all of our labs.
+Now you will definitely need to know your material
+for your exam, but of course it's also very helpful
+for just day to day stuff.
+First of all let's just start off with what it is.
+As I'm sure you've already been able to see,
+gcloud is a command-line tool to interact
+with a Google Cloud Platform.
+But it's more than just gcloud really
+because gsutil and bq are very much related.
+In fact all of these tools will share the same configuration
+that you set using gcloud config.
+And when you type gsutil, it's almost
+as if you could have typed gcloud storage,
+and when you type bq it's
+as if you would have typed gcloud bigquery.
+Now you can't actually call gcloud
+with storage or bigquery right now.
+I just mean that these tools work in a way
+that I imagine would have worked like that.
+Now I've linked some documentation to this resource,
+and I highly recommend that you read through all of it.
+You might wanna go through all of it
+right after this lecture and also make a note
+to review it before your exam.
+Well so far through this course,
+we've definitely been interacting
+with a Google Cloud Platform
+through both the console and command-line tools.
+Now in general these command-line tools are more powerful
+than the console is, but less powerful
+than calling the REST API directly.
+What I mean is that some things that you can do
+in the command-line tools are not actually possible
+in the console, and still some other things are
+only possible when you use the API directly.
+Now Google is constantly adding new functionality
+to gcloud, and if you wanna use some of that
+before it's been fully vetted and released,
+you can access that through gcloud alpha or gcloud beta.
+For example, at the time that I'm recording this,
+if you want to list the billing accounts you have access to,
+you need to use gcloud beta billing accounts list.
+And if you want to associate a particular project
+with a particular billing account,
+you'd need to use this command.
+Now it's possible that by the time you watch this video,
+this billing functionality has been released
+in the normal gcloud command, but the point really is
+that functionality will be available earlier
+through the alpha and beta channels
+than they will in the normal one.
+You can feel free to use that functionality to do your job,
+you just need to be aware that it might change on you.
+All right, let's take a look at the syntax
+of a gcloud command.
+Now here's another link to a document,
+and I strongly recommend that you read through this as well.
+It's really valuable information.
+Now to run gcloud you type gcloud
+as we've been doing this whole time,
+and after that you can optionally give it some global flags.
+Now after that you will definitely need
+to specify the service or product that you wanna use.
+Each service or product may be broken down into a group
+or area, and then you will give it a command,
+something you want it to do.
+That command might have some flags or parameters
+through which you can give it the details
+about what you want it to do.
+Now notice that in this syntax we're always drilling down
+as we go from left to right,
+and since we always specify the service or product
+before we specify the command or verb
+of what we want it to do,
+you would never have a command like gcloud create instances
+because create is not a service.
+It's a command, and you would have to first specify
+that you want to use the compute service.
+All right, let's take a look at a few examples.
+You could specify a command
+like gcloud --project myprojid compute instances list.
+In this case --project myprojid is a global flag.
+Compute is the service.
+Instances is the area inside of compute
+that you wanna act on, and then list is the command
+that you want it to run.
+This command has no flags or parameters.
+Now another way we could have specified this global flag
+is to enter --project=myprojid.
+Whether you put a space there
+or an equals sign doesn't really matter.
+They still go together as one global flag.
+Now in a lot of the commands we've been running,
+we haven't been specifying the project.
+Instead we've been relying on the project being set
+in a configuration, so we've typed things
+like gcloud compute instances create myvm.
+Now in this case compute instances specifies
+the same service and area as the last one,
+but whereas the last one was telling gcloud
+to list the instances, this one gives the command
+to create an instance.
+Now this create command needs you to specify a name,
+so that's why we passed myvm as the name parameter.
+Not all commands have parameters though.
+Sometimes they'll use flags instead
+such as gcloud services list
+which uses the --available flag.
+Now as I mentioned, gsutil is definitely
+in this same family.
+In this case, gsutil implies that you're working
+against the Google Cloud Storage service,
+and the command is to list.
+You can also give a command to make bucket,
+and that takes a flag to specify the location
+and then the bucket name is specified as the parameter.
+For this example gsutil also has you specify the area
+which is label.
+The command is to set,
+and that command takes two parameters.
+The first parameter is the name of the file
+that has the labels JSON document,
+and the second parameter is the bucket
+that you wanna act on.
+All right, let's take a quick look at the global flags
+that you could pass.
+Now this is not an exhaustive list,
+but it is the most interesting ones.
+As we've seen you can pass --help or -h
+to get information about the command
+that you wanna run,
+and you can also specify a particular project
+with a --project and then giving the project ID.
+-account will let you specify a particular account
+that you wanna use such as might be useful
+if you're logged as both an admin and a user account.
+-filter can let you cut
+down the information that gets returned,
+and this global flag is not always available.
+But when it is it's often better than using grep.
+Another helpful global flag is --format
+that can let you choose to have the output formatted
+as either JSON, YAML, Comma Separated Value,
+or something else.
+It can be particularly useful to output some data
+as JSON and then pipe it to the jq command
+to do extra processing.
+One more global flag to mention is the --quiet or -q.
+If you specify this gcloud won't prompt you to confirm
+about destructive actions.
+This could definitely be helpful if you have a script
+that needs to do something like that,
+but it's also something to be quite careful about using
+because you might not get prompted and save yourself
+from making a silly mistake.
+The next thing I wanna talk
+about is configuration properties.
+These are values that are entered once,
+and can then be used by any command that needs them.
+This is usually how you specify the project,
+but like I mentioned about the global flag,
+these properties can be overridden
+on a specific gcloud command
+when you use the appropriate flag.
+Now these config properties are used very often
+for the account, project, region, and zone.
+So if you don't wanna have to specify --account
+every time you run gcloud,
+you can set this account property.
+Now technically the property is core/account,
+but because it's a core property, you can get away
+with just specifying account.
+Similarly --project is what you would have to specify
+if you hadn't already set the core/project property,
+and again you can refer to this as simply project.
+Now if you want to avoid using the --region,
+you'll have to set the compute/region property.
+Just setting region by itself won't work.
+Similarly, you'll have to specify --zone for any command
+that needs it if you haven't set the compute/zone property.
+Now to set any of these properties, you would type
+gcloud config set and then the property
+and then the value you wanna set it to.
+And if you wanna se what it's set to,
+you can check that with gcloud config get-value
+and then the property name.
+And if you no longer want a particular property to be set,
+you can clear it with gcloud config unset and the property.
+Next let's take a look at gcloud's configurations.
+Configurations are a way to maintain groups of settings
+and switch between them.
+Now these are most useful
+when you're using multiple projects,
+but you might also wanna use them to switch
+between different accounts, regions, zones,
+or things like that.
+Now you can type gcloud init to get an interactive work flow
+to set a bunch of these common properties in a configuration
+and you can list all the properties that are set
+in a configuration with gcloud config list.
+Now notice that this is quite different
+than listing all of the configurations that you have
+which is what you would get
+if you typed gcloud config configurations list.
+You definitely don't wanna get yourself confused
+with all of these different things.
+Remember that gcloud init is going to ask you a bunch
+of questions to set a bunch of properties.
+gcloud config list will show you all of the properties
+that are set in that configuration,
+and if you wanna see which configurations you have,
+you need to specify gcloud config configurations list.
+Now when you do run this last command
+you get a table of all the configurations,
+and one of the columns that shows up is called IS_ACTIVE.
+This column will tell you which one of your configurations
+is currently being used, and the other columns
+in that table will show you what the account, project,
+region, zone, and name of the config are.
+Now when you start off using gcloud,
+you'll only have one configuration,
+but you can make a new configuration
+with gcloud config configurations create
+and then the name you wanna give it.
+To switch to that new configuration,
+you would type gcloud config configurations activate
+and then that name.
+Or if you wanna use that configuration
+for just one gcloud command, you can give it the global flag
+-configuration and then its name.
+Okay, I recognize that this is a lot of new information
+on the screen all at once.
+So let me give you an analogy
+that will hopefully help this information
+about configurations sink in.
+Let's compare working with directories on the command-line
+to working with configurations on the command-line.
+If you want to make a new directory,
+you would type something like mkdir
+and then the new directory's name.
+To make a new configuration, you would type something
+like gcloud config configurations create
+and then the name of the new configuration.
+But both of these are really just a container
+to hold new things.
+In the case of the directory,
+it will hold new files and other directories,
+and in the case of the configuration,
+it will hold properties.
+But when you wanna work with a directory,
+you don't just create it,
+you generally will also switch to it using something
+like cd and then the name of the directory.
+That makes that new directory the context
+in which you're working,
+and the same thing goes for configurations.
+Creating a configuration is different than switching to it.
+Now to be fair, when you do create a configuration using
+that command line, it will actually
+also activate it immediately,
+but you'll only make the configuration once
+and you could switch to it any number of times.
+Now once you're inside of a particular directory,
+when that's your working directory,
+you can list it's contents with just ls.
+This is similar to how gcloud config list will
+list the properties in the active configuration.
+But if you wanna list the contents of some directory
+that is not currently your working directory,
+you can still do that too, but you need
+to provide the information at the command-line.
+You would say ls and then the path to that directory.
+Here I'm just assuming that that directory is
+in your home directory represented by the tilde.
+Now for configurations, you could still list the properties
+of some configuration that's not the active one
+by passing the --configuration= and then the name
+of the configuration that you want.
+But as a helpful student named Chris pointed out,
+there's a another version of the command
+that can list the properties too.
+gcloud config configurations describe
+and then the name of the configuration will also print all
+of the properties in that configuration
+but in a slightly different format than the one
+that you see when you type gcloud config list.
+All right, I wanna draw your attention one more time
+to the documentation that's attached to this lecture.
+It's really important that you read it,
+because it adds a lot of context
+and really helps this information sink in.
+You should also definitely re-watch this lecture
+before your exam, and whenever else you might need
+a reminder on how all of this works.
+Practice all of this until you've really got it down pat.
+All right, if you have any questions,
+please let me know.
+If not, please feel free to move on to the next lecture.

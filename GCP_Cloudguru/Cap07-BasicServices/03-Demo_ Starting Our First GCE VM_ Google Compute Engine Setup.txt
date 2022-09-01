@@ -1,0 +1,205 @@
+Okay, hello, cloud gurus,
+and welcome to this lab where we're going to start
+our very first virtual machine in the Google Cloud.
+So to start off with,
+log into the console with your user account,
+select the same project as we were using
+for the Google Cloud storage labs, and open up Cloud Shell.
+All right, I'll see you over there.
+Okay, so here we are in the shell, and we can make sure
+that we've got the right project selected
+by running gcloud config get value project.
+And it shows us that we are indeed
+in the services exploration labs project.
+Of course, you can see the same thing up here
+in this Cloud Shell tab label,
+but it's definitely important for the exam
+to know the several different ways that you can check
+which project you're currently working against.
+Well, all right, since we wanna start a virtual machine
+in Google compute engine,
+let's check to make sure that there aren't any running yet.
+We type gcloud compute instances list.
+Now, before I hit enter on this command,
+what do you think it's gonna do?
+Have you made your guess?
+Well, let's see if you're right.
+Uh huh, so was this what you expected?
+Well, don't feel bad if it wasn't
+because most people would not have expected this result.
+Now I'm gonna show you a bit about what this means.
+So I'm just going to accept the default choice of no
+as indicated by the capital N in this prompt.
+Just hitting enter will do that.
+And we see that the result of this API call was 403,
+telling us that we're not allowed to do that.
+So let's come back to this message in a little bit.
+Right now instead, I want you to type gcloud services list.
+Now, this shows us a bunch of different services,
+but let's find out a little bit more
+about what this command actually means.
+Now, I showed you before that you can add --help
+to any command, to get a lot more information about it.
+But in this case,
+I'm just gonna add the shorter form -h
+to get a shorter version of the help information too.
+Now here we see that we're allowed to pass the flags
+-available or --enabled.
+So let's try the --enabled one first.
+Well, that looks pretty familiar,
+and it's because --enabled is the default.
+Now I'll note that big query is on this list.
+And if you'll remember, we set up a billing export
+to big query earlier on.
+So what would happen if we disabled the big query API here?
+What do you think would happen?
+Would we break the billing export that we'd set up?
+Well, think about the data flow
+and the scope of the information that we're looking at,
+and the impact of the change that we might make.
+This list is the APIs
+that are enabled for this specific project.
+So is this specific project writing to big query?
+No, it's not.
+This project can incur some charges,
+and those charges will show up
+in the trial billing account that we set up.
+The trial billing account is the source of the data,
+but the export and the actual use of the big query API
+will happen in the admin project.
+But the reason we didn't have to go
+through any rigmarole of enabling APIs for big query
+when we set up that admin project
+is because these APIs that we're looking at right now
+are enabled by default for all new projects.
+And this is the same reason that we didn't have any trouble
+when we did the Google Cloud storage labs.
+But enough of that, so let's try --available then.
+And oh, wow, we see a lot more stuff now.
+Well, let's try rerunning that command,
+but this time let's pipe the output of that command
+indicated by this vertical bar to the command grap compute.
+Now, if you're not familiar with this pipe syntax,
+it just takes the output of whatever command is on the left
+and passes it as input to whatever command is on the right.
+In this case,
+grap will only show lines that include the word compute.
+And here we see that compute.googleapis.com is available.
+So if we wanted to enable this service,
+we would type gcloud services.
+And if, again, we use -h
+just to see what things we're allowed to do at this level,
+we see that we can disable, enable or list.
+So we could definitely run gcloud services
+enable compute.googleapis.com,
+and that would get us past this particular block.
+But we don't wanna do that yet either.
+Instead, let's go back to this
+gcloud compute instances list.
+When we say no to this prompt,
+it gives us a URL that we can follow,
+so let's do that now.
+And here we see yet another way that we can enable this API.
+So where are we?
+Well, we're in the Google API section of the console,
+and it has preselected the compute engine API for us.
+But let's go back up a level.
+And here we see a whole bunch of different services.
+Do any of them look familiar to you
+from when we were looking at the list of available APIs?
+We can filter this list
+to groups like the Google Cloud APIs,
+but let's go up another level from the API library.
+And here it becomes even more clear
+that this is just the APIs and services section
+in the console.
+Here on this main dashboard,
+we see the same list of enabled APIs
+that we saw in the command line,
+with easy links to disable any of them.
+Clicking on enable APIs and services
+just takes us back to the library.
+But let's still not enable the API just quite yet.
+Before we do, let's go over to the navigation menu
+and head to IAM and admin.
+Here in the IAM section of the console,
+we see the permissions
+that have already been set on this project.
+The user account that we're currently using
+is the owner of the project,
+and it's the only account with any permissions here.
+Now we could add anyone we wanted to this project
+with the add button up here,
+but we don't need to do that right now.
+Instead, on the left,
+let's find the service accounts section.
+And here we see that there aren't any yet.
+All right, that's all we cared about here for now,
+so let's head back to the main dashboard.
+From here, let's navigate
+to the compute engine section of the console.
+And just by doing this,
+it is now enabling the compute engine API.
+Now this can take several minutes to finish,
+so I'm gonna fast forward the video for you.
+Well, now that that's finished,
+let's go back to the Cloud Shell
+and rerun the exact same command.
+And there we go, now we're allowed to find out
+that we have no running instances.
+But before we start an instance,
+let's take a look at the result of what happened
+when we navigated
+to the compute engine section of the console.
+Let's run gcloud services list.
+And here we go, compute.googleapis.com
+has now been enabled, but interestingly, that's not all,
+this oslogin.googleapis.com has also been enabled.
+And if we go back to the IAM section in the console,
+we see that more stuff has been added automatically.
+We still have our owner account that we had before,
+but we now also have a compute engine
+default service account, a Google APIs service agent,
+and a compute engine service agent,
+three new identities, each one identified
+by an email address that includes our project number.
+Now it may be useful
+for you to remember the format of these email addresses,
+but don't worry about that quite yet.
+All right, of course, the reason I had to go
+to the service accounts list before we navigated
+to the compute engine section of the console
+was because I wanted to show
+that this service account was created automatically.
+Now, it is possible to go
+and delete this auto created service account,
+but we definitely don't wanna do that yet.
+Well, all right, I said that this lab was going to be
+about creating our very first virtual machine,
+and so let's do that now.
+We type gcloud compute instances create myvm.
+We didn't specify a zone,
+so it suggests this one, so sure why not?
+And there we go, our first virtual machine.
+Now, this lab was really all about enabling the APIs
+and getting the service configured.
+So I'm just gonna delete this VM now,
+and we'll run a new one in the next lab instead.
+Was this maybe a little bit different
+than you expected?
+Were you maybe thinking
+that the bulk of this lab was going to be
+in choosing different options
+about how to set up the virtual machine?
+Poof, gone.
+Well, all right, I hope you found that useful
+to see how different services may need to be enabled
+and configured so that you can start using them.
+And I hope you also took note
+of the many different ways
+you can enable APIs in Google Cloud.
+Those will definitely come up both in the real world
+and on your exam.
+All right, if you have any questions, please let me know.
+If not, please feel free to move on to the next lecture.
+Thank you.

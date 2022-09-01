@@ -1,0 +1,39 @@
+Congratulations Cloud Gurus,
+you've reached another milestone,
+By now you've had a chance
+to take a look at a number
+of the core managed services.
+And you've also seen how
+we can use the Command-line and G Cloud
+to clearly specify what we want to have happen.
+We've seen how data flows around
+when we use different services.
+And altogether, this makes up a powerful platform
+that we can use to build things.
+So what do I mean by building?
+Well, building is about using tools
+to create systems that get results.
+And if you let me get just a little bit philosophical here,
+I think that all forms of Cloud Architecture
+are a kind of programming.
+You're programming the cloud system.
+You start by making a plan for how it should work.
+And then you implement that plan as a set of resources
+in connections, where you can configure them
+and script them
+and maybe deploy applications to them too.
+And then those things come together to create that system
+that gets you the results you want.
+So looking ahead, we're gonna have
+you take some ownership of this.
+Instead of just watching data flows happen,
+you're going to start wielding them like a skilled master.
+Instead of doing all the things yourself,
+you're going to be causing
+the things that you want to happen.
+So you're going to start building on
+this foundation of understanding
+how the Google Cloud works.
+If you have any questions, let me know.
+If not, let's jump into the next lecture.
+I'll see you there.

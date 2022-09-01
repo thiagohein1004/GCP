@@ -1,0 +1,438 @@
+Okay.
+Hello Cloud Gurus
+and welcome to this Lab
+where we're going to take a look
+at the Google Compute Engine from the GCP Console.
+Now, as I am sure you've already noticed
+throughout this course,
+it's really important to be familiar
+with both the Command-Line and the Console.
+The Command-Line is direct and consistent
+and it makes it really easier to script things
+and this a critical thing for a Cloud Engineer
+but the GCP Console is also very important.
+It can make of the choices
+that you need to make a lot more clear.
+It's often easier to use and as we'll see,
+it often surfaces really valuable information
+that you might not always think to go and get
+through the Command-Line.
+So for this lab, you'll need to head into the GCP Console
+and select the project that we've been using so far
+to explore the services.
+All right I'll see you in the Console.
+Okay, so here we are in the Console
+and we've got the Services Exploration labs Project selected
+and then in the menu on the left,
+we're going to go to the Compute Engine Service.
+In fact, I may as well pin it now
+just so that it's easy access.
+Now, the GCE section of the Console
+is divided up into a lot of different subsections.
+VM instances, Instance groups, Instance templates and so on
+but let's start by scrolling to the very bottom
+and going to settings.
+Now here in the settings,
+is where you can set a default region and zone
+to be automatically selected
+when you're creating new Instances and whatnot.
+Now please notice, the region and zone here are not set
+even though we just set a default region and zone
+through the Command-Line.
+So what does this information tell you?
+What's your mental model
+for how you're setting those default values.
+The fact that they're not set here
+should tip you off to the fact,
+that you've been setting the default for the tool
+and the settings that you use in the G Cloud tool
+are separate from the settings
+you use here in the Console tool.
+In particular, the place that this information is stored
+is completely separate from the place
+where the G Cloud command stores
+its configuration information.
+Moving on, let's check out the Metadata section.
+Now this is a place where we can specify
+custom project-level metadata
+that shows up in addition
+to the Google Managed Project Metadata
+but the key thing I wanna call out is the SSH Keys.
+If you switch to that tab,
+we'll see here the public key
+that G Cloud created automatically for us
+when we used it to SSH to the Instance
+that we had created on the Command-Line.
+That key is now registered so any future Instances
+they get created, will automatically
+know to accept this for login.
+Now there are more things we can do to control that
+but we'll get to that later.
+We're done with the Metadata for now
+so let's scroll the subsections up
+and choose VM instances.
+So if you compare this to the Command-Line,
+this is what corresponds to G Cloud Compute Instances.
+So without further ado,
+let's start the process of creating one.
+Now, just like in the Command-Line,
+we have to give each instance a name
+so we'll call this one myveryhappyvm.
+Now the process of selecting a region and zone
+is rather easier here than to find the list of these
+and paste the right one into the Command-Line.
+Now I'd like the instance that I create
+to qualify for the free tier
+so I'm going to pick a region and zone
+that are in the United States but not in Northern Virginia
+so let's go for Iowa and we'll say US-central1-f.
+Now the Console is already surfacing valuable information
+such as, how much it's going to cost to run this Instance
+and that will update if I make different selections
+of either machine type or region.
+I'll just put this back to Iowa, US-central1-f.
+But since we're looking for free tier,
+we wanna choose the f1 micro machine type.
+And again, quite helpfully it tells us
+not only how much that costs per month
+but also, that this does qualify for the free tier.
+Now before we move on,
+I wanna point out that there are quite a few
+different machine types in this list.
+At the bottom, the high CPU machine types
+have the minimum amount of memory that you can use
+with that number of CPUs
+and the highmem machine types are the opposite
+where they have the maximum amount of memory.
+The standard types are somewhere in between
+where they're supposed to be a decent blend
+but one of the nice things
+about Compute Engine is that, you're not restricted
+to this list of machine types.
+You can just hit this customize button
+and then drag the slider however you want.
+Whatever you select, that's what you'll pay for.
+Now, you can play around with this
+to get a feel for the different settings
+but one of the interesting things about this is,
+if you make a custom configuration
+that matches one of Google's known machine types,
+it'll just automatically change it into that for you.
+In any case, this is also where you can set the CPU platform
+and attach GPUs and stuff like that
+but we're just gonna leave it as an f1 micro for now.
+Now, when we're creating an Instance,
+we can ask Google to deploy
+a Container Image for us automatically to it
+but if you're deploying Containers,
+you should probably consider using GKE instead.
+Now, the Boot disk is another important choice
+and this is where we choose the operating system.
+The default image is Debian 9
+but if we hit this change button,
+we see that we have lots of options.
+All sorts of Linux based ones,
+Windows Server, Application images
+that also include things like SQL Server
+and if we had created any of our own Custom images yet,
+we would see them in this list.
+You can also choose to boot from a disk snapshot
+or an existing persistent disk in this particular zone
+but for now, we're just going to cancel out of this
+and leave it set to Debian 9.
+Moving down a little bit,
+we get to the Identity and API access section
+and here's where we see the default service account
+that we use to connect to Google Cloud services
+from the VM that we created on the Command-Line.
+There's a default service account for Compute Engine
+but we can also make additional service accounts
+so that we can scope the capabilities to whatever we want
+or we could say, no service account
+so that it doesn't have any automatic access
+to Google services.
+For now, we'll leave the default service account selected
+but an interesting
+and important thing to understand is that,
+even when we've given access to a particular service account
+these access scopes restrict what you can do with it.
+By default, you'll only get read access
+to Google Cloud Storage and you don't actually get access
+to Google Compute Engine which is why we were unable
+to terminate the Instance that we were using
+when we shelled into it.
+If you want, you can set access
+on a service by service basis but for this lab,
+let's just set allow full access to all cloud APIs
+so that this machine is unrestricted
+in how it can use this service account.
+Here we have some settings that we can set
+about Firewalls and allowing ingress
+to this particular instance
+and then we have additional customization options
+for management, security, disks, networking
+and stuff like that but for now,
+let's just leave it at that and hit Create.
+This will take a little bit of time
+just like it does through the Command-Line
+so I'll fast forward this section.
+If you're following along with the lab,
+you can just hit pause now until it finishes.
+All right, now that it's finished,
+we can take a look at the notification here
+and it says, yes it did indeed create it
+and if we click on the VM in the list,
+we get a lot more information about it.
+Now if we click on the Edit button at the top,
+we see that there are a lot of different things
+that we can change about this particular machine
+but a number of them that we can't.
+The name is not something that we can change
+and neither is the zone but it calls out that
+we could change the machine type
+if we stopped the instance first.
+Because I didn't expand the advanced settings
+when we were creating this machine,
+we didn't wind up setting a label
+so we can set that now,
+maybe setting function to learning
+and something like creationmode to Console.
+Here again, we see options for things like,
+allowing HTTP traffic which would be Port 80
+or HTTP traffic which would be Port 443
+but these are really just shortcuts
+for things that you could accomplish through Network tags
+or other Custom Network configuration.
+Moving down, we see Deletion protection
+and the sole purpose of this is,
+is to stop you from accidentally deleting machines
+that you wanna keep around.
+This can have its place but really,
+you'd rather set things up so
+that people are restricted through IAM
+from being able to delete instances that you care about.
+Honestly though, this setting seems to be the opposite
+of the way that you should be using Instances.
+This is about protecting one special machine
+but best practice says that,
+you should treat any instance as disposable.
+Now, we'll cover that more in a future lecture
+but you can already see here from this Delete boot disk
+when Instances deleted checkbox
+that the default behavior
+is not to be preserving these Instances.
+You start them up, they do some stuff, they go away.
+Going away shouldn't be a problem
+because the doing some stuff part
+should always be writing
+everything that matters somewhere else.
+Now if you want to,
+you can attach additional persistent disks to machines
+and that could be a place where you store stuff
+but that way of doing things doesn't play as nicely
+with autoscaling so you often wanna use a separate service
+to store the data instead.
+There are some additional options here
+about Preemptibility, SSH Keys, Metadata and stuff like that
+but I wanna show you those options
+through the creation UI instead.
+So let's scroll to the bottom, hit Save,
+dismiss the notification and hit the Create Similar button
+at the top of the VM details.
+Now this very conveniently pre-populates
+the information in the Create wizard
+with the information from the Instance we were looking at.
+So we're already set to US-central1-f
+with an f1 micro machine type.
+At the moment, it says that this machine
+is going to cost 4.28 per month
+and that breaks down to 5.55 for the machine itself,
+40 cents for the persistent disk
+and then a sustained use discount
+that reduces the cost because this is a monthly estimate.
+But if we scroll down to the bottom,
+expand the Management, Security,
+Disks, Networking, Sole Tenancy
+and scroll to the bottom of this Management tab,
+here's where we could say that we did want it
+to be a preemptible instance.
+Now before I change this option about preemptability,
+notice that the default option for Automatic restart is on
+and the default option for host maintenance
+is to migrate the VM.
+But if I change the machine to be preemptible,
+now first of all, that changes the cost in that,
+the base cost is now only 2.56 per month
+but because it's preemptible,
+there's no sustained use discount.
+You've already gotten the discount
+by having it be preemptible.
+But back down at the bottom, you may have noticed
+that when I set it to be a preemptible instance,
+it disables these options sets the automatic restart to off
+and says that on host maintenance,
+it will terminate instead.
+So what are all these about and how do they relate?
+Well, setting a machine to be preemptible,
+is saying to Google,
+I don't really care how long this thing runs,
+I'll take care of whatever happens after that.
+When a machine is set to not be preemptible,
+Google will do what it can
+to try to keep that machine running.
+If some problem happens,
+like maybe one of the racks in one of the data centers
+just dies all of a sudden,
+then Google can automatically restart it
+on another rack for you.
+And if Google knows that they're gonna need to get
+all of the machines off of a particular host,
+like maybe when they need
+to update the hypervisor or something,
+then they can set things up to be live migrating
+that machine from one host to another.
+It's quite impressive actually
+and you'll almost definitely not even notice
+when it happens.
+Well in a case like that,
+a preemptible machine will just go away
+but it's more than that to.
+Even if nothing bad happens, preemptible instances
+would get killed off after 24 hours.
+Or if Google is running low on capacity
+in their data centers and there are paying customers
+who are willing to pay the higher non-preemptable price.
+So you have to be careful when you choose preemptible
+that your system can handle
+all of the pay the preemptible instances,
+going away at the same time
+even across multiple zones or regions.
+All right, let's scroll up a bit
+to look at the Automation and Metadata.
+Now the startup script here,
+is something that will be run automatically
+whenever that instance starts up
+whether for the first time or on a reboot
+but really, there's nothing special
+or magical about this particular startup script.
+It just winds up being passed to the Instance as Metadata.
+It just so happens that the machine images
+that Google provides are generally all set up
+to automatically run the startup script
+passed in at that particular location.
+Sometimes, the startup script you give
+could be quite involved.
+Installing all sorts of things,
+grabbing and cashing special files from Cloud Storage,
+running different services, whatever you want really
+but in many other cases, this startup script
+will simply run a program
+that will connect to your other configuration management
+like Chef or something like that.
+Now in this Advanced Settings section,
+we also have a Security tab
+and here's where we could override
+the project level settings about SSH Keys
+and block them from being used and add custom ones
+just for this Instance.
+You might wanna use this if you have special machines
+that shouldn't be available to most people in the project
+or some machines where you wanna allow specific access
+to those machines and not the others.
+The point is, that these are just options
+for how you can configure things
+and how you use them will depend on your specific situation
+and what you're trying to accomplish.
+Now for the disks,
+remember that the default behavior
+is to delete the Boot disk whenever the instance goes away
+though you could either add a new one
+or attach an existing persistent disk
+that you had created, using this UI here.
+In terms of encryption, it's generally easiest
+to let Google manage the Keys,
+though you may have some requirements
+to use the Cloud Key Management Service instead
+and manage the encryption through that.
+If possible though, you should try to avoid
+having to manage the Keys yourself outside of Google
+because that'll definitely create hassles.
+For now we're gonna skip the other tabs
+and cancel this and go back to our list of Instances.
+Now at this point, if we wanted,
+we could definitely start the Cloud Shell up
+and then connect to this machine
+in the same way we connected
+to the one in the Command-Line lab.
+But we don't even need to do that really,
+we can just click this button to connect directly
+to that particular machine.
+And there we go, we're in.
+So like before, we can take a look around
+running whoami and hostname.
+But for now, I just wanna do a gsutil ls
+to see that we still have automatic access to that
+and we can list the Instances.
+And again, try to delete the Instance
+that we're actually using right now.
+Yes, we did mean this zone
+and yes, we do realize the disk will be deleted.
+Now, this looks like it's taking a while
+but if we switch back to the list of VM instances
+and refresh the list, we see that it's gone.
+We successfully deleted that particular Instance
+from inside of it and that's entirely due to the fact that,
+we changed the scopes
+to allow access to Google Compute Engine
+through that service account.
+Now the next thing I wanna do here
+is to look at the activity.
+Now when we drop down the list of Notifications,
+we see that it's a bit out of date
+but if we go to the bottom and press See All Activities,
+and give it a little bit of time to load
+then we'll see all the actions that happened.
+Now we see here that almost all of the logged activities
+that we've been doing have been happening
+as our user account but these last two activities
+to delete the VM were performed by the service account
+that was used by the Compute Engine Instance.
+Now this is a really important thing
+and I need you to make sure you understand this.
+So if you're having any trouble with it,
+please rewatch this video,
+do the lab again,
+look into the documentation
+and maybe post a question about it on our forum.
+And the last thing I wanna do here,
+if we go to the menu,
+go to Compute,
+look at Metadata
+and then switch to the SSH Keys tab,
+we'll see two new SSH Keys
+that were added as a part of the connection
+from the console to the Instance.
+Do you remember how when we run G Cloud, Compute, SSH,
+it generated a private and public key pair for us.
+It put the public key in this project metadata spot
+and it stored the private key on the file system
+that was running G Cloud
+which happened to be Cloud Shell in our case.
+Well that private key isn't accessible to this Console
+and the Console does this a different way
+using temporary keys that it generates instead.
+It does still register the public key in this same place
+but because of this expires on tag,
+Google will automatically remove these in a short while.
+They last long enough for us to make the connection
+to the Instance but not long enough
+for them to become an issue
+of someone stealing these credentials
+and using them to mount an attack.
+Well, all right.
+I hope that this has opened your eyes to many of the options
+that you have available to you in Google Compute Engine.
+Like always, if you have any questions for me,
+please let me know,
+if not, please feel free to move on to the next lecture.
+Thank you.
