@@ -1,0 +1,461 @@
+Okay hello Cloud Gurus,
+and welcome to another installment on this challenge lab.
+Now for many of the labs,
+I recommend that you first watch me do
+the lab through once,
+and then you yourself go ahead and do it.
+But for this challenge lab,
+we're doing everything in reverse.
+Now I've already described what we wanna accomplish,
+and I want you to go and make that happen
+before you watch me do it.
+In this lecture,
+we're going to look at the data flow that we want,
+both what we ourselves do
+and also what happens behind the scenes
+because of what we do.
+Now whether you've already accomplished the challenge
+or whether you're going through this
+because you want some hints,
+as I go through this data flow,
+think about how it compares to your mental model.
+Did you already realized what was happening in each step?
+And if so, were you already thinking it before I said it?
+Or was it just that it seemed familiar once I had?
+In any case, as we go, try to refine your mental model.
+Okay so let's just remind ourselves quickly
+of the desired result.
+We want a brand new project,
+with a GCE instance that runs the script that I've provided.
+We want the system logs to show up in Stackdriver logs.
+We wanna have a new GCS bucket for the resulting log files.
+And we want the log file to appear in that new bucket
+after the instance finishes starting up.
+Now throughout all of this,
+there's no need to SSH to the instance itself.
+It should handle all of those things on its own.
+So let me summarize then what our actions are going to be.
+What is it that we're going to do in this lab?
+Or hopefully, what is it that you evolve already done?
+Now the first thing is that we need
+to look at that startup script.
+It definitely has important information in it.
+After that, we'll make a new project,
+make ourselves the logs destination bucket,
+enable the Google compute engine API.
+Now this is automatic if you do this through the console,
+but it's definitely something that you need to consider
+if you're doing it through the command line.
+After that, we'll create the new GCE instance.
+And some key things that we need to set there
+are that we need to enable the scope to write to GCS,
+optionally set some labels,
+set the startup script,
+and add a new piece of metadata
+that points to that logs destination bucket.
+After that, a lot of stuff happens autonomously.
+But we will take a look at the progress
+by looking at the Stackdriver logs,
+the CPU graph and the GCE monitoring tab,
+and the file that shows up in the logs bucket.
+Well without further ado,
+let's take a look at the data flow in action.
+We start things off with your machine;
+the computer you're using to run your web browser
+that connects to the GCP console.
+Now to have connected to the console,
+you can connect to cloud shell and its editor
+to get access to the course lab files.
+Those are stored in cloud shell's persistent storage,
+and you load the startup script into the web browser tab.
+Now for this lab,
+that's really all you need cloud shell for.
+And you could just as well get that startup script
+by clicking on the resource in the lecture
+where I introduced this challenge lab.
+Now one of the first things we need to do
+is to create a project,
+because that's the bucket that will contain
+all of the rest of the resources.
+So we reach out to Google's project control
+and ask it to create us this challenge lab project.
+Then we'll select the project in the GCP console.
+And from that point on,
+everything that the GCP console does
+will be in the context of that project.
+I'm not gonna go into every single detail here.
+But when the project is created,
+a number of different services are enabled by default
+and some others aren't.
+As it relates to this lab,
+the Google Cloud Storage and Stackdriver services
+are enabled by default,
+but Google Compute Engine is not.
+So given that GCS is enabled,
+the console can talk to GCS and say,
+"I would like a bucket with this name, please."
+That logs bucket is then created,
+and the console is told that it was successful.
+The next thing we do in the console
+is to navigate to the Google Compute Engine area.
+But because GCE is not enabled by default,
+the console talks to service API control for us
+and asks it to turn on the API.
+That will then reach out
+to GCE inside of Google behind the scenes
+and initialize the things that are needed.
+At that point the API is turned on
+and the console is told that it can go ahead
+and talk directly to GCE from this point on.
+So in the console,
+we do ask GCE to create a new instance for us.
+We give it the configuration information,
+where we pass the script that we had loaded
+in our web browser already.
+We pass a reference to the bucket
+that we just created as custom metadata.
+And we set the scopes that are supposed to be used
+for this instance.
+Now another thing that's very important,
+but that we don't have to change
+is that we want to use the default service account.
+This gets stored as a part of the instance configuration
+and will come into play in a little bit.
+Now once this information has been passed
+to the GCE control plane,
+the rest of what happens here is asynchronous.
+There is nothing more that Google needs from us,
+our machine, or our console web app.
+Everything from this point on
+will happen completely automatically,
+except for when we look into things, I mean.
+But think about what we've given it really.
+We didn't give it an actual machine,
+neither physical nor virtual.
+And we didn't even really create a machine at this point.
+All we've given Google is a template for creating a machine,
+and Google has accepted our request to create that machine
+from this template right now.
+So it wouldn't matter if we turned off our machine,
+lost our internet connection,
+or just ignored it for a long while and came back later.
+Everything from this point on would happen
+the same way anyway.
+Now for the sake of this data flow,
+let's bring our machine back
+and leave the web browser with the Google console open,
+because we'll use it to look into some things later on.
+So now that GCE has gotten a request to create a machine,
+it needs to go and find itself a host machine somewhere
+that has free space for this VM.
+The host machine that it picks
+will depend on what instance type we've given it.
+The location of that machine will of course depend
+on the region and zone that we've selected.
+And Google will manage the problem
+of trying to pack all of the different instances
+onto the different hosts most efficiently,
+so that there aren't wasted resources.
+Now that host machine will then reserve some space
+for the GCE instance.
+But there's more going on on this host than just that.
+One of the important things to understand
+is that the host machine itself
+is always running the metadata service.
+And this is why you can connect from a GCE instance
+to the metadata service using just HTTP instead of HTTPS
+and it's still secure.
+Normally you would consider HTTP connections to be insecure
+because they're not encrypted.
+But because the connection
+is literally from a machine to itself,
+there's no way for anyone else to be eavesdropping
+on that conversation.
+Now as a part of setting up this GCE instance
+on this GCE host,
+this metadata service will get information
+from the GCE control plane.
+In particular, it'll get the startup script
+and the custom metadata bucket name that we passed along.
+But when it comes to the scopes in the service account,
+there's a little bit more that goes on here.
+In particular the identity
+and access management service comes into play,
+and it combines the scopes and the service account together
+to create an access token.
+Now fundamentally, what this access token allows,
+is for whoever holds it to act as that service account,
+but scoped to down to whatever those scopes would allow.
+So if the service account allows something
+but the scopes do not,
+then you can't do that with the access token.
+But the reverse is also true.
+If the scopes allow something,
+but the service account
+doesn't have access to do that thing,
+then again the access token won't be enough
+to be able to do that.
+Well we've already seen that the default service account
+has access to a lot of different things,
+but you can scope that down on an instance-by-instance basis
+using the scopes.
+So for example, by default,
+you can read from Google Cloud Storage,
+but you can't write to it.
+The service account allows you to do both,
+but the scopes say read only by default.
+But imagine if you changed that service account
+or created a new one,
+and you didn't give that service account access
+to any GCS buckets.
+Well then, no matter what the scope says,
+that access token will never let you do something
+that the service account couldn't have done originally.
+Now one less thing to call out here
+about the metadata service,
+is that GCE maintains some project level SSH keys for us
+as we've seen.
+And those keys will also be passed to the metadata service
+as a part of configuring this instance.
+Now at this point, the host machine has everything it needs,
+and so it lets the GCE control plane know that it's got it,
+that the instance is running,
+and then flips the communication around
+and starts telling the GCE control plane
+about what's happening with that instance.
+It'll tell it things like the instance is still running,
+or, oh, it shut down now.
+But it will also pass along metrics
+of things that are visible to the hypervisor.
+Now the hypervisor is really just the system
+on the host machine that is running and monitoring
+all of the instances, all of the virtual machines.
+And so whatever things are virtualized
+will be visible to that hypervisor.
+So for example,
+when the instance uses a lot of CPU
+because that's virtualized,
+the hypervisor will see all of that processing.
+And because disk and network access are also virtualized,
+those things are also visible to the hypervisor.
+Things that are at the level
+of the operating system of that GCE instance,
+those things are not visible to the hypervisor.
+So for example,
+the hypervisor doesn't know how much free memory
+there is in the operating system,
+because the operating system
+is just using the memory however it sees fit.
+Maybe it goes about clearing all of the pages of memory,
+and so it looks like memory access,
+even though it's just cleaning things up.
+Or maybe the operating system hands out
+a bunch of memory pages to different applications.
+And so that memory is effectively being used up,
+even though there isn't
+any memory access associated with it.
+Another thing that would not be visible to the hypervisor
+is things like garbage collection events
+that happen in the Java virtual machine.
+Now I'd like to point out that once things
+have gotten to this point,
+the instance is considered to be running.
+The GCE control plane has handed off the responsibility
+to the host machine.
+And at this point,
+that instance and the host are resilient
+to a control plane outage.
+What this means is that because the data
+has already flowed to it,
+it has everything it needs to keep running until any issue
+with the GCE control plane has been resolved.
+Any metrics or status updates
+that it would have passed along
+will just wait on the host machine
+until the GCE control plane comes back.
+Now this situation here is exactly why
+when you see a service outage related to GCE,
+it'll usually be that you're unable
+to start or stop or delete instances,
+not that those instances stopped running
+all of a sudden.
+Sure, here and there,
+an individual host will have trouble,
+and a few instances will get restarted somewhere else.
+But the system is designed
+to let all of the instances keep doing
+whatever they're doing,
+even if there's a system level problem with GCE.
+I think this here is one of the most clear ways
+to identify the control plane.
+It's the part of the system that you use to make changes,
+rather than the part of the system
+that actually does the work.
+In any case,
+let's move on and assume that the GCE control plane
+is humming along just fine.
+So at this point,
+the GCE host knows that it needs to start up this instance,
+and it effectively powers on the virtual machine,
+which makes the operating system boot and do its thing.
+Now as the operating system boots,
+Debian Linux in this case,
+it writes its progress to a file called syslog.
+Now syslog is a place where lots
+of different applications will write.
+And keeping a whole bunch of arrows pointing at syslog
+will really over-complicate the diagram.
+So I'm just gonna simplify things and omit those arrows.
+Now when the operating system starts up,
+one of the things that it does
+is that it starts a program to manage SSH keys.
+Yes, the actual SSH service will also be started.
+But what I wanna point out here
+is that this SSH key management system
+will reach out to the metadata service
+and grab whatever keys are authorized
+to connect to this instance.
+Now in the case of this brand new project
+where we didn't set any project level
+or instance level SSH keys,
+this is just going to be empty for now.
+But a core part of why this all works
+is that this SSH key management system puts a watch
+on the SSH keys in the metadata service.
+In particular, the metadata service has a mechanism,
+where you can ask it for any particular value,
+but tell it if it doesn't have a new one, just wait.
+Don't answer yet.
+Just answer if it changes.
+It's actually really easy to ask for this functionality
+because you just add a query parameter to the metadata URL,
+setting wait for change equal to true.
+Now setting this query parameter
+is triggering something that's called long poling.
+Now if you're not already familiar with long polling,
+that's fine.
+But it is a really valuable technique to understand.
+It allows you to basically get an event sent
+through the normal HTTP system.
+In particular, because it uses normal HTTP traffic,
+reaching out from the client to a server,
+it'll be able to use any normal firewall
+or network configuration to enable web traffic,
+and won't require a lot of complicated management
+on either the client or the server either.
+If you imagined this arrow flipped the opposite direction
+where the metadata service had to push
+some information into the GCE instance,
+that would be a problem,
+because then the instance would have to have some way
+of accepting and processing that request.
+You would have to start a server on the instance
+and you would have to open up some ports,
+so that the connection could come through.
+But because the instance is reaching out,
+it just uses the normal system for making web requests,
+and doesn't even require the extra setup overhead
+that something like web sockets could have.
+In any case, moving on,
+the operating system also wants to run the startup script.
+The machine image that we're using in GCE
+comes pre-configured to go and access the metadata service
+to ask for the startup script.
+So when it retrieves that, it runs it.
+Now this startup script starts off by connecting out
+to the internet to update some things on the local machine.
+But we're gonna ignore
+the internet connection stuff for now,
+and just talk about how it starts up the Stackdriver agent.
+Now actually, this doesn't just start
+the Stackdriver agent either.
+If you look at the script, it reaches out to the internet,
+downloads the Stackdriver agent install script,
+runs that Stackdriver agent install script,
+which will then reach out to the internet again
+to get the Stackdriver agent,
+install it on the machine, and run it as a service.
+There's a lot of stuff going on,
+but what matters to the data flow
+is that it gets installed and starts running.
+Now this Stackdriver agent will read the data from syslog.
+In fact, it doesn't just read it,
+it actually watches that file from this point on,
+and it's then going to send that data
+to the Stackdriver logs service.
+But Stackdriver doesn't accept logs from just anyone.
+You need valid credentials.
+So the agent gets the access token
+from the metadata service.
+And using that,
+it's then able to write the logs to Stackdriver.
+And it continues writing them as new log lines are written.
+Now I've only pointed out syslog here,
+but the Stackdriver agent, by default,
+will send tons of different logs.
+It comes pre-configured to send logs
+for pretty much all of the most popular services.
+But this agent can do more than just shuttle logs too.
+It can also write metrics
+that are only visible from within the VM
+by asking the operating system what's going on.
+This can see things like how much free memory there is,
+something that I pointed out
+is not visible to the hypervisor.
+Well okay, once the Stackdriver agent is off and running,
+the startup script runs the stress tool.
+Now this is effectively simulating some work
+that would need to get done on this GCE instance.
+So it just processes a bunch of stuff on the CPU.
+Now because CPU usage is visible to the hypervisor,
+that will be sent by the host machine to GCE
+as hypervisor metrics,
+and we'll see a spike in the CPU graph for this instance.
+When stress finishes,
+the CPU graph will go back to low usage.
+The next thing that happens
+is that the startup script reaches out
+to the metadata service to get the bucket name.
+It uses that information to create a command for gsutil,
+telling gsutil to write a particular log file
+to that bucket we created.
+But gsutil also needs some credentials,
+so it too reaches out to the metadata service
+to get the access token,
+which then allows it to write the log to the logs bucket.
+When it's finished running the file, gsutil finishes.
+And that was the last thing in the script.
+And then the operating system finishes booting too.
+Well, there we go.
+We just got the result that we expected
+without having to SSH to the instance or anything.
+And we haven't used the GCP console for anything
+since pretty much the very beginning.
+Now at any point in time during this process,
+or after it all finishes,
+whatever you choose,
+you can use the GCP console to connect out
+to these different places to see what's going on.
+You can check the status of the machine
+or the metrics that are visible to the hypervisor
+in the GCE area of the console.
+You can check whether the file has appeared
+in the logs bucket in the GCS area.
+And in Stackdriver, you can watch for the logs to show up,
+indicating that the startup script
+was able to install the Stackdriver agent,
+and the agent was able to use the access token
+to write the logs.
+All of this information is visible to you
+in the GCP console.
+Well, wow, that took even more animation steps
+than the cloud shell data flow did.
+But I hope it's been useful to help you validate
+your understanding of this challenge lab data flow
+and how everything works.
+Now if you haven't already had a chance to go
+and actually do the lab yourself,
+please do that now before you continue on.
+And if you have any questions for me, please let me know.
+And when you're ready, I'll see you in the next lecture.
+Thank you.

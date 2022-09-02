@@ -1,0 +1,49 @@
+Congratulations Cloud Gurus you've reached
+a significant milestone.
+In this challenge lab I pushed
+you to build something on your own.
+Its not the most complicated system in the world,
+but its an important thing to realize
+that that's what this is all about.
+The real world is not about following instructions
+that someone else gives you.
+The real world is about figuring out what needs
+to be done and doing it.
+And if you took on the advance challenge of scripting
+everything then you'll have learned even more and gotten
+even more practical value out of it.
+Now another thing I hope you've gotten
+out of what we've just done is the realization
+that what this is all about is causing things to happen.
+In this way designing and building systems
+like this is a lot more like composing music
+and conducting an orchestra, not playing
+every instrument yourself.
+The power of the Cloud or any abstraction really lies
+mostly in not having to do things yourself.
+There's a great quote that is often misattributed to Bill
+Gates, though the true source is not entirely clear,
+and that quote says, "Choose a lazy person to do a hard
+job, because a lazy person will find an easy way to do it."
+Now there can definitely be value in hard work,
+but as much as possible you should look for the way
+that takes the least of your time.
+Person time is one of the most expensive things
+in all systems, and so if you can invest some person time
+upfront, to create a system that saves more person time
+down the road ,that's a really good trade off.
+Even if the system itself costs a bit to run.
+So what we have seen is that we can cause a whole
+lot of things to happen if we set the right things
+up and ask Google to do certain things.
+And even if you haven't done the advanced challenge
+and you did everything through the console
+it was all still a form of automating and packaging
+up your instructions and data,
+in a way that could be executed by the Google Cloud.
+But as we look forward well see other ways
+that that can happen.
+Well if you have any questions please let me know.
+If not then lets get going
+with some more Google Cloud stuff huh.
+Ill see you in the next lecture.

@@ -1,0 +1,296 @@
+Okay, hello Cloud Gurus,
+and welcome to this lecture where I'll be going through
+the practice exam questions related to this Challenge Lab.
+Now, before we start into the questions
+I just wanna give you a very quick summary of my strategy
+for breaking down certification exam questions like these.
+You can find the full version of this in my Cert Prep Guide
+and I'll put a link to the key lecture
+in the Resources section for this lecture.
+But as I've mentioned before, it can be helpful
+for you to go through the entire guide.
+In any case, the first step to breaking down
+an exam question is to understand what's going on.
+In any question there's almost always going to be
+some description and then what I call a kicker.
+The key question at the end that might ask something like,
+how would you do this in a cost-effective way
+or how would you debug this problem?
+It's important to keep this key question in mind
+because this is really what you're answering.
+You also need to understand what everything means
+both in the question and in each of the responses.
+But understanding doesn't just mean the terms,
+it also means that you should think through the data flow.
+The next step is to eliminate.
+You need to eliminate response options
+that have fake information or problems,
+something that goes wrong in them
+and you should also get rid of responses that conflict
+with that key question, the kicker.
+Eliminating responses is a really critical part
+of answering these questions correctly.
+In fact, it's probably even the most important thing.
+Once you've eliminated different options,
+you need to evaluate the ones that are left.
+You can compare them with each other
+and think through what it means
+in terms of different trade-offs.
+Maybe some options will be much more expensive
+than other options, or some options
+are more secure than others, you should be thinking
+about all sorts of different trade offs.
+You should definitely pay attention
+to the ones that are called out, but don't forget
+to consider the ones that are just implied to.
+Once you've evaluated the options, you need to choose
+exactly the right number of options
+that the question requests, some questions may ask you
+to choose two or three different responses,
+so make sure you do that.
+Now sometimes a good way to do this, is to order the options
+that you haven't eliminated
+in terms of how you've evaluated them
+and then either just pick the ones at the top,
+or knock out the ones at the bottom.
+After you've done that, don't forget to validate
+your choices, make sure that you're actually answering
+the key question and that you don't accidentally wind up
+conflicting with it.
+But okay, enough about that let's move on
+to the first question.
+You have been tasked with configuring
+a number of, to-be-created GCE instances,
+which of the following should you do choose two?
+So right off the bat, we're thinking
+about Google Compute Engine Instances,
+and how to set them up.
+A, write one startup script per instance
+and pass it in as the startup dash script metadata.
+Well, this might be possible, what would you do here?
+Let's say that you had five instances,
+you would be writing five different scripts,
+it doesn't seem ideal, but it might work, let's keep going.
+B, write one the startup script for the fleet
+and pass additional metadata to each instance.
+Well, that definitely seems like an interesting possibility,
+having only one startup script for a group of instances
+is much easier to maintain and a good way to configure
+any instance level specifics is to pass additional metadata,
+so this definitely seems like a good option.
+C, install, the Stackdriver logging agent
+in your startup script.
+Well, this also seems like a good idea.
+When you do install the logging agent
+you get better information about that instance,
+so that seems good too.
+D, in your startup script, double-check
+that the Stackdriver agent was already installed by default.
+Well, this is inaccurate, it's not installed by default,
+you have to install it yourself,
+so I would say we should eliminate D.
+E, use Google's instance Fleet service
+to run your preexisting Chef recipes.
+Well, you can't use Chef recipes to configure machines
+which is something you might or might not know
+depending on your background,
+but Google doesn't have an instance Fleet service,
+so we should eliminate this option too.
+So we've eliminated options D and E,
+but now we have to choose
+exactly two of the remaining options.
+If I compare A and B, I definitely prefer B over A
+so I would say that I should choose B and C instead
+and these do seem to line up with the key question.
+All right, next question two.
+Your accounting department wishes you to create
+Google Compute Engine instances with a label
+that has the key of department and the value of development
+to assist with tracking the instances you create.
+Which of the following options is the best way
+to apply labels to those instances?
+Well, if we look at this question it doesn't really matter
+why we're setting these labels,
+whether it's the accounting department that asks us
+or some compliance, or just because we feel like it,
+that probably won't really affect which answers we choose.
+The key question here is which of the following options
+is the best way to apply labels to those instances?
+So option A, after the instance has been created,
+go to the Instance Details page and edit the Labels section.
+Well, it is possible to edit the labels
+in the Details page of an instance,
+so I wouldn't eliminate this option
+but I don't really like this idea.
+You don't wanna edit the labels after you've created it,
+you wanna create it with the correct labels
+right off the bat.
+B, write a command line script to apply labels
+to any newly-created instances.
+Well, this seems to me, again like it's working
+after the fact, you could write a command line script
+to do this, but it still doesn't see my ideal.
+C, set a project level metadata item
+called apply underscore labels, with a value
+of department:development.
+Well, this just seems wonky, setting metadata like this
+is about communicating information to the running instances,
+and we need to talk to the GCE control plane
+to set the labels.
+This is a completely wrong data flow, and it wouldn't work
+unless you had something running on the instance
+to reach out to the control plane to set the labels.
+D, when creating the instance in the console,
+expand the Management tab and set the label there.
+Well, this would definitely work if you are creating
+an instance manually you could set the label there.
+This seems like the best option to me so far.
+E, in the console activity screen set a trigger
+for instance creation and set the action
+to apply label department:development.
+This isn't something you can do like that,
+so we should eliminate it.
+So in the end, I choose option D.
+Question three, you believe that the startup script
+for a newly created GCE instance did not run at all,
+which of the following steps should you take
+to help investigate this problem, choose two.
+A, restart the instance in SSH mode.
+Well, there isn't an SSH mode and you don't need
+to restart the instance to be able to connect to it,
+so we should just eliminate this.
+B, press the SSH button on the Instance Details page
+in the console.
+Well, this definitely could work, there is such a button
+and connecting to the machine definitely could help you
+investigate the problem.
+C, go to the Stackdriver Logs page for this instance
+and press the Pull Logs button.
+Well no, this is wrong, this data flow does not work.
+Stackdriver does not pull logs from the instances,
+the instances are set up to push their logs
+to Stackdriver through the agent.
+Unsurprisingly, there is no such Pull Logs button
+and this option is just wrong, we should eliminate it.
+D, check the machine's syslog.
+Well that definitely could help, in the syslog,
+you could see it trying to run this script,
+maybe it failed to retrieve it from the metadata service
+or maybe something went wrong when it did run,
+this could be very helpful information.
+E, from the instance, run the command
+curl-h GoogleHeader: Allow https://metadata/startup-script.
+Well, this is not going to work, the header is wrong,
+the address is wrong and the metadata service
+uses the HTTP protocol not HTTPS,
+we should definitely eliminate this.
+So we've eliminated options A, C and E,
+so we're just left with B and D.
+Does it make sense to press the SSH button
+on the Instance Details page in the console
+and then check the machine's syslog?
+Definitely, those are the right answers.
+Next question, question four.
+You have a GCE instance with startup script
+that writes to GCs when it completes
+but you are not seeing the file appear in the GCs bucket.
+Which of the following should you do
+to help diagnose this situation?
+Well, this scenario is very similar to our Challenge Lab
+and that's as I modeled this question
+after our Challenge Lab, when I was making it up
+but it's still a perfectly valid question in its own right,
+so let's break it down.
+A ,look at the GCE console's monitoring tab
+to see whether any error messages were logged
+by the start-up script.
+Well, this just doesn't work,
+the data does not flow like that.
+The GCE console's Monitoring tab has information
+that it can get from the hypervisor,
+so we can see things like CPU usage
+but it can not see error messages logged
+by the start-ups script, we should eliminate this option.
+B, look at the activity screen in the GCP console
+to see whether there is currently any outage.
+Well an outage could potentially explain this,
+but you don't see that on the activity screen
+in the GCP console, so we should eliminate this option too.
+C, check whether the scopes are set
+to allow writes to storage.
+Well, this is definitely an important thing to check
+and it could help you diagnose the situation,
+so we don't eliminate this but let's keep moving on.
+D, check whether the instance has it's Allow HTTP Traffic
+and allow HTTPS Traffic checkboxes set.
+Well, this is the wrong direction for the data flow,
+those checkboxes do exist, but they're all
+about opening the ports in the firewall
+for traffic that starts outside of the instance
+and is going into it.
+And nothing in this scenario requires or expects us
+to be running a server on that instance,
+that instance is simply reaching out
+and you don't need these checkboxes set to connect
+to either the metadata service or to GCS.
+And we've seen that in practice, in our Challenge Lab
+we should eliminate this option too.
+E, none of the other responses is appropriate.
+Well, this is wrong and should be eliminated too
+because when we came across option C,
+we thought it was good, so we stick with C
+and that's the right answer.
+Question number five, you have a GCE instance
+with a startup script that writes to GCS when it completes
+but you are not seeing the file appear in the GCS bucket,
+seem familiar so far?
+Which of the following should you do
+to help fix this situation?
+So we're dealing with the same scenario
+but the kicker is just a little bit different.
+In this case, we wanna do something to make it work
+rather than just find out more information.
+A, remove the default service account from the instance.
+Well, that doesn't seem valuable,
+in our Challenge Lab, we used the default service account
+and it was able to write to GCS just fine.
+This is not the right answer.
+B, restart the machine so that the metadata will be updated.
+Well again, we saw that we don't need to restart the machine
+to get new metadata, so even if the problem
+was that some metadata was out of date,
+restarting the machine would be the wrong way to solve it.
+We should eliminate this option too.
+C, wait at least four hours
+for the new buckets DNS to propagate.
+Now, regardless of whether you know
+all about DNS propagation, we've seen firsthand
+that you don't need to wait four hours to be able to use
+a new bucket from an instance like this, this is wrong.
+D, ensure that the buckets allowed writers file
+includes this instance.
+Well, we never had to set anything
+about an allowed writers file,
+this is also not a good answer.
+E, make sure that the instances IP tables configuration
+includes the bucket's ANSI IP address
+in the Allow Full Column.
+Well, this is just technobabble,
+some of those terms might exist
+but the way they're all put together makes no sense at all.
+And simply from your experience
+of going through the Challenge Lab, I think you could see
+that this isn't the right answer.
+F, none of the other responses is appropriate.
+Well of all of these responses, I think this is the only one
+that makes sense and that's the right answer.
+Well, all right, I'd like to leave you
+with this reminder about the question strategy
+but I'd also like to ask you, does this make sense to you?
+Do you see how thinking through the data flow
+leads to many option eliminations in questions like these?
+Do you feel confident that you would now be able
+to answer questions like these on your exam?
+Well, if you have any questions for me, please let me know,
+if not, please feel free to move on
+to the next lecture, thank you.

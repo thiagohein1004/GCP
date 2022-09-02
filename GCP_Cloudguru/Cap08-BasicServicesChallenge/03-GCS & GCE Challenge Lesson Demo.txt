@@ -1,0 +1,217 @@
+Okay, Hello Cloud Gurus and welcome.
+This is the video where I go through the challenge lab
+that has you create a Google Compute Engine instance
+and connect it up to a Cloud Storage bucket.
+Now, I really hope that when you watch this video
+you're watching it to see how I did it
+to compare it to how you've already done it yourself.
+That's the way this challenge lab
+was intended to work, anyway.
+That said, I do realize that some people
+won't have gone through the challenge lab
+on their own first, but either way,
+I hope that when you're watching this
+you're really trying to pay attention
+to the mental model of the data flows.
+Well, all right, how about you join me in the console.
+Okay, here we are in the console
+and the first thing I'm going to do is to start Cloud Shell.
+I'm also gonna put it into its own window.
+Now, Cloud Shell here is going to connect
+to the project that I have selected,
+but that's all right
+because I'm not actually going to use Cloud Shell
+to do the command line version of this challenge lab,
+I'm just going to use Cloud Shell to get the script we need.
+Now, one of the first things we need to do
+is to create a new project for this challenge lab
+because that was one of the requirements.
+And since creating a project takes a while
+I'm gonna switch over to that tab,
+we can drop the dropdown, say New Project,
+call it something like Challenge Lab GCE, say Create,
+and now this'll take a little bit of time.
+So if we look at the script, here,
+it starts out by saying that it'll echo the information
+so that it's a little easier to run.
+Then it'll update the installed packages on the machine,
+and then download and run the install script
+for Google's Stackdriver logging agent,
+moves on to stressing the CPU for a bit,
+then getting some metadata called lab-logs-bucket
+and copying a log file
+to that place with a gsutil command.
+So, this lab-logs-bucket
+is definitely gonna be interesting,
+but we don't need it quite yet,
+so let's just leave this script up
+and head back to the console.
+Now we can switch to the challenge lab project
+and create the bucket we need.
+We say, Create bucket.
+Let's call this one challenge lab something.
+Challenge-lab-gce is still available.
+To keep it within the free tier
+we'll make it a regional bucket and say us-west2,
+and we can Create.
+The name of this bucket will be useful,
+so I'll just copy it.
+And we can head over to the Compute Engine section.
+Now, this also takes a little bit of time to finish,
+so think about what's happening here.
+When we created the project,
+a number of APIs for different services
+were turned on by default.
+So, those services went through
+whatever initialization they needed at that time.
+For Compute Engine that doesn't happen automatically
+when you just create the project,
+you have to turn it on yourself.
+So, here, it's going about doing things
+like creating service accounts,
+registering our account
+in the Compute Engine side of things,
+all sorts of things, really.
+Whenever you have a situation where you have to wait,
+it's a good idea to be thinking about what's going on.
+Imagine what it's actually doing behind the scenes
+because a lot of what happens is what you trigger,
+not necessarily what you do, specifically.
+And that's actually a key thing about this challenge lab,
+the amount of action that you managed to trigger
+with just a few simple things is quite significant.
+Well, all right, looks like it finished initializing
+Google Compute Engine.
+So, let's go ahead and make the GCE instance.
+We say, Create.
+You don't have to name it anything different,
+but I think I'll just tack on challenge lab
+to make it challenge-lab-instance-1.
+This region and zone of us-east1-b
+qualify for the free tier, so we can just leave that.
+It doesn't matter that the logs bucket
+is going to be on the West coast
+and the machine is gonna be on the East coast,
+they'll still be able to talk to each other just fine,
+they'll just be a tiny, extra delay.
+For free tier though,
+we want to set this to be an F1 micro instance,
+and now we can scroll down.
+It's important to leave the service account
+to be the Compute Engine default service account,
+but if we leave the scopes with the default access
+we won't be able to write the logs to the bucket,
+so we'll need to make sure that it can Write to Storage.
+It doesn't actually need to be able to read,
+but writing is important.
+Since we're here, we can also notice
+that the Stackdriver logging and monitoring APIs
+are also already set to allow Write access,
+and of course that's important for the Stackdriver agent
+to be able to work.
+Moving down, we'll need to expand the advanced options.
+It's optional, but we can set a label here.
+You can set whatever label you want, really.
+But if we scroll down, here,
+this is where it really gets interesting.
+We're definitely going to need to set this Startup script
+and also this Metadata.
+Now, I remember that the metadata
+was going to need the bucket name,
+so I may as well just paste that in now,
+but the format is in the GS, colon, slash, slash
+and it might need a trailing slash as well,
+so I'll just set those right away.
+If I switch the tab I can grab the startup-script.
+I can paste that in.
+And then if I scroll up a little bit, there,
+I can get the key name
+for the metadata that I'm going to set.
+So, I'll copy that and paste it into the key.
+Well, now we've set the key things that we needed to set
+about this instance, so let's scroll down to the bottom
+and hit Create.
+Now off it goes.
+So, here again is an instance where we're waiting.
+So what's going on?
+Can you, right now, think through all of the things
+that are happening behind the scenes.
+The data flow lecture that corresponds with this
+should hopefully clarify exactly what is going on,
+but it's really important for you to understand
+all of the things that happen,
+in what orders they happen and why they happen.
+So, now that the instance is at least running,
+we can click on the instance name
+and see some information about it,
+but it's this monitoring tab
+that's kind of interesting now.
+So far there's nothing happening,
+but there is stuff going on.
+So it'll just take a little bit of time for it to refresh.
+Well, while that's going on,
+I'm going to open up a couple more tabs
+so that we can check a few more places.
+For one of those tabs I'm going to go to the bucket
+to see when the file gets written.
+No files yet, understandably.
+And for the other tab, I'm gonna head over to Stackdriver.
+In the details for the VM instance
+there's a handy little link that takes us directly there.
+Now, I see that a lot of things are going on
+and these last lines are exactly what I expect to see.
+That stress is running and outputting some information.
+Here, it shows us that it ran the command
+stress -c eight -t 120,
+so that it uses eight CPUs for 120 seconds.
+Now, this machine doesn't have eight CPUs,
+but this will, basically, just max out whatever it can use.
+If we refresh the Monitoring tab,
+we see that a bit of the network activity
+has registered, which was presumably for updating
+the various installed packages
+and downloading the Stackdriver agent installer.
+But, oh, here I see that it's updated.
+The CPU registers 223.36%
+and then it drops down to about 100%.
+And this is what I would expect to see
+because it's allowed to burst for a little while,
+beyond a hundred percent, but then it gets throttled down
+because it's only an F1 micro instance.
+Now that this has been running for a little bit,
+if we head back to the bucket we might see the file show up.
+And indeed we do, there's our file.
+Well, without SSHing to the machine,
+without doing anything to it directly
+we managed to have it start up, complete some work
+and output its information to three different places.
+We saw information
+in the Google Compute Engine monitoring tab,
+we saw Stackdriver logs, which if we refresh,
+shows that the start-up finished
+and we saw the file
+show up in the Google Cloud storage bucket.
+Now, this instance is still running,
+but if we wait a little while
+we see that the graph shows it's not doing any more work.
+So, we should definitely remember to either stop
+or delete this instance.
+Before you do, though,
+you might consider SSHing to the instance
+and taking a look around,
+like maybe running some of those script commands yourself.
+Well, I'm done with this for now,
+so I'm just going to delete the instance.
+Well, I hope you found that helpful
+to see how quickly you can go through something,
+like this challenge lab,
+if you understand what you're trying to accomplish
+in advance.
+If you plan out your actions
+and have a clear understanding of the data flow,
+both that you yourself are performing
+and the ones that you trigger,
+that'll really set you up for success.
+If you have any questions, please let me know.
+If not, please feel free to move on to the next lecture.
+Thank you.
