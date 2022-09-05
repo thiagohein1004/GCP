@@ -1,0 +1,303 @@
+Okay, hello Cloud Guru's,
+and welcome to this lecture
+where we're going to take a look at security.
+So what is security?
+Well, you probably already have some sense of this,
+but we're going to dig into it a bit more deeply.
+So let's start with what Wikipedia says.
+It says, "Information security,
+"sometimes shortened to InfoSec,
+"is the practice of preventing unauthorized access,
+"use disclosure, disruption, modification, inspection,
+"recording or destruction of information.
+"Its primary focus is the balanced protection
+"of the confidentiality, integrity, and availability
+"of data, also known as the CIA triad,
+"while maintaining a focus on efficient policy
+"implementation, all without hampering
+"organization productivity."
+Well there we go, I'm not sure there's any more
+to say now is there.
+But seriously though,
+this definition is almost overwhelming.
+So here's what I say instead.
+Security is ensuring proper data flow.
+Not too much, not too little.
+Now, we're going to unpack these definitions
+in the rest of this lecture, but a key takeaway already,
+is that you don't build overall systems
+for the purpose of security.
+There's always some other data that needs to flow,
+and security is just one of the cross cutting concerns.
+Meaning that it's something that affects
+every piece of the system.
+So what is proper data flow?
+Well it means that you cannot view data that you shouldn't.
+You cannot change data that you shouldn't.
+And you can access data that you should.
+These line up directly with the CIA triad,
+making sure that only the right people
+can see certain data is confidentiality.
+Being able to trust that the data hasn't been changed
+inappropriately, is integrity.
+And being able to get out the data
+and use the system when you do need to is availability.
+But let's take a look at these three things
+in the context of a data flow example.
+Let's say that we have a person here,
+and this person is the construction manager
+for a building project,
+and she wants to use this scheduling system
+to help manage the progress.
+She's able to connect to the system,
+access the data and retrieve it.
+But a new challenger approaches.
+Now, whether it's a ninja, alien, nine year old
+or any other attacker,
+this is someone who wants to breach, your security.
+They want to access your system and either read
+or change the data at rest.
+They want to meddle with your communication
+and either eavesdrop on or tamper with the data
+that's in transit, also called the data in flight.
+They want to disable your system
+or block your communication.
+Security is about preventing these bad actors,
+while maintaining availability.
+So how do we actually do this then?
+How do we take control of the data flow,
+and make sure that it happens properly?
+Well, that brings us to the triple A model of security.
+The first A, authentication asks, Who are you?
+This is a very important first question.
+We need to be absolutely sure
+that you actually are who you say you are
+before we let you do anything.
+This includes things like passwords,
+multi-factor authentication and single sign-on
+from another trusted system.
+The next A, authorization asks the question,
+what are you allowed to do?
+And this includes both reading and writing.
+So for example as a store shift supervisor,
+you might be allowed to see how many items were sold today,
+but maybe not how much profit was made off of those items.
+That's information that should
+be confidential to the business owner.
+Or as a bank client, you might be allowed
+to see your current account balance,
+but not set it to whatever you want, unfortunately.
+The third A, accounting, asks,
+"What did you do or what happened?"
+This includes actions like writing or deleting data,
+but it can also include viewing information.
+For example, if you work in healthcare
+and view some patients information,
+that should be tracked
+and you should be held accountable
+that it was for some valid purpose.
+Or if you delete some system log files
+that action should also be recorded
+and might need to be explained.
+Especially if there's been a security breach,
+and those logs might have explained what happened.
+Now there's one more thing I should point out
+about controlling data flow,
+that doesn't exactly fit into the triple A model.
+If we think about the availability from the CIA model,
+we might want to add something like resiliency
+to make sure that we keep things running.
+But okay, practically speaking,
+how does data flow through a triple A model?
+Let's say that we have the same person,
+accessing the same building construction system.
+If the person tries to connect directly to it
+that connection is refused.
+You need to be authenticated before you can access it.
+So the first thing the user does
+is to connect to the authentication system.
+This system will validate the identity,
+and then sign a token for them, saying,
+"I have validated this user."
+This will then also talk to the accounting system
+to record that this user did successfully log on.
+The user will then connect to the application
+and pass along the credentials
+from the authentication system.
+The application will check that the credentials
+are indeed signed by the authentication system,
+and then it'll check the identity
+with the AuthZ, the authorization system
+to see whether this user is allowed
+to take this particular action,
+whether that action is to view or to write some data,
+or whatever.
+In this case, this user is in the AuthZ's list
+of allowed users, so it says that the action
+should be allowed.
+The application responds with success,
+and this action is then logged in the accounting system too.
+Now, whether it's the authorization system
+or the application that does the logging
+to the accounting system doesn't really matter for our sake,
+it can work either way, depending on how things are set up.
+But now let's bring in the attacker again.
+The attacker knows that connections directly
+with the application are refused,
+so they also connect to the authentication system.
+Now at first they claim to be the valid identity,
+but the authentication system challenges that claim
+and rejects their attempt.
+It does not pass back credentials.
+Instead, it talks to the accounting system
+to record a failed login attempt.
+So the attacker connects again to the authentication system,
+but this time claims to be their own identity.
+In this case it's true, so they do know their own password,
+and they can pass the other authentication checks.
+So they also get certified credentials
+from the authentication system.
+This successful login is also recorded
+in the accounting system.
+So now the attacker connects to the application
+and passes along their own credentials
+from the authentication system.
+The app checks that the credentials
+are validly signed by the authentication system,
+and that they haven't been revoked or anything.
+So then it checks the identity
+with the authorization system.
+But in this case, the authorization system
+does not have any approvals for this attackers identity,
+so it says that this identity should not be allowed access.
+The application rejects the request
+and records that rejected access in the accounting system.
+So what can we use then to enable security.
+Well some of the things we can use
+would be called security products or services,
+things that only exist for the purpose of security.
+So for a real world example, the sole purpose of a vault,
+or safe, is to create some security,
+but that vault doesn't really have any value
+aside from security.
+Security features are aspects of some other thing
+that can be used to help with security.
+So for example, a Canadian $100 bill
+has a serial number printed on it.
+That serial number is an aspect of the currency
+that can be used to identify it if it gets stolen,
+but the bills purpose is not to have a serial number,
+it's to be money used for exchange,
+the serial number is just a feature.
+But security services and features are pointless,
+if they're not tied together with a security mindset.
+Continuing the previous example,
+a security mindset says that a bank should record
+the serial numbers of its high value bills
+and put them in the vault.
+That's a much better idea than just leaving a pile of cash
+in the bank lobby overnight,
+or worse out in the parking lot.
+Now you might laugh at how obviously insecure that seems,
+but the truth of the matter is
+that far too many people are building systems,
+just like that.
+If you don't believe me,
+just Google for "public bucket breach."
+They don't think it'd be like it is, but it do.
+All right, one more thing to call out here,
+is that a security mindset includes an availability mindset.
+You haven't really handled the availability aspect
+of security if your system falls over
+because of increased load or something like that,
+regardless of whether that load is from an attacker,
+or an increase invalid usage, that you didn't expect.
+The availability mindset is something
+that we've talked about elsewhere in this course.
+So let's talk about some key things
+that make up the security mindset.
+And one of the things we've talked about is least privilege.
+And it's also the key problem
+with all of those bucket breaches I mentioned.
+In essence, because people are unwilling
+to use some authentication and authorization,
+they're saying that everyone can access the data.
+Sure, it's the simplest and maybe most available way
+to do it, but it's ignoring the confidentiality aspect
+that is also critical.
+Another principle is defense in depth,
+where you don't want to rely on just one thing for security,
+you want to include some layers.
+You know I can't talk through every one of these principles,
+but I can tell you that they are really important
+and that you should read,
+OWASP's "Security by Design" principles.
+OWASP is the open web application security project,
+and they're best known for their OWASP top 10 list
+that they publish every few years,
+which is also very valuable by the way,
+and lists the top 10 most critical
+web application security risks.
+But this is about the security mindset, not a checklist.
+These are principles, best practices
+that inform all of the decisions you make
+around building your system.
+Remember, security as a cross cutting concern
+that affects every part of your system.
+All right, so let's take a look at some of the key
+security products and features in GCP.
+In the identity space, you would be using G-Suite,
+or Cloud Identity for the humans
+that are supposed to use your system.
+Applications and services would use service accounts.
+But you also want to put these identities into a hierarchy,
+for their different roles or purposes.
+So you would use Google Groups for that.
+Now when you're managing identities,
+you can use Google Cloud Directory Sync
+to pull data from LDAP,
+so you don't have to duplicate all of that manually
+in Google's system.
+From the authorization side of things,
+I've already mentioned that you'd be managing
+identity hierarchy through Google Groups,
+but this ties into the authorization
+because you're going to use those different groups
+to say who can do what.
+Another important thing for authorization
+is the resource hierarchy of organization,
+folders and projects.
+And of course this all ties into the identity
+and access management, with its permissions,
+roles and bindings to tie it all together.
+Another thing to call out here
+is that Google Cloud Storage has access control lists,
+and that you have to consider billing management as well.
+Now the networking structures that you use
+can definitely be set up to help support security,
+and that also includes a number of features
+to restrict data flow.
+From the accounting side of things,
+we have the audit or activity logs
+that are provided by Stackdriver.
+Now this is definitely an important thing to understand,
+and I'm sure that's why it shows up a lot in the exam too.
+Another thing in the accounting category
+is billing export that you can set up to go to BigQuery,
+or also to a file in a GCS bucket.
+Whether you want that to be a JSON file,
+or a comma-separated value file.
+Now in this accounting section
+I'm going to point out that compliance is not always,
+or maybe even usually about asking, "Did we comply?"
+It's just as much about making things comply.
+So things like Google Cloud Storage's
+Object Lifecycle Management
+can be used to ensure that we properly dispose
+of sensitive material on the correct schedule.
+Well, all right, there we go.
+I hope I've answered the question for you,
+what is security, especially in the context of GCP?
+If you have any questions please let me know.
+If not, please feel free to move on to the next lecture.
+Thank you.

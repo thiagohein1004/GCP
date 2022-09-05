@@ -1,0 +1,79 @@
+Okay, hello Cloud Gurus and welcome.
+In this series of lectures, we're going
+to take a closer look at the identity
+and access management in Google Cloud.
+Now remember, IAM is for the authorization
+off the ZED piece, not the authentication
+or authen piece even though it has identity
+right there in its name.
+Really, it should maybe be called identify access management
+without the and or maybe just access management.
+In any case, let's start with the resource hierarchy.
+The things that we create or set up
+in GCP are called resources.
+As you've seen several times already,
+we put those into projects.
+Projects are the container that we use
+for a set of related resources.
+Projects also define a trust boundary
+but that's something we'll get to in a bit.
+Now you can take projects and put several
+of them together inside of a folder.
+You can also put folders inside of other folders
+all together as a system of organization.
+That kind of putting things in order organization
+is a little bit different from the top level
+of this hierarchy called the organization.
+This is what's tied to a G Suite or a Cloud Identity domain
+like an internet address domain like google.com
+or acloud.guru.
+Structurally, here's an example that Google provides.
+This organization is example.com and it uses folders
+to divide things up by department
+for human resources, engineering and sales.
+I'm sure that HR and sales have projects as well,
+but in this case, we're only seeing the projects
+for engineering, those being example dev,
+example prod and example test.
+Now that can be a pretty normal way
+to structure your projects
+to have one for dev, one for tests and one for prod.
+But the odd things about this example
+that Google gives is that the resources inside
+of those projects don't look like you would expect them
+to look if this really were for dev, test, and prod.
+The point they're trying to make is
+that you can have all sorts of different resources
+in different projects,
+but really they should have made the set
+of resources much more similar between them
+if this were to be a real world example
+of dev, test, and prod.
+It doesn't really matter
+because the point is that different projects
+can have different resources.
+In this case, the project on the left
+has one compute engine instance
+while the project on the right
+has two compute engine instances.
+The project in the middle is the only one
+that has a Cloud Pub subtopic
+and it doesn't have any instances or buckets at all.
+Now what I mentioned about trust boundary
+is that by default, things within a project
+sort of trust each other.
+As we've seen from our labs, if you're trying
+to access Cloud Storage from a GCE instance,
+you can read from it by default
+if it's in the same project,
+but not if it's in a different one.
+In fact, the default service account that's attached
+to compute engine instances has quite a lot
+of capability to access resources in that project.
+It's only the default scopes that you use
+when you're starting the instance
+that restrict that capability somewhat.
+This is all just about the resources,
+so let's move on to permissions.
+I'll see you in the next lecture when you're ready.
+Thank you.

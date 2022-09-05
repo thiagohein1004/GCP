@@ -1,0 +1,92 @@
+Okay, hello Cloud Gurus and welcome
+to this lecture where we're going to dig into the part
+of IAM that's all about controlling what you can do.
+A Permission allows you to perform a certain action
+and each one follows the pattern, service dot resource
+dot verb.
+Now usually, each one of the Permissions that a service
+defines corresponds to a single one of the methods
+in its REST API.
+Now this would probably mean more to you if you were writing
+the code to actually make those REST API calls,
+but hopefully, you'll just be using some language libraries
+that do all of that for you automatically.
+Two example Permissions are:
+pubsub dot subscriptions dot consume,
+and pubsub dot topics dot publish.
+These Permissions would allow you to get data
+from or put data to pubsub but wouldn't allow you to define
+new topics or add new subscriptions.
+You would need different Permissions for those things.
+Next, let's take a look at Roles.
+A Role is a collection of Permissions to use or manage
+GCP resources.
+So if you think about the Permissions that we just talked
+about, if you had every one of those Permissions
+for a particular service, that would make you
+an Administrator for that service, and in fact, each service
+does have an Administrator role, but that's getting a little
+bit ahead of myself.
+Let's talk about the Primitive Roles.
+These Roles are defined at the project-level and are,
+because of that, often too broad.
+The three Primitive Roles are:
+Viewer, which can read any data but can't write or change
+things, the Editor Role which can also view everything
+but also change things, and the Owner Role
+which can do everything the Editor and Viewer can do,
+but also control access and billing.
+But like I said, these are often too broad,
+and you would rather use Predefined Roles.
+These can give you granular access to specific
+GCP resources.
+We'll get into these a bit more in a bit, but two examples
+are the bigquery dataEditor or the pubsub subscriber.
+Now a difference between this pubsub subscriber Role
+and the permission to consume from a subscription
+is that this Role would also allow you
+to set up a subscription, not just consume
+from one that already exists.
+Now an exam tip for you is that you should definitely read
+through the list of roles for each product or service.
+Think about why each one exists.
+You don't need to memorize the whole list
+of them or anything, but it is important to have a sense
+for which kinds of things show up in that list.
+All right, the last time of role is a Custom Role.
+Now you can define these Custom Roles at the project
+or organization level and you can put whatever Permissions
+you want into them.
+So you can mash a couple of Roles together, or just pick
+and choose very specific Permissions that you want.
+All right, now I said that it's very important to read
+through the list of Predefined Roles, so as an example,
+here are the ones for App Engine.
+The first Role is the Admin.
+This lets you do everything in App Engine; read, write,
+modify access to all application configuration and settings.
+Not quite as powerful as the App Engine Admin
+is the Service Admin.
+This Role still lets you access a lot of things and write
+settings at the modular version level, but you cannot deploy
+a new version with this, and the application level
+is read-only to you.
+An App Engine Deployer is the counterpart
+to the Service Admin.
+This is someone who can deploy a new version,
+but is not allowed to change existing versions.
+You can see here that the separation of duties
+is something that comes out from these Roles.
+You might have a team where you have Devs
+that can deploy new versions,
+and Ops people who are administering the services.
+The next Role is the App Engine Viewer and a person
+with this Role can look at the configuration and settings,
+but if you also want to look at the code,
+you would need the Code Viewer Role.
+So when you read through the list of Roles, try to imagine
+the person who would be granted that role.
+Well if you have any questions about this,
+please let me know, if not, let's move onto the next
+part of IAM.
+Thank you.

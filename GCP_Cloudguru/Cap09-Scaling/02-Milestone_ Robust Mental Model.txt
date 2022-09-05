@@ -1,0 +1,71 @@
+Congratulations, cloud gurus.
+You've reached another milestone.
+So, we've just seen how you can use automation
+to take care of things
+that you might otherwise have had to deal with yourself.
+In the physical world of data centers,
+scaling is something where
+you have to predict your capacity,
+budget for, order machines,
+install and configure them.
+It's all a completely manual process.
+But here we just say, hey, if we're using lots of CPU,
+let's get some more machines doing the job.
+And if we're not using so much,
+we don't wanna pay for that.
+This is elasticity,
+where we can match the resources
+to the work that needs to be done.
+But it's much better than just
+being able to match them, too.
+We set it up so that it matches automatically.
+And this is a part of the engineering mindset.
+Setting a managed instanced group up to scale
+is effectively a way of programming it to do what you want,
+both to save money by scaling down,
+and to handle the load by scaling up.
+But something to point out about this
+is that the loads that we've been dealing with
+have not been in terms of web requests.
+I didn't want you to get caught in the trap
+of thinking about these powerful services
+in terms of just web servers.
+That's a really easy thing to do if that's your background.
+And if you don't have much background in that,
+then I guess it's not as likely,
+but it's still important
+to ground your understanding of how these systems work
+in broader scenarios.
+Web services are definitely important,
+but they're not everything.
+Now, there are a number of different places
+where we could track work to be done,
+such as a Google Cloud Storage bucket,
+where each object or folder
+might represent some work to be done,
+or maybe Cloud Pub/Sub.
+And an interesting thing about both of those
+is that they are asynchronous.
+You can just put the work to be done in there
+and forget about it.
+This is generally different
+than work to be done by most web services
+because in that case an incoming web request
+generally needs to be handled synchronously.
+There are definitely a lot of cases
+where the work needs to be done right away,
+and the caller is waiting for it to finish.
+But a lot of the power of distributed systems
+comes from the fact that you can design them
+to work asynchronously.
+In any case, I don't wanna go on forever about that,
+but I wanted to focus on this asynchronous work first
+because I think this helps you
+build a more robust mental model.
+Now, going forward, we will definitely take a look
+at how networking and web requests work,
+and we'll also take a look at different ways
+of packaging up instructions and automating our workers.
+Well, if you have any questions, please let me know.
+If not, please feel free to move on to the next lecture.
+Thank you.

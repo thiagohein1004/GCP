@@ -1,0 +1,421 @@
+Okay, Hello Cloud Gurus,
+and welcome to this lab where we're going to launch a MIG.
+No, unfortunately we don't get to fly a Russian fighter jet.
+I'm talking about a managed instance group.
+So to start off with,
+log into the console with your user account,
+ideally select the same project as the challenge lab,
+now, if you've already deleted that project,
+you can go ahead and recreate it quickly,
+which would be good practice.
+Or you could use the services exploration labs project.
+In any case, I'll be using the challenge lab project
+and I've cleared out the files from the storage bucket
+to make the new files from this lab easier to see.
+The other thing you'll need to do
+is to open up the challenge lab startup script,
+as we'll be using that same one for this lab.
+Well, all right, I'll see you in the console.
+Well, okay here we are in the console
+with the challenge lab project selected,
+and I've already navigated to compute engine,
+but this time,
+instead of going to the VM instances subsection,
+let's go to instance templates,
+and press on the create instance template button.
+Now, I hope that your first reaction to seeing this is,
+wow that looks familiar,
+because this UI is exactly the same
+as the UI used to create an instance.
+Well, okay that's not exactly true,
+there are some very minor differences
+between this UI and the other,
+and it's your homework to list them.
+I want you to compare these two, to find the few differences
+and think about why it's a difference
+between creating an instance and an instance template.
+Now, I am going to give you the first one
+and point out that this instance template
+does not require you to select a zone.
+Instance templates are global,
+and you can create instances from them
+in any zone that supports the configuration.
+Now I'm going to call this instance template
+worker instance template
+and select F1 micro as the machine type.
+Scrolling down,
+I want to set the scopes to right to storage.
+And I want to expand the advanced settings
+so I can set some labels,
+maybe say setting function to learning
+and made by to template.
+Scrolling down a bit,
+here's where we need the startup script.
+So we can select and copy that and paste it in.
+And like before,
+we'll get the metadata key name from the script,
+which is lab logs bucket,
+and set it to the path for our bucket.
+That's all we need to set for now.
+So we can press create.
+That doesn't take too long to finish, but when it does
+we can press on the name to look at the details.
+And here we see all of the things that we entered.
+But where's the edit button?
+How would we change this template?
+Well, the thing is you can't.
+Instance are immutable.
+You don't ever change them directly,
+but you can copy them and make a new one if you need to.
+Now we'll get to this create instance group in a little bit,
+but for now, let's just press this create VM button.
+And now on the right,
+we see the same form that we normally see
+when we create an instance.
+Now let's call this worker for instance from template one
+and notice that we can change any of the details,
+including the region, zone, machine type
+and all sorts of things.
+I'm going to leave this machine as an F1 micro
+in the us-east1-b zone,
+which is in South Carolina,
+and just scroll down in the hit create.
+Now, while that's creating,
+I'm also going to hit this create instance button,
+and then choose to create one based on a template
+from the panel on the left,
+and on the right selecting worker instance template.
+Of course, this is now no different
+than it was coming from the instance template section
+but I'm going to call this instance worker instance
+from template two.
+And despite this change
+making it ineligible for the free tier
+and therefore using up a little bit of my free trial credit
+I'm going to set this instance to be an N1 standard 2,
+a two CPU machine,
+but also in South Carolina us-east1-b.
+I'll create that machine
+and it'll take just a little bit of time to finish creating.
+Well, now we have two machines running,
+and if we take a look at the first one
+and go to its monitoring tab,
+we can see that it's already started to do a few things,
+because of the startup script that we have.
+But if we imagine for a minute
+that this machine is pulling work packages
+from a pub sub subscription and doing stuff with them,
+but there are so many packages of work to do
+that it doesn't have enough capacity.
+That might be the kind of situation
+where we need to bring online a second instance,
+like we've already done here.
+And this instance is a bit beefier,
+more CPUs and more memory.
+But maybe instead of monitoring
+each of these instances separately, we'd like to group them.
+So let's make ourselves an instance group.
+So if we go to the instance group section
+and press on create instance group,
+let's call this instance group my unmanaged instance group,
+and scroll down
+and set it to be an unmanaged instance group.
+Now, something I'd like to point out is
+that an unmanaged instance group cannot be multi zone.
+If you choose multi zone,
+the managed/unmanaged radio button goes away.
+So we have to switch back to single zone
+to be able to have an unmanaged instance group.
+Now, here in the region and zone
+let's choose South Carolina us-east1-b
+and leave the rest of the settings the same
+until we get to this VM instances.
+Here we can drop the list down
+and add the two instances that we created.
+When we've added both instances, let's press create.
+So now, if we go into the unmanaged instance group,
+we can see the two instances
+and the monitoring tab will show us information
+aggregated across both of them.
+So now that the graph shows us
+that it's not doing a lot of work anymore,
+let's go back to the members
+and navigate into this two CPU instance.
+Because there's less work to do,
+we can stop this instance.
+This'll leave the instance around
+in case we want to turn it back on again later,
+but we won't get charged for it while it's stopped.
+So while that stopping,
+we can go back to our instance group.
+And in a short bit, it's finished.
+There's still not all that much work to do,
+but we can leave that one micro instance running
+for when some work does come in.
+But this is really not a happy way to be managing instances.
+This is far too manual of a process.
+I don't want to be starting
+and stopping instances all the time.
+So let's do it properly instead.
+Let's go back to the list of instance groups
+say, create instance group,
+and this time let's call it my managed instance group
+and make it a multi zone group in U.S. central one.
+Now we can choose to allow or disallow certain zones
+but U.S. central one has four zones,
+so we may as well allow them all.
+But now when we scroll down,
+we see some things that are very different
+than the unmanaged instance group.
+In the unmanaged instance group,
+we were asked if we wanted to add some existing instances,
+but here instead we have to choose an instance template.
+Of course we'll choose the worker instance template
+that we've set up,
+but I hope you're already thinking to yourself
+how this is very different.
+The key thing here is that Google will be creating
+and deleting instances on our behalf.
+It'll use this instance template as it is
+and automatically scale up and down
+based on what we set here.
+Now, you can actually turn auto-scaling off
+and then tell it manually how many instances you want,
+but that's really not ideal,
+so we're going to leave auto scaling on
+and tell it to auto-scale based on the CPU usage.
+This says that when there's a lot of work to do,
+and the CPU usage goes up,
+we want to add more instances.
+And when the work is finished,
+and the CPU usage goes back down,
+we want to delete some of those instances
+so that we save money.
+Now, I think it'd be a good idea for you to read
+some of the supporting documentation on this,
+but for the sake of this lab,
+we're going to leave it as CPU usage,
+but set this target CPU usage to a rather low 30,
+just so that we see the scaling happen
+based on the stressing that happens in the start-up script.
+Now we want this managed instance group
+to always have at least one instance running
+but let's set the maximum to five for this lab.
+Now this cool-down period will set to 30 seconds.
+And what this is about
+is about telling Google to exclude
+any newly created instances
+from the metrics that it's using to measure CPU and target.
+In normal circumstances,
+you want this cool-down period to be longer
+than the total amount of time it takes
+to start up the instance
+and finish running its startup script.
+But because we're using the startup script
+to simulate the work that's happening,
+we want Google to be considering all
+of that CPU usage and trigger a scale up.
+Since the startup script stresses the CPU
+for a couple of minutes, 30 seconds should do nicely here.
+Now at the bottom here, we see auto healing.
+This is another valuable thing.
+Now, as we've talked about before,
+if one of your instances for some reason, dies,
+just crashes and shuts off,
+you want that instance to come back to life.
+You want Google to restart it.
+And that will also happen in auto scaling groups.
+Even if we don't do anything with this health check,
+an instance that shuts down will get restarted.
+But this goes beyond just that.
+This is about making sure
+that the instances are healthy
+to do the work that they need to do.
+If you imagine that you're running a program
+to pick up work packages,
+but something went wrong with it and it crashed,
+that won't necessarily shut down the machine.
+But if you have a health check that is continually
+asking that machine, Hey, are you all right?
+How about now?
+Are you still all right?
+What about now?
+Everything good?
+Then if it doesn't get a positive response,
+it can say, all right, there's something wrong with you,
+you need to be refreshed.
+It'll delete the problematic machine
+and create a new one.
+No big deal,
+the instance template has
+all the information it needs right?
+Now the instances that we're dealing with
+aren't configured to respond to a health check.
+So we're going to leave this
+as no health check for now and hit create.
+Now, while this is creating,
+let's open up a new tab
+and go to Google cloud storage.
+Here we can go into the bucket
+and we see that the two instances that we created manually
+have successfully logged their files.
+If we open up an additional window
+and go to compute engine,
+we'll see that there's now a new instance
+that's been created as a part of the managed instance group.
+We can click on that and take a look at it
+like any other instance,
+even meddling with it, though that's a very bad idea.
+But in the monitoring tab
+we'll eventually see the CPU spike up.
+But more interesting than watching the individual instance
+is going over to the managed instance group
+and taking a look at what's going on there.
+Here, we see that it is now scaling and it says
+the number of instances is going up
+from one to three, and now from one to five,
+and now it says that it's created two instances
+and that is targeting five.
+Three instances are now online.
+And if we go into the instance group,
+we'll see all sorts of instances.
+The monitoring tab will give us some more information
+about what's going on when it has a chance to update.
+But if we look at the list of members,
+we can see that the instances are being spread out
+across multiple zones.
+This is very good from a robustness standpoint.
+If there were some unlikely event
+that affected a lot of instances,
+like maybe one of the data centers
+burning down or something,
+like I said, it's very unlikely.
+But if something like that were to happen,
+then losing a whole zone
+really wouldn't be that big of a deal.
+If we have our instances evenly spread out
+across four different zones,
+then even losing an entire zone should never cripple us.
+Now, it's going to take a bit of time
+for this auto scaling dance to play out.
+So I'm going to speed up the video for you.
+Okay. Here we see that the auto-scaling has kicked in,
+so early on in this graph, when we had one instance
+because that instance was significantly
+over the 30% threshold that we had set,
+Google decided it needed to add more instances,
+lots more instances.
+And of course, because all of those instances
+are set to peg the CPU when they start up,
+the total usage just kept climbing,
+until eventually it hit the limit:
+five instances and no more.
+That's what we said.
+And that's why in the members tab,
+it also told us that it hit the maximum.
+But back to this monitoring tab,
+when the instances start-up scripts finished,
+the CPU was no longer pegged.
+And so the total usage was dropping significantly
+but the capacity,
+which is 30% times however many instances
+are running at that time, stayed rather higher.
+So I'm going to fast forward a bit more,
+but because the blue line is now below the green line,
+Google should start deleting instances in a bit.
+Magic speed up time again.
+Hey, there we go.
+All the way back down to one instance,
+our minimum, of course.
+Now, unfortunately because the 30% threshold is so low,
+it registered a need to add a second instance back
+and that's going to start the whole cycle over again,
+because of course it's the startup script itself
+that pegs the CPU.
+But we've really seen what we needed to see in action now.
+So let's go and delete the instance group.
+It's already back up to five instances,
+but we just don't need them.
+And actually, while we're at it,
+we can delete the unmanaged instance group too.
+Now I hit the delete button
+on the managed instance group twice,
+so it shows a bit of an error,
+but it should work itself out shortly.
+If we refresh the bucket,
+we see that lots more files have been logged
+from the new instances that came online
+in the managed instance group.
+And if we go back
+to the list of instances in compute engine,
+we see the managed instance group instances
+in the process of shutting down.
+Now, if we copy the name of one of these resources
+before it goes away
+and link over to Stackdriver logging
+from the worker instance that is notably still around,
+then we should be able to change it to show all instances,
+but filter by that particular instance's name.
+So we can see the results of what happened to it.
+And here we see things like
+no shutdown scripts found in metadata.
+The value of pushing these logs to Stackdriver logging
+is that we don't still need to have the instance around
+to be able to tell what happened to it.
+A little further up,
+we see the information about the startup script.
+Now, if we switch back to the instance groups,
+we see that they're all gone,
+but there's still the matter
+of a couple of instances that are left.
+And that's because deleting a managed instance group
+will delete all of its instances because it owns them.
+But deleting an unmanaged instance group
+will just leave all of the instances behind.
+So don't forget to delete these two as well.
+Some more time bending, and we're all done.
+Now, I've just been letting these notifications pile up,
+but you can see all of the different things that happened.
+And I highly recommend
+that you look through both the notifications
+and the activities that you see in the log.
+This activity log is quite important.
+So you should make a habit of coming back here
+after you do things
+to see what shows up and what doesn't.
+Well all right to wrap things up,
+here are some key takeaways from this lab.
+I hope this has shown you
+that using instance templates is much better
+than manually creating instances.
+And this goes the same for the command line interface too.
+You can create both instance templates
+and instances from templates via the command line as well.
+Another thing I hope you take away from this
+is that managed instance groups are much better
+than unmanaged ones.
+Unmanaged instance groups have a lot more restrictions
+and are not nearly as useful.
+One of the reasons why managed instance groups are better is
+because they have auto scaling,
+and auto scaling is much better
+than manually managing the instances.
+If you set things up correctly,
+auto-scaling will just do the job while you sleep even,
+taking care of all the ups and downs of load on your system.
+Another thing we've seen here
+is that we should treat most of the resources
+as ephemeral or expendable,
+expect them to go away
+and design your system to handle that without trouble.
+This allows you to automate things
+because automation both requires and gives consistency.
+Because automation does the same thing each time
+it has to be working against some known standard.
+And then it will give you a new predictable result.
+And this leads to my final takeaway,
+which is that everything depends on reliable automation.
+This is really a key theme of everything we do.
+Well okay, if you have any questions, please let me know.
+If not, please feel free to move on to the next lecture.
+Thank you.

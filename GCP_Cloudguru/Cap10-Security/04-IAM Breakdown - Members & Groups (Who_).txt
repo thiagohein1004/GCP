@@ -1,0 +1,100 @@
+Okay, hello, Cloud Gurus,
+and welcome to this lecture in the IAM Breakdown series.
+Next up, we have members.
+Now, a member is someone that Google knows about,
+some identity that they can validate,
+and you generally refer to members by their email addresses.
+Now, there are a few different types of members,
+so, let's go through them.
+The simplest kind of member is a user.
+It's just a specific Google account.
+This could be an account from G Suite, Cloud Identity,
+the Gmail.com domain,
+or it could be any email address from the entire internet
+that has been attached to a Google account and validated.
+The key thing here is that you have to be able to prove
+that you own the email address that backs this account
+to be able to use it.
+User accounts are the kind that you use for people, humans.
+The next type of member, though, is serviceAccount.
+This is generally not used by humans,
+but rather, used by applications or services,
+computers or programs that are trying to interact with GCP.
+Now, if you think back to the labs we've done already,
+I'm sure you'll remember cases
+where we've used each of these types of member.
+The next type of member is a group,
+and this is a very important type of member.
+Group members are managed by Google groups,
+and you can use this to combine all sorts of users
+and service accounts together.
+Group lets you do something
+like give all of the developers access to a particular thing
+instead of having to give each individual developer access.
+The next type of member, domain,
+is for when you want to grant access to some resource
+to every single account in a particular domain.
+Now, that domain needs to be managed
+by G Suite or Cloud Identity.
+allAuthenticatedUsers is a different type of member.
+This is effectively saying that the resource is public.
+The only block to using it
+is that you have to have some Google account,
+anyone will do.
+If you create a new Gmail account,
+poof, this gives you access.
+This is effectively public.
+The only difference is that you can tie actions
+back to some user account,
+which is what makes this different
+from the allUsers type of member.
+The allUsers type of member
+doesn't need any authentication at all.
+Completely anonymous access is fine.
+Now, in terms of these different types of members,
+there are definitely circumstances
+where each one is appropriate,
+but a rule of thumb
+is that if you're using any one of these, except for group,
+you should really be asking yourself why.
+Group should be your default choice, always.
+So, let's take a closer look at groups.
+A Google group is a named collection
+of Google accounts and service accounts.
+You decide on a bunch of other users
+to include in this group and you give it a name.
+Now, that name is important
+because every group has a unique email address
+that is associated with the group.
+So, you would get something like developers@mycompany.com.
+Now, even though the group has an email address,
+you would never use that to log in.
+You never act as the group,
+but if you're a member of that group,
+then, that can give you the ability to do things.
+Now, like I mentioned before,
+you should use groups for everything.
+In any situation where you're doing something real,
+and not just testing something out,
+you should pretty much be using a group.
+You can even use a group to be the owner of projects
+when you have an organization,
+and to be able to manage the groups effectively
+in an organization,
+you can nest them.
+So, for example,
+you might wanna have one group for each department,
+and then, have another group called All Staff
+that just includes all of the department groups.
+This is good,
+because every employee will be in some department,
+so they'll always be included in the All Staff group,
+and it's a lot less work to manage adding
+and removing employees this way
+than going and finding each and every one of the groups
+that they should be a part of.
+Well, we've now seen all of the key pieces in isolation,
+but when you have a chance,
+please, join me in the next lecture,
+and we'll look at how they all tie together.
+Thank you.

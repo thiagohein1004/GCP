@@ -1,0 +1,175 @@
+Okay, hello Cloud Gurus.
+So far, we've looked at resources and roles
+and members, but now we need something
+to tie them all together.
+And that's where policies come in.
+A policy binds members to roles for some scope of resources,
+and in doing that, it answers the question
+who can do what to which thing?
+So if you remember back to the resource hierarchy,
+you would find some place in that resources hierarchy
+to attach a policy.
+Whether it's at the top level of the organization,
+some folder or sub folder within that,
+or maybe a specific project,
+or even a specific resource inside of that project.
+These are all places where you could attach a policy.
+And that attachment is how you identify the resources.
+The policy itself lists the roles and members,
+but it's only this attachment that defines
+which resources are to be affected.
+Now, an important thing to call out
+about policies is that they are allow only.
+If you attach a policy, you can only grant access.
+Attaching a policy can never deny someone access
+to a resource because it's always additive.
+The documentation calls out, "Child policies
+"cannot restrict access granted at a higher level",
+which means that, if you give someone access
+at the organization level, that's it.
+They can always do that.
+This is why it can often make sense
+to put things in a folder even if you're not sure
+you're going to change things later.
+If you don't decide to change anything,
+and every project winds up in that folder,
+then no harm done.
+It works just the same as if you had granted access
+at the organization level.
+But if, in the future, you find
+that you need some special case
+for a particular project, then you
+can always create a separate folder
+next to the original one and not have
+to change anything about the existing resources.
+So let's take a look at an example of a policy.
+Here's a policy that we might attach to some resource.
+Let's say that we attach it to a folder
+inside of an organization and it has two bindings.
+The first binding says that bob@example.com
+is going to be the owner for all of the projects
+that are underneath that folder.
+Now, if this were bound at a particular project level,
+then Bob would be the owner of just that project.
+And, if it were bound at a particular resource,
+then Bob would have all of the privileges
+included in the owner role, but only for that resource.
+So attaching this policy to a folder
+that contains lots of projects
+gives Bob a lot of power.
+But attaching it to one tiny little resource
+that doesn't have much in it,
+well that would be relatively much less power.
+The second binding in this policy
+grants the compute network viewer role
+to a bunch of different members.
+Alice@example.com gets access,
+as do the admins@example.com, and every account
+in the example2.com domain gets access.
+And this app engine service account also gets access,
+regardless of which project is using that service account.
+So let's take a look at a few more things about policies.
+Each resource can have exactly one policy attached to it.
+By default, resources generally
+have an empty policy attached to them.
+Now, in that one policy per resource,
+you can have a maximum of 1500 member bindings.
+Now, the reason I point this out
+is not so that you'll memorize this,
+because you really don't need to.
+I say this because I want to call out
+that this is a ridiculously high maximum.
+If you are anywhere close to this number of bindings,
+you're doing it wrong.
+The answer is that you should use groups instead.
+I'm really not kidding here, don't forget this.
+Groups are really important.
+Both to your regular day-to-day usage
+and, because of that, to your exam.
+But okay, enough about that.
+But that brings me to my next point,
+which is that you should use groups!
+Oh did I mention that already?
+Yeah.
+Okay, a small thing to point out
+is that there is a limit of 250 group bindings in a policy,
+but that's still crazy high.
+You should never get to that either
+if you've got any sort of a sensible group structure.
+Okay, so if you attach a policy to a resource,
+it usually takes less that 60 seconds
+to apply those changes, whether you're granting
+or revoking access.
+But it might also be useful to know
+that the documentation says it may take
+up to seven minutes for changes to fully propagate
+across the system.
+Again, this is more just something to be aware of
+to realize that it's a thing,
+not something where you need to go
+and memorize these numbers.
+Okay, so I mentioned that there's one policy
+per resource, so how do you manage these policy bindings?
+Well, you could use the get-iam-policy function,
+such as in G Cloud, edit the JSON or YAML file
+that you get from it, cause you can ask it for either,
+and then use set-iam-policy to push
+that change to document back.
+But don't do this.
+I mean, you should know that you can,
+and there are some cases where this makes sense,
+such as if you're creating and initializing the resources.
+But, in general, you would rather use add-iam-policy-binding
+and remove-iam-policy-binding instead.
+These two functions are atomic and granular
+and they're better because it's much simpler
+and less work and less error-prone
+to specify exactly which role and member you want to change.
+But this also will avoid any race conditions,
+because you can do multiple of these things simultaneously
+and they won't conflict with each other.
+So let's imagine a scenario.
+Let's say that there are two people,
+or systems, or whatever, that are trying
+to make changes at the same time to the same resource.
+And they both start by doing get-iam-policy
+and they get the same document.
+Then both of them will make their separate changes
+in that document.
+Maybe one person adds Bob as the administrator
+and the other person adds Jane as the administrator.
+But when each of those two people
+will then set-iam-policy their new,
+complete changed document back,
+only one of them will win.
+This is a classic race condition.
+In the end, only one of the two new administrators
+will actually be an administrator.
+The other one will have been unintentionally removed
+as a part of the second one being applied.
+So let's think, also, about the data flow.
+If you do a get and set, you're shuttling
+way more data than you really need
+back and forth between the machine
+giving the command and GCP.
+And when it has gotten it, that machine
+will need to process that data,
+maybe even storing it locally as a part of that
+and then push the entire document back, right?
+But with the add-iam-policy binding
+and remove-iam-policy binding,
+only the targeted instruction data
+needs to flow from the machine giving the command.
+That's it.
+It's definitely preferred.
+So an example command here would be gcloud beta compute
+instances add-iam-policy-binding
+to the resource myhappyvm and passing
+in the role roles/compute.instanceAdmin
+and granting that access for the member user:me@example.com
+This is how that command would look.
+Well, if you have any questions for me
+about policies, please let me know.
+If not, please join me in the next lecture,
+where we'll finish off our iam breakdown.
+Thank you.
