@@ -1,0 +1,217 @@
+[Narrator] - Okay! Hello Cloud Gurus, and
+welcome to this lecture, where we're going to look at
+how you control Billing in GCP.
+So let's start off by looking at Billing Accounts.
+A Billing Account represents some way to pay for
+GCP service usage.
+So, this is required if you want to use any resources,
+that aren't just free.
+Now, the billing account itself, is
+a type of a resource, but
+it's one that lives outside of Projects.
+But even still, it can belong to an organization,
+meaning that the organization owns that billing account.
+And in that case, the billing account will
+inherit the organization level IAM policies.
+So for example, if you were an owner at
+the organization level, you would also be an owner
+at the billing account level.
+Now, billing accounts,
+even though they live outside of projects,
+can be linked to projects.
+But when they do get linked, the billing account still
+does not own the project
+which means if you attach the policy on the billing account,
+it doesn't effect the project in any way.
+But these are just a bunch of words, and
+like they say a picture is worth a thousand words.
+So here's an example of an organization that
+has one billing account and three projects.
+The organization owns all three projects, and
+the billing account, and
+the billing account is linked to the three projects.
+If you attach a policy at the organization level,
+all three projects and
+the billing account will inherit it, but
+if you attach a policy at the billing account,
+it will have no impact on the projects, and
+if you attach a policy to any of the projects,
+it will have no impact on the billing account either.
+Now, this diagram shows a fairly simple situation,
+where there's just one billing account, but
+you can definitely have multiple.
+Depending on how your organization is set up,
+you might want multiple billing accounts for things like,
+different departments, or production versus development, or
+if you're providing service to multiple clients,
+you might want to have a separate billing account
+for each one. Now the one thing to be aware of though, is
+that a single project can only have one link
+to a billing account, so even though the organization
+can have many billing accounts, and many projects, and
+even though each billing account can be linked
+to many projects. A single project is only
+ever linked to a single billing account.
+So, one of the really important roles linked to billing,
+is the billing account user.
+Now we already used this role in an earlier lab,
+to delegate authority from an admin account
+to our user account so it can create projects, but
+not mess with the billing account settings.
+Now let's dig into it a little bit more
+based on the documentation.
+Google says that the purpose for this is
+to link projects to billing accounts.
+Well, that's pretty straight forward, right?
+And it says that the level is the organization, or
+billing account.
+So if you grant this role at the billing account level, then
+the member that's granted access can link projects
+to this billing account.
+But, if the role is granted at the organization level, then
+the member that's granted access can link a project up
+to any of the billing accounts in that organization.
+The documentation goes on to say about the use case, that
+this role has very restricted permissions.
+So you can grant it broadly, typically in combination with
+project creator.
+These two roles allow a user to create new projects
+linked to the billing account on which the role is granted.
+But let's take a broader look, at
+other billing related roles.
+First up, we have the billing account creator.
+Now the scope of this role,
+or the resource impact, if you will,
+is that you can set it at the organization level, and
+it gives someone the ability to
+create new billing accounts, but
+you don't just want to create accounts,
+you also need to administer them, and
+the billing account administrator role
+applies to a particular billing account, and
+gives whoever has this role the ability to manage it.
+Now depending on your organization, and
+how you want to set things up,
+this might be the same person, but
+the reason these are separate roles is because
+they're not always the same person.
+You might want to grant someone the role to administer
+certain billing accounts that have already been created, but
+you want to manage the creation of new ones differently.
+The next role is the billing account user, that
+we've already seen. So,
+managing the details of that billing account is one thing,
+but you may well want to grant someone the ability to
+link a project to that billing account
+without being able to change anything else about it.
+And of course that's exactly what we wanted, so
+that's what we did.
+The billing account viewer role lets you view
+billing account cost information and transactions, so
+this is a role that could let you audit what's going on, but
+not change anything.
+The last role we're going to look at,
+is the project billing manager, and
+the scope of this role is the project.
+This gives you the ability to
+link projects to billing accounts and unlink them so
+it's the project counterpart to the billing account user.
+If you want to make a link between a project, and
+a billing account, you need to have the
+billing account user role on the billing account user role
+and you need to have the project billing manager role
+on the project.
+If you don't have both of them,
+you won't be able to make the link.
+All right, let's take a quick detour
+to talk about invoiced billing. So,
+some customers are eligible to change their
+billing method to monthly invoiced billing, and
+what this means is that instead of having your credit card
+automatically charged at the end of the month,
+you get billed monthly, and pay by the invoice due date.
+When you get the invoice, you can pay it by check or
+wire transfer, not just by credit card, and
+you can also increase your project and quota limits
+when you have invoiced billing.
+Now, if you're the billing administrator of an
+organization's current billing account
+you can contact Google's Cloud Billing Support to
+figure out whether you're eligible for invoiced billing, and
+to apply to switch to monthly invoicing, but
+whether you will be eligible will depend on
+how old your account is,
+how much you usually spend each month, and
+what country you're in.
+All right, detour over. I just wanted to cover that because
+it comes into play a little bit
+when we're talking about the next thing.
+Now we're gonna take a look at one of the scenarios
+that's described in Google's documentation about
+billing access control.
+The first scenario here, is that you're a small to medium
+enterprise with a preference for centralized control.
+In this scenario, we have three different groups of people,
+as it relates to billing.
+We have the Chief Executive Officer,
+the Chief Technical Officer, and
+the Development teams.
+What we want these different people to be able to do, is we
+want the CEO to be able to manage the payment instruments
+and to view and improve the invoices.
+All the money goes through this CEO.
+The CTO, though, will be able to set budget alerts,
+see how much is being spent, and
+create new billable projects so
+that they can get their work done.
+The development teams cannot do anything related to billing.
+So, what are the roles that these different people will need
+to accomplish this? Well,
+the CEO here, needs to be the billing account administrator
+that's what gives them the ability to manage the
+payments, and deal with the invoices.
+Now the CTO will definitely need to be a project creator,
+and will need at least the billing account user access
+to be able to create new billable projects, but
+to be able to set budget alerts,
+they also need to be the billing account administrator.
+So, there's no need to also give them
+the billing account user role.
+The dev teams here, can only use the projects, and
+not deal with the billing.
+Now this is a business that wants centralized control, but
+the next scenario is very similar, except
+they want to delegate their control.
+In this case, the different people involved,
+might be the CEO, the Chief Financial Officer,
+Accounts Payable, and the developments teams.
+Here, the CEO wants to be able to manage the
+payment instruments, but wants to delegate the authority
+for the rest of this stuff to other people.
+The CFO in this case, will set the budget alerts, and
+view the spend, but
+the people who work in Accounts Payable will be doing the
+viewing and approving of invoices.
+Because this is delegated authority, the development teams
+here are trusted, they can create new billable projects,
+as they need.
+So, the roles follow pretty directly from these billing
+activities, like before, the managing of payment
+instruments and setting of budget alerts
+require those two people to be
+the billing account administrator role, but
+accounts payable only needs the billing account viewer role,
+to see what's going on, and
+make sure that it lines up with what they're expecting.
+In this case, it's the development teams that are given the
+billing account user, and project creator roles.
+That's all I really wanted to cover in this lecture.
+There are two more scenarios like this, discussed
+in the rather short documentation page I've linked, and
+I highly recommend that you take a read through them, and
+please, post any question you have on our forum.
+That'll give both you and others
+the chance to work through these scenarios, and
+it'll help it sink in much better, and
+when you're ready, I'll see you in the next lecture.
+Thank you.

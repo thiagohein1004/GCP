@@ -1,0 +1,52 @@
+OK, hello Cloud Gurus.
+Let's quickly recap what we've looked at
+in this IAM breakdown series of lectures.
+A Permission allows you to perform a certain action,
+Service.Resource.Verb .
+A Role is a collection
+of Permissions to use or manage the GCP resources.
+The Primitive Roles are the Owner, Editor and Viewer.
+But Predefined Roles give you more
+granular access to specific resources.
+And Custom Roles will let you
+define your own granular permissions
+if the Predefined Roles aren't just right for you.
+A Member is some Google account identity
+that's tied to an email address.
+And a Policy will bind Members to Roles
+for some scope of resources in the resource hierarchy.
+Answering the question,
+who can do what to which thing?
+To manage the Policy attached to a particular resource,
+you would rather use
+add-iam-policy-binding and remove-iam-policy-binding
+instead of using get-iam-policy,
+editing the document you get and then using set-iam-policy.
+So this is a really important topic.
+You need to understand this well
+both for real-world use and for your exam.
+Since it can often be helpful
+to see the same thing presented in multiple different ways,
+I've got some resources that you should also take a look at.
+Google's IAM overview documentation
+could be really helpful and is worth reading.
+And their frequently asked questions page
+will answer a lot of questions that you either had
+or didn't even know that you had.
+Google has also published a document called
+"Using IAM securely"
+and this has a lot of good, best practices.
+It gives several examples of concrete ways
+to follow the principle of least privilege
+and lots of other do's and don'ts
+related to security in GCP.
+Well all right, if you have
+any questions please do let me know.
+And don't forget to go to the course forum
+and read other people's questions too.
+Like I've mentioned, this is a really important topic
+so you want to take advantage
+of the resources available to you.
+Well all right, I'll see you
+in the next lecture when you're ready.
+Thank you.
